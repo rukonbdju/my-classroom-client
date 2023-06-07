@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../../../firebase.config";
 import { useEffect, useState } from "react";
+import { handlePostMethod } from "../../utilities/handlePostMethod";
 
 const useFirebase = () => {
   const [user, setUser] = useState('')
@@ -12,8 +13,7 @@ const useFirebase = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(user => {
         if (user) {
-          updateUserProfile(displayName)
-          
+          updateUserProfile(displayName)       
         }
       })
       .catch(e => setErrorMessage(e.message))
