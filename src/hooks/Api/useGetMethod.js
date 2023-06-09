@@ -11,14 +11,14 @@ const useGetMethod = () => {
             const result = await response.json();
             setData(result)
         } catch {
-            (err)=>setError(err)
+            (err) => setError(err)
         }
         finally {
             setLoading(false)
         }
     }
 
-    return {data,loading,error,handleFetching}
+    return { data, loading, error, handleFetching }
 };
 
 export default useGetMethod;

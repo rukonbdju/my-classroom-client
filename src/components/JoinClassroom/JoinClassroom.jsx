@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
+import bg from "../../assets/bg/gradient-bg.png"
 
 const JoinClassroom = () => {
   const { user } = useAuth();
+  console.log(user)
   const handleJoinClassroom = async (e) => {
     e.preventDefault();
     try{
@@ -18,18 +20,17 @@ const JoinClassroom = () => {
       const result = await handlePutMethod(url,userData)
       console.log(result)
       // add classroom in the user data
-      if(result.classroomId){
-        const url=`http://localhost:3000/users/${user.uid}`
+      
+        const url2=`http://localhost:3000/users/${user.uid}`
         const id=result.classroomId
-        const result2=await handlePutMethod(url,{id});
-        console.log(result2)
-      }
+        const result2=await handlePutMethod(url2,{id});
+        console.log(result2) 
     }catch{
       err=>console.log(err)
     }
   };
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div style={{backgroundImage:`url(${bg})`}} className="w-screen h-screen flex items-center justify-center bg-cover">
       <div className="w-5/6 mx-auto">
       <form
         onSubmit={handleJoinClassroom}

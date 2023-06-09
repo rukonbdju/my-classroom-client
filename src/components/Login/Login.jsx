@@ -1,9 +1,11 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import bg from "../../assets/bg/gradient-bg.png"
 import useAuth from "../../hooks/Auth/useAuth";
 const Login = () => {
   const navigate= useNavigate()
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
     const {signInWithEmail,user,loading, errorMessage}=useAuth()
     const handleLogin=async(e)=>{
       e.preventDefault()
@@ -13,11 +15,12 @@ const Login = () => {
       e.target.reset();
     }
     if(user){
-      return<Navigate to={'/classroom'}></Navigate>
+      navigate(from, { replace: true });
+      return;
     }
   return (
-    <div className=" bg-slate-700" >
-      <div style={{backgroundImage:`url(${bg})`}} className="">
+    <div className="" >
+      <div style={{backgroundImage:`url(${bg})`}} className="bg-cover">
         <form onSubmit={handleLogin} className="h-screen flex flex-col items-center justify-center max-w-lg mx-auto gap-4">
           <h1 className="text-2xl md:text-4xl lg:text-5xl mb-12 font bold">
             Welcome Back!

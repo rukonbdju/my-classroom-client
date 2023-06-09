@@ -21,15 +21,15 @@ const Register = () => {
       const uid= user.uid;
       const password = event.target.password.value;
       const password2 = event.target.password2.value;
-      const formData = { name, institute, email, address, uid };
       if (password !== password2) {
         setPasswordConfirm(false);
         setFetchLoading(false);
         return;
       }
+      await createNewUserWithEmail( email, password, name );
       const url = "http://localhost:3000/users";
-      await createNewUserWithEmail(email, password, name, url, formData);
-
+      
+      const formData = { name, institute, email, address, uid };
       const result = await handlePostMethod(url, formData);
       console.log(result)
       setRegisterResult(result);
@@ -38,6 +38,7 @@ const Register = () => {
       (err) => console.log(err);
     } finally {
       event.target.reset();
+      setFetchLoading(false);
       
     }
   };
@@ -46,7 +47,7 @@ const Register = () => {
     return <Navigate to={'/classroom'}></Navigate>
   }
   return (
-    <div className="bg-slate-700">
+    <div className="">
       <div
         style={{ backgroundImage: `url(${bg})` }}
         className="py-24 bg-fixed bg-no-repeat bg-cover"

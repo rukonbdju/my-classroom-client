@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
+import bg from "../../assets/bg/gradient-bg.png"
 
 const CreateClassroom = () => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +39,7 @@ const CreateClassroom = () => {
   };
   console.log(classCreationResult);
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div style={{backgroundImage:`url(${bg})`}} className="w-screen h-screen flex items-center justify-center bg-cover">
       <div className="w-5/6 mx-auto">
       <form
         onSubmit={handleCreateClassroom}

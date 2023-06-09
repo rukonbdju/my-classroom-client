@@ -1,10 +1,11 @@
 import React from "react";
 import useAuth from "../../hooks/Auth/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import Home from "../../components/Home/Home";
 
-const AuthRoute = ({children}) => {
+const AuthRoute = ({ children }) => {
   const { user, loading } = useAuth();
+  let location = useLocation();
   if (loading) {
     return (
       <span className="flex items-center justify-center h-screen w-screen">
@@ -31,8 +32,8 @@ const AuthRoute = ({children}) => {
       </span>
     );
   }
-  if(!user){
-    return <Navigate to={"/login"}></Navigate>
+  if (!user) {
+    return <Navigate to={"/login"} state={{ from: location }} replace></Navigate>
   }
   return children;
 };
