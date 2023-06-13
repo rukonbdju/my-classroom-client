@@ -16,12 +16,12 @@ const JoinClassroom = () => {
     const photo=user.photoURL;
     const userData={name,email,photo}
     //add student in the classroom
-    const url=`http://localhost:3000/classrooms/${code}`
+    const url=`http://localhost:3000/api/v1/classrooms/${code}`
       const result = await handlePutMethod(url,userData)
       console.log(result)
       // add classroom in the user data
       
-        const url2=`http://localhost:3000/users/${user.uid}`
+        const url2=`http://localhost:3000/api/v1/users/${user.uid}`
         const id=result.classroomId
         const result2=await handlePutMethod(url2,{id});
         console.log(result2) 

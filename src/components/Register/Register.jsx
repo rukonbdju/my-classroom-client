@@ -27,7 +27,7 @@ const Register = () => {
         return;
       }
       await createNewUserWithEmail( email, password, name );
-      const url = "http://localhost:3000/users";
+      const url = "http://localhost:3000/api/v1/users";
       
       const formData = { name, institute, email, address, uid };
       const result = await handlePostMethod(url, formData);

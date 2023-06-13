@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../../../firebase.config";
 import { useEffect, useState } from "react";
-import { handlePostMethod } from "../../utilities/handlePostMethod";
 
 const useFirebase = () => {
   const [user, setUser] = useState('')

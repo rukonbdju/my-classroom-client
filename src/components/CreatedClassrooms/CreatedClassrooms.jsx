@@ -20,7 +20,8 @@ const CreatedClassrooms = () => {
         setLoading(false);
       }
     };
-    const url = `http://localhost:3000/classrooms/${user.uid}`;
+    const url = `http://localhost:3000/api/v1/classrooms/${user.uid}`;
+    console.log(url)
     getClassrooms(url);
   }, []);
   return (

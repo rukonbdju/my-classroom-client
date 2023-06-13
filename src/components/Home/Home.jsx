@@ -22,7 +22,7 @@ const Home = () => {
         setLoading(false);
       }
     };
-    const enrollUrl = `http://localhost:3000/users/${user.uid}`;
+    const enrollUrl = `http://localhost:3000/api/v1/users/${user.uid}`;
     getEnrolledClassrooms(enrollUrl);
   }, []);
 
