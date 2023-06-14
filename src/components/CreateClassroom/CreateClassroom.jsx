@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
 import bg from "../../assets/bg/gradient-bg.png"
+import { handlePutMethod } from "../../utilities/handlePutMethod";
 
 const CreateClassroom = () => {
   const [loading, setLoading] = useState(false);
@@ -11,21 +12,31 @@ const CreateClassroom = () => {
   const [modalActive, setModalActive] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  // create new classroom
   const handleCreateClassroom = async (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const description= e.target.description.value;
-    const email = user.email;
-    const creator = user.displayName;
-    const uid = user.uid;
-    const formData = { name, email, description, uid, creator };
-    console.log(formData)
-    const url = "http://localhost:3000/api/v1/classrooms";
+    setLoading(true);
+    const data={
+      name:e.target.name.value,
+      description:e.target.description.value,
+      creator:user.uid,
+      members:[{
+        userId:user.uid,
+        role:'teacher'
+      }],
+      cover_photo:'',
+      created_at:new Date().toString()
+
+    }
     try {
-      setLoading(true);
-      const result = await handlePostMethod(url, formData);
-      setClassCreationResult(result);
+      const url = "http://localhost:3000/api/v1/classrooms";
+      const result = await handlePostMethod(url, data);
+      const url2 = `http://localhost:3000/api/v1/users/create/${user?.uid}`;
+      const id=result.insertedId;
+      const res =await handlePutMethod(url2,{id})
       console.log(result)
+      console.log(res)
+      setClassCreationResult(result);
     } catch {
       (err) => setError(err);
     } finally {
@@ -33,11 +44,15 @@ const CreateClassroom = () => {
       e.target.reset()
     }
   };
+
+  useEffect(()=>{
+    console.log('create')
+  },[classCreationResult])
+
   const handleCloseModal = () => {
     setModalActive(false);
     navigate("/classroom");
   };
-  console.log(classCreationResult);
   return (
     <div style={{backgroundImage:`url(${bg})`}} className="w-screen h-screen flex items-center justify-center bg-cover">
       <div className="w-5/6 mx-auto">
@@ -104,7 +119,7 @@ const CreateClassroom = () => {
                 </p>
               </div>
               <p className="bg-slate-400 p-2 rounded-md">
-                Share with your students
+                Share the code with your students for join classroom.
               </p>
             </div>
           </div>

@@ -10,13 +10,20 @@ import useClassroom from "../../hooks/classroom/useClassroom";
 const MainLayout = () => {
   const { user } = useAuth();
   const params = useParams();
-  const{classroom,posts,getClassroom,getPosts}=useClassroom()
+
+  const{classroom,posts,getClassroom,getPosts,creator,getCreator}=useClassroom()
   const [modalOpen, setModalOpen] = useState(false);
   
   useEffect(()=>{
     const url = `http://localhost:3000/api/v1/classrooms/${params.id}`;
     getClassroom(url)
   },[params.id])
+
+  
+  useEffect(()=>{
+    const url = `http://localhost:3000/api/v1/users/${classroom.creator}`;
+    getCreator(url)
+  },[classroom])
   
 
   useEffect(() => {
@@ -51,7 +58,7 @@ const MainLayout = () => {
       <div className=" w-2/3 mx-auto mt-24">
         <div style={{ backgroundImage: `url(${bg})` }} className="p-5 rounded-xl shadow-md bg-cover">
           <h1 className="text-3xl">{classroom?.name}</h1>
-          <p className="font-bold">Teacher: {classroom?.creator}</p>
+          <p className="font-bold">Teacher: {creator?.name}</p>
           <p className="my-4">{classroom?.description}</p>
           <p>{classroom?.students ? classroom?.students?.length : 0} Students</p>
         </div>

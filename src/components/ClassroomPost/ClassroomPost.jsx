@@ -20,8 +20,9 @@ const ClassroomPost = ({ modalOpen, setModalOpen, id }) => {
       const email = user.email;
       const classId = id;
       const likes = [];
+      const comments = [];
       const timestamps = new Date().toString();
-      let data = { uid, name, email, postContent, classId, likes, timestamps };
+      let data = { uid, name, email, postContent, classId, likes,comments, timestamps };
       const url = 'http://localhost:3000/api/v1/posts'
       await createNewPost(url, data)
     } catch {

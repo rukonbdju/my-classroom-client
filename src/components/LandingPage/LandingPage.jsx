@@ -1,8 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import { Link } from "react-router-dom";
-import classroom from "../../../public/classroom.svg";
-import check from "../../../public/check-circle.svg";
+import classroom from "/classroom.svg";
 
 const LandingPage = () => {
   return (

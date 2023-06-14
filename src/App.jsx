@@ -13,6 +13,7 @@ import JoinWithLink from "./components/JoinWithLink/JoinWithLink";
 import NotFound from "./components/NotFound/NotFound";
 import LandingPage from "./components/LandingPage/LandingPage";
 import ClassroomLayout from "./layouts/ClassroomLayout/ClassroomLayout";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login></Login>}> </Route>
         <Route path="/register" element={<Register></Register>}></Route>
+        <Route path="/reset_password" element={<ResetPassword></ResetPassword>}></Route>
         <Route path='/classroom/:id' element={<AuthRoute><ClassroomLayout></ClassroomLayout></AuthRoute>}></Route>
         <Route path="/join_with_link" element={<AuthRoute><JoinWithLink></JoinWithLink></AuthRoute>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>

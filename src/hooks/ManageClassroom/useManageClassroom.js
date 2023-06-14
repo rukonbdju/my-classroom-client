@@ -10,11 +10,22 @@ const useManageClassroom = () => {
     const [postWriter, setPostWriter] = useState({})
     const [postResult,setPostResult]=useState({})
     const [updatedLike,setUpdatedLike]=useState({})
+    const [creator,setCreator]=useState({})
 
     //get posts by url with classroom id
     const getPosts = async (url) => {
         const data = await handleGetMethod(url);
         setPosts(data)
+    }
+
+    //get user by creator id
+    const getCreator=async(url)=>{
+        try{
+            const result= await handleGetMethod(url)
+      setCreator(result)
+        }catch{
+            err=>console.log(err)
+        }
     }
 
     //get classroom by url with id
@@ -42,6 +53,8 @@ const useManageClassroom = () => {
         post.likes.push([...post.likes,userId])
         console.log(post)
     }
+    //update unlike by url with two query post id and user id
+
     const updateUnLikes = async (url,postId,userId) => {
         console.log(postId)
         const result = await handleDeleteMethod(url);
@@ -60,7 +73,7 @@ const useManageClassroom = () => {
         setPosts(prevPost => [data, ...prevPost])
     }
 
-    return { classroom, posts, postWriter,postResult,updatedLike, getClassroom, getPosts, getPostWriter,createNewPost, updateLikes,updateUnLikes }
+    return { classroom, posts, postWriter,postResult,updatedLike,creator,getCreator, getClassroom, getPosts, getPostWriter,createNewPost, updateLikes,updateUnLikes }
 };
 
 export default useManageClassroom;

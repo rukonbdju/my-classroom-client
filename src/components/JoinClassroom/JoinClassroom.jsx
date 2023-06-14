@@ -6,25 +6,25 @@ import bg from "../../assets/bg/gradient-bg.png"
 
 const JoinClassroom = () => {
   const { user } = useAuth();
-  console.log(user)
   const handleJoinClassroom = async (e) => {
     e.preventDefault();
     try{
     const code=e.target.code.value;
-    const name=user.displayName;
-    const email=user.email;
-    const photo=user.photoURL;
-    const userData={name,email,photo}
     //add student in the classroom
     const url=`http://localhost:3000/api/v1/classrooms/${code}`
-      const result = await handlePutMethod(url,userData)
-      console.log(result)
+    const data={
+      userId:user.uid,
+      role:'student'
+    }
+      const result = await handlePutMethod(url,data)
+
       // add classroom in the user data
       
         const url2=`http://localhost:3000/api/v1/users/${user.uid}`
-        const id=result.classroomId
-        const result2=await handlePutMethod(url2,{id});
-        console.log(result2) 
+        const classId=result.classroomId;
+        console.log(classId)
+        const result2=await handlePutMethod(url2,{classId});
+        console.log(result2)
     }catch{
       err=>console.log(err)
     }
