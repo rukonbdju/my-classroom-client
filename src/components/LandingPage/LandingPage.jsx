@@ -29,9 +29,9 @@ const LandingPage = () => {
             </button>
           </Link>
           <span>OR</span>
-          <Link to={"/join"}>
+          <Link to={"classroom/join"}>
             <button className="text-sm md:text-lg lg:text-xl uppercase border-2 border-blue-700 text-blue-700 rounded-lg p-2 hover:text-slate-50 hover:bg-blue-700 hover:shadow-md">
-              Join Now
+              Join Classroom
             </button>
           </Link>
         </div>

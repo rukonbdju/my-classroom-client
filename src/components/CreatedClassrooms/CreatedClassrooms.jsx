@@ -8,6 +8,7 @@ const CreatedClassrooms = () => {
   const { user } = useAuth();
   const [classrooms, setClassrooms] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getClassrooms = async (url) => {
       try {
@@ -20,10 +21,18 @@ const CreatedClassrooms = () => {
         setLoading(false);
       }
     };
-    const url = `http://localhost:3000/api/v1/classrooms/${user.uid}`;
-    console.log(url)
+    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
     getClassrooms(url);
-  }, []);
+  }, [user.uid]);
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
+        <div className="w-80 h-48 rounded-md bg-slate-300"></div>
+        <div className="w-80 h-48 rounded-md bg-slate-300"></div>
+        <div className="w-80 h-48 rounded-md bg-slate-300"></div>
+      </div>
+    )
+  }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
       {classrooms?.map((classroom) => (

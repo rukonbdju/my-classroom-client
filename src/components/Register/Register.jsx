@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import bg from "../../assets/bg/gradient-bg.png";
 import useAuth from "../../hooks/Auth/useAuth";
+import Loader from "../Loader/Loader";
+import { handlePostMethod } from "../../utilities/handlePostMethod";
 
 const Register = () => {
   const navigate = useNavigate()
@@ -10,8 +12,9 @@ const Register = () => {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState(true);
-  const { user, createNewUserWithEmail, errorMessage, savedUserResult } = useAuth();
-  console.log(savedUserResult)
+  const [savedUserResult,setSavedUserResult]=useState({})
+  const { user, createNewUserWithEmail, errorMessage, updateUserProfile,deleteCurrentUser } = useAuth();
+  console.log(user)
 
   //check confirmed password
   const handleConfirmPassword = (e) => {
@@ -38,21 +41,41 @@ const Register = () => {
       if (password != password2) {
         return
       }
-      const url = "http://localhost:3000/api/v1/users";
-      await createNewUserWithEmail(email, password, name, url);
-    } catch {
-      (err) => console.log(err);
+      //create new user
+      const {user}=await createNewUserWithEmail(email, password);
+      //update user name
+      await updateUserProfile(name)
+      if(user.displayName){
+        const data = {
+          firebaseId: user.uid,
+          name: user.displayName,
+          email: user.email,
+          password: password,
+          photo: '',
+          cover_photo: '',
+          phone: '',
+          address: '',
+          created_at: new Date().toString()
+        }
+        // save user in mongodb 
+        const url = "https://my-classroom-server.onrender.com/api/v1/users";
+        const addUserToDB= await handlePostMethod(url, data)
+        setSavedUserResult(addUserToDB)
+      }     
+    } catch(error) {
+      console.log(error)
     } finally {
       event.target.reset();
-      setFetchLoading(false);
+      setFetchLoading(false)
     }
   };
 
   useEffect(()=>{
-    if (user) {
+    if (savedUserResult.acknowledged||user.displayName) {
+      console.log(savedUserResult)
       navigate(from, { replace: true });
     }
-  },[user])
+  },[savedUserResult,user.displayName])
   return (
     <div style={{ backgroundImage: `url(${bg})` }} className=" flex flex-col items-center justify-center min-h-screen max-w-full bg-no-repeat bg-cover">
       <div
@@ -115,26 +138,7 @@ const Register = () => {
           >
             {fetchLoading ? (
               <span className="inline-block mx-1">
-                <svg
-                  className="animate-spin inline-block -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
+                <Loader></Loader>
               </span>
             ) : (
               <span className="inline-block mr-2">Register</span>

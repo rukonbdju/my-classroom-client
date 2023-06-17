@@ -1,5 +1,4 @@
 export const handlePutMethod=async(url,data)=>{
-    console.log({url,data})
     try{
         const response=await fetch(url,{
             method:"PUT",

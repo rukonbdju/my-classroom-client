@@ -1,6 +1,5 @@
 
 export const handlePostMethod = async (url, data) => {
-    console.log(data)
    try{
     const response = await fetch(url, {
         method: "POST",

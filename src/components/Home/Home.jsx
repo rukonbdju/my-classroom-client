@@ -22,7 +22,7 @@ const Home = () => {
         setLoading(false);
       }
     };
-    const enrollUrl = `http://localhost:3000/api/v1/users/${user.uid}`;
+    const enrollUrl = `https://my-classroom-server.onrender.com/api/v1/users/${user.uid}`;
     getEnrolledClassrooms(enrollUrl);
   }, []);
 
@@ -52,7 +52,7 @@ const Home = () => {
             Enrolled Classroom
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
-            {enrolledClassrooms?.classroomList?.map((id) => (
+            {enrolledClassrooms?.joined?.map((id) => (
               <JoinedClassrooms key={id} id={id}></JoinedClassrooms>
             ))}
             <Link to={"/classroom/join"}>

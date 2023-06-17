@@ -1,7 +1,15 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail
+} from "firebase/auth";
 import { auth } from "../../../firebase.config";
 import { useEffect, useState } from "react";
-import { handlePostMethod } from "../../utilities/handlePostMethod";
 
 const useFirebase = () => {
   const provider = new GoogleAuthProvider();
@@ -13,105 +21,84 @@ const useFirebase = () => {
   const [sendResetMail, setSendResetMail] = useState(false)
 
   // create new user with email and password and update name and save to database
-  const createNewUserWithEmail = (email, password, displayName, url) => {
-    let saved;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        updateUserProfile(displayName)
-        const data = {
-          firebaseId: result.user.uid,
-          name: displayName,
-          email: email,
-          password: password,
-          photo: '',
-          cover_photo: '',
-          phone: '',
-          address: '',
-          created_at: new Date().toString()
-        }
-        handlePostMethod(url, data)
-          .then((result) => {
-            setSavedUserResult(result)
-          })
-      })
-      .catch((err) => {
-        setErrorMessage(err.message)
-      })
+  const createNewUserWithEmail = async (email, password) => {
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password)
+      return result;
+    }
+    catch (error) {
+      console.log(error.message)
+      setErrorMessage(error.message)
+    }
   }
 
   //sign in with email and password
-  const signInWithEmail = (email, password) => {
-    setLoading(true)
-    signInWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        if (user) {
-
-          setLoading(false)
-        }
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-        console.log(error.message)
-      });
-    setLoading(false)
+  const signInWithEmail = async (email, password) => {
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password)
+      console.log(user)
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
   }
 
+  // google sign in
   const signInWithGoogle = async () => {
-    setLoading(true)
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        setUser(user)
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorMessage = error.message;
-        setErrorMessage(errorMessage)
+    try {
+      const { user } = await signInWithPopup(auth, provider)
 
-      })
-    setLoading(false)
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
   }
 
-  const emailLogOut = () => {
-    setLoading(true)
-    signOut(auth).then(() => {
+  //log out
+  const emailLogOut = async () => {
+    try {
+      await signOut(auth)
       setUser('')
-    }).catch((error) => {
+    } catch (error) {
       setErrorMessage(error.message)
-    });
-    setLoading(false)
+    }
   }
 
-  const updateUserProfile = (name) => {
-    updateProfile(auth.currentUser, {
-      displayName: name
-    }).then(() => {
-      setUpdateName(true)
-    }).catch((error) => {
-      setErrorMessage(error.message)
-    });
-  }
-
-  const resetPassword = (email) => {
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setSendResetMail(true)
+  const updateUserProfile = async (name) => {
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: name
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setErrorMessage(errorMessage)
-        setSendResetMail(false)
-      });
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
   }
 
+  //sent mail for reset password
+  const resetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email)
+      setSendResetMail(true)
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
+  }
 
+  //delete user
+  const deleteCurrentUser = async () => {
+    try {
+      const user = auth.currentUser;
+      console.log(user)
+      await deleteUser(user)
+      setUser('')
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
+  }
 
-
+  //get user at any time
   useEffect(() => {
     setLoading(true)
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
         setUser(user)
       } else {
         setUser('')
@@ -120,7 +107,16 @@ const useFirebase = () => {
     });
   }, [])
 
-  return { createNewUserWithEmail, signInWithEmail, emailLogOut, updateUserProfile, signInWithGoogle, resetPassword, sendResetMail, user, savedUserResult, errorMessage, updateName, loading, auth };
+  return {
+    createNewUserWithEmail,
+    signInWithEmail,
+    emailLogOut,
+    updateUserProfile,
+    signInWithGoogle,
+    resetPassword,
+    deleteCurrentUser,
+    sendResetMail, user, savedUserResult, errorMessage, updateName, loading, auth
+  };
 }
 
 

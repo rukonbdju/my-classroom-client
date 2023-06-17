@@ -2,50 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { handlePutMethod } from '../../utilities/handlePutMethod';
 import useAuth from '../../hooks/Auth/useAuth';
 import Comments from '../Comments/Comments';
-import { handleGetMethod } from '../../utilities/handleGetMethod';
+import { handlePostMethod } from '../../utilities/handlePostMethod';
+import StaticComment from '../StaticComment/StaticComment';
 
-const CommentBox = ({ id }) => {
+const CommentBox = ({ postId }) => {
     const { user } = useAuth()
     const [comment, setComment] = useState('')
-    const [formData, setFormData] = useState('')
+    const [staticComment, setStaticComment] = useState('')
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)
-    console.log(comments)
+    const [commentResult,setCommentResult]=useState({})
 
-    useEffect(() => {
-        const handleGetComments = async (url) => {
-            try {
-                setLoading(true)
-                const result = await handleGetMethod(url);
-                console.log(result)
-                setComments(result?.comments?.reverse())
-            } catch {
-                err => console.log(err)
-            }
-            finally {
-                setLoading(false)
-            }
-        }
-        const url = `http://localhost:3000/api/v1/posts/query?id=${id}`
-        handleGetComments(url);
-
-    }, [])
-    const handleCommentText = (event) => {
+    const getCommentFromUser = (event) => {
         const text = event.target.value;
         setComment(text)
     }
+
     const handleComment = async () => {
         try {
-            const timestamps = new Date().toString()
-            console.log(timestamps)
-            const userId = user.uid;
-            const data = { userId, comment, timestamps }
-            setFormData(data)
-            console.log(data)
-            const url = `http://localhost:3000/api/v1/posts/${id}`
-            const result = await handlePutMethod(url, data)
-            setComments(prevComment =>prevComment? [data, ...prevComment]:[data])
-            console.log(result)
+            setLoading(true)
+            const data = {
+                postId:postId,
+                userId:user.uid,
+                content:comment,
+                timestamps:new Date().toString(),
+                likes:[],
+                replies:[]
+            }
+            setStaticComment(data)
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
+            const saveCommentResult = await handlePostMethod(commentUrl, data) 
+            const commentId=saveCommentResult.insertedId;
+            const postUrl=`https://my-classroom-server.onrender.com/api/v1/posts/comment/${postId}`
+            const saveRefToPost=await handlePutMethod(postUrl,{commentId})    
+            setCommentResult(saveRefToPost)      
         } catch {
             error => { console.log(error) }
         }
@@ -59,7 +49,7 @@ const CommentBox = ({ id }) => {
                     placeholder='write comment'
                     type="text"
                     value={comment}
-                    onChange={handleCommentText}
+                    onChange={getCommentFromUser}
                     name="comment"
                     id="comment" />
                 <button
@@ -76,7 +66,9 @@ const CommentBox = ({ id }) => {
                     </svg>
                 </button>
             </div>
-            <Comments comments={comments}></Comments>
+            
+            {commentResult?.acknowledged && <StaticComment staticComment={staticComment}></StaticComment>}
+            <Comments postId={postId}></Comments>
         </div>
     );
 };

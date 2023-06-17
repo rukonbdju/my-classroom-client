@@ -1,11 +1,11 @@
-const handleDeleteMethod=async(url)=>{
-    console.log(url)
+const handleDeleteMethod=async(url,data)=>{
     try{
         const response = await fetch(url, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
             },
+            body:JSON.stringify(data)
         });
         return(response.json())
     }catch{
