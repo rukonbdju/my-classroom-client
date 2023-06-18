@@ -12,8 +12,6 @@ const MainLayout = () => {
   const navigate = useNavigate()
   const [classroom, setClassroom] = useState({})
   const [creator, setCreator] = useState({})
-  const [modalOpen, setModalOpen] = useState(false);
-  const [postResult, setPostResult] = useState({})
 
   useEffect(() => {
     //get classroom by url with id
@@ -25,9 +23,9 @@ const MainLayout = () => {
         (err) => console.log(err);
       }
     };
-    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
+    const url = `http://localhost:3000/api/v1/classrooms/${params.id}`;
     getClassroom(url)
-  }, [params.id, postResult])
+  }, [params.id])
 
 
   useEffect(() => {
@@ -40,12 +38,9 @@ const MainLayout = () => {
         err => console.log(err)
       }
     }
-
-    const url = `https://my-classroom-server.onrender.com/api/v1/users/${classroom?.creator}`;
+    const url = `http://localhost:3000/api/v1/users/${classroom?.creator}`;
     getCreator(url)
-
-
-  }, [classroom, classroom?.creator])
+  }, [classroom?.creator])
 
 
   useEffect(() => {
@@ -75,65 +70,63 @@ const MainLayout = () => {
     );
   }
 
+  /*   if(!creator?._id){
+      return (
+        <div>
+          <Navbar></Navbar>
+          <div className=" bg-cover w-3/4 mt-24 mx-auto">
+            <div className="rounded-md bg-slate-200 p-4">
+              <div className="h-4 w-64 rounded-md bg-slate-600"></div>
+              <div className="h-4 w-48 rounded-md mt-4 bg-slate-600"></div>
+              <div className="mt-8">
+                <div className="h-2 rounded-full mb-2-4 bg-slate-600"></div>
+                <div className="h-2 rounded-full w-64 my-4 bg-slate-600"></div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center justify-between gap-4 my-4">
+              <div>
+                <div className="w-12 h-12 rounded-full bg-slate-500"></div>
+              </div>
+              <div className="h-12 w-full rounded-full bg-slate-500"></div>
+            </div>
+          </div>
+        </div>
+      )
+    } */
+
   return (
-    <div className={`${modalOpen && "overflow-hidden"}`}>
-      {modalOpen && <CreatePost
-        classroom={classroom}
-        setModalOpen={setModalOpen}
-        setPostResult={setPostResult}>
-      </CreatePost>}
+    <div>
       <Navbar></Navbar>
       <div className="w-11/12 md:w-5/6  lg:w-2/3 mx-auto mt-24">
-        {(classroom?._id && creator?._id) ? <div>
-          <div style={{ backgroundImage: `url(${bg})` }} className="p-5 rounded-xl shadow-md bg-cover">
+        <div>
+          <div style={{ backgroundImage: `url(${bg})` }} className="p-5 rounded-xl shadow-md bg-cover relative">
+            <div className="absolute top-2 right-2">
+              <button className="relative group">
+                <div className="flex items-center justify-center border rounded-full cursor-pointer
+               hover:bg-slate-400 p-1">
+                  <svg
+                    className="block"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                  </svg>
+                </div>
+                <div className="absolute hidden group-focus-within:block right-0 w-24 p-4 bg-slate-400 rounded">
+                  <p className=" bg-slate-200 p-1">edit</p>
+                </div>
+              </button>
+            </div>
             <h1 className="text-3xl">{classroom?.name}</h1>
             <p className="font-bold">Teacher: {creator?.name}</p>
             <p className="my-4">{classroom?.description}</p>
             <p>{classroom?.members?.length - 1} Students</p>
           </div>
-          <div>
-            <div className="flex flex-row gap-2 mt-4">
-              <div>
-                <button
-                  className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12 ">
-                  {user?.photoURL ? (
-                    <img src="user?.photoURL" />
-                  ) : (
-                    user?.displayName?.slice(0, 1)
-
-                  )}
-                </button>
-              </div>
-              <input
-                onClick={() => setModalOpen(true)}
-                className="px-4 rounded-full border w-full "
-                placeholder="Start Class Discussion"
-                type="text"
-                name="post"
-                id=""
-              />
-            </div>
-          </div>
-        </div> : <div className=" bg-cover">
-          <div className="rounded-md bg-slate-200 p-4">
-            <div className="h-4 w-64 rounded-md bg-slate-600"></div>
-            <div className="h-4 w-48 rounded-md mt-4 bg-slate-600"></div>
-            <div className="mt-8">
-              <div className="h-2 rounded-full mb-2-4 bg-slate-600"></div>
-              <div className="h-2 rounded-full w-64 my-4 bg-slate-600"></div>
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between gap-4 my-4">
-            <div>
-              <div className="w-12 h-12 rounded-full bg-slate-500"></div>
-            </div>
-            <div className="h-12 w-full rounded-full bg-slate-500"></div>
-          </div>
-        </div>}
-
+        </div>
         <Posts classroom={classroom}></Posts>
       </div>
-
     </div>
   );
 };

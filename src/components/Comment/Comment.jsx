@@ -7,7 +7,7 @@ const Comment = ({ commentId }) => {
     const [commentator,setCommentator]=useState({})
     useEffect(() => {
         const getComment = async () => {
-            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
+            const url = `http://localhost:3000/api/v1/comments/${commentId}`
             const result = await handleGetMethod(url)
             setComment(result);
         }
@@ -20,7 +20,7 @@ const Comment = ({ commentId }) => {
             setCommentator(result);
         }
         if(comment?.userId){
-            const url = `https://my-classroom-server.onrender.com/api/v1/users/${comment.userId}`
+            const url = `http://localhost:3000/api/v1/users/${comment.userId}`
             getCommentator(url)
         }
     },[comment,comment?.userId])
@@ -64,7 +64,7 @@ const Comment = ({ commentId }) => {
                                 height="16"
                                 fill="currentColor"
                                 viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
+                                <path fillRule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
                             </svg>
                             <span>Reply</span>
                         </button>

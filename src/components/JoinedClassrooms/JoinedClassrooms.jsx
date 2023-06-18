@@ -17,7 +17,7 @@ const JoinedClassrooms = ({ id }) => {
                 err => console.log(err)
             }
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${id}`
+        const url = `http://localhost:3000/api/v1/classrooms/${id}`
         getClassroom(url)
     }, [])
 

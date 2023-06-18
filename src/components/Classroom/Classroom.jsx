@@ -12,7 +12,7 @@ const Classroom = ({ classroom }) => {
       setCreator(result)
     }
     if (classroom?.creator) {
-      const url = `https://my-classroom-server.onrender.com/api/v1/users/${classroom.creator}`
+      const url = `http://localhost:3000/api/v1/users/${classroom.creator}`
       getCreator(url)
     }
   }, [classroom])

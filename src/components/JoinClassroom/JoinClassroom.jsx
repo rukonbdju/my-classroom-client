@@ -17,7 +17,7 @@ const JoinClassroom = () => {
       setLoading(true)
       const code = e.target.code.value;
       //add student in the classroom
-      const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/join/${code}`
+      const url = `http://localhost:3000/api/v1/classrooms/join/${code}`
       const data = {
         userId: user.uid,
         role: 'student'
@@ -26,7 +26,7 @@ const JoinClassroom = () => {
 
       // add classroom in the user data
       const id = result.classroomId;
-      const url2 = `https://my-classroom-server.onrender.com/api/v1/users/joined/${user.uid}`
+      const url2 = `http://localhost:3000/api/v1/users/joined/${user.uid}`
       const updateUserResult = await handlePutMethod(url2, { id });
       setIsJoined(updateUserResult)
       setLoading(false)
