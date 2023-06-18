@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
+import { useParams } from "react-router-dom";
 
-const CreatePost = ({ classroom, setOpenModal }) => {
+const CreatePost = ({ setPosts, setOpenModal }) => {
+  const params = useParams()
+
   const { user } = useAuth();
   const [postContent, setPostContent] = useState("");
+  const [postCreationResult,setPostCreationResult]=useState({})
   const [loading, setLoading] = useState(false)
 
   const getPostContent = (e) => {
@@ -17,27 +21,34 @@ const CreatePost = ({ classroom, setOpenModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = {
+      console.log
+      let data = {
         author: user.uid,
-        classId: classroom._id,
+        classId: params.id,
         content: postContent,
         likes: [],
         comments: [],
         timestamps: new Date().toString()
       }
       const postUrl = "http://localhost:3000/api/v1/posts"
+      console.log(postUrl)
       const result = await handlePostMethod(postUrl, data)
       const postId = result.insertedId;
-
-      const classroomUrl = `http://localhost:3000/api/v1/classrooms/${classroom._id}`
+      console.log(postId)
+      const classroomUrl = `http://localhost:3000/api/v1/classrooms/${params.id}`
       const addRefToClass = await handlePutMethod(classroomUrl, { postId })
-      setPostResult(addRefToClass)
-    } catch {
-      error => console.log(error)
-    } finally {
+      console.log(addRefToClass)
+      setPostCreationResult(addRefToClass)
+      if (addRefToClass.modifiedCount) {
+        data._id = postId;
+        setPosts((prevPosts) => [data, ...prevPosts])
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    finally{
       setLoading(false)
-      setPostResult(true)
-      setModalOpen(false)
+      setOpenModal(false)
     }
   };
   return (

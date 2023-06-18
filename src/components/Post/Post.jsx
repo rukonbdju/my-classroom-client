@@ -137,6 +137,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className=''>
                     {openComment && <CommentBox
+                        setCommentCount={setCommentCount}
                         postId={post?._id}
                         setOpenComment={setOpenComment}>
                     </CommentBox>}

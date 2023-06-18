@@ -11,7 +11,7 @@ const CommentBox = ({ postId }) => {
     const [staticComment, setStaticComment] = useState('')
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)
-    const [commentResult,setCommentResult]=useState({})
+    const [commentResult, setCommentResult] = useState({})
 
     const getCommentFromUser = (event) => {
         const text = event.target.value;
@@ -22,30 +22,33 @@ const CommentBox = ({ postId }) => {
         try {
             setLoading(true)
             const data = {
-                postId:postId,
-                userId:user.uid,
-                content:comment,
-                timestamps:new Date().toString(),
-                likes:[],
-                replies:[]
+                postId: postId,
+                userId: user.uid,
+                content: comment,
+                timestamps: new Date().toString(),
+                likes: [],
+                replies: []
             }
             setStaticComment(data)
             const commentUrl = `http://localhost:3000/api/v1/comments`
-            const saveCommentResult = await handlePostMethod(commentUrl, data) 
-            const commentId=saveCommentResult.insertedId;
-            const postUrl=`http://localhost:3000/api/v1/posts/comment/${postId}`
-            const saveRefToPost=await handlePutMethod(postUrl,{commentId})    
-            setCommentResult(saveRefToPost)      
-        } catch {
-            error => { console.log(error) }
+            const saveCommentResult = await handlePostMethod(commentUrl, data)
+            const commentId = saveCommentResult.insertedId;
+            const postUrl = `http://localhost:3000/api/v1/posts/comment/${postId}`
+            const saveRefToPost = await handlePutMethod(postUrl, { commentId })
+            setCommentResult(saveRefToPost)
+        } catch (error) {
+            console.log(error)
+        }
+        finally{
+            setComment('')
         }
     }
     return (
         <div className='my-4'>
-            
-            <div className='flex flex-row items-center gap-2'>
+
+            <div className='flex flex-row items-center border w-full border-slate-600 rounded-md'>
                 <input
-                    className='border w-full border-green-400 rounded-md p-1 outline-0'
+                    className=' w-full p-1 md:p-2 lg:p2  rounded-l-md outline-0'
                     placeholder='write comment'
                     type="text"
                     value={comment}
@@ -54,9 +57,9 @@ const CommentBox = ({ postId }) => {
                     id="comment" />
                 <button
                     onClick={() => handleComment()}
-                    className='border ml-2 rounded-md p-2 outline-0 bg-green-400'>
+                    className='flex flex-row items-center gap-2 border rounded-r-md  p-2 outline-0 bg-slate-300 hover:bg-slate-400'>
+                    <span className='hidden md:block lg:block'>comment</span>
                     <svg
-                        className='text-slate-50'
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
                         height="16"
@@ -66,7 +69,7 @@ const CommentBox = ({ postId }) => {
                     </svg>
                 </button>
             </div>
-            
+
             {commentResult?.acknowledged && <StaticComment staticComment={staticComment}></StaticComment>}
             <Comments postId={postId}></Comments>
         </div>

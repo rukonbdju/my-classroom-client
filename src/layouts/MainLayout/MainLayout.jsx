@@ -27,7 +27,6 @@ const MainLayout = () => {
     getClassroom(url)
   }, [params.id])
 
-
   useEffect(() => {
     //get user by creator id
     const getCreator = async (url) => {
@@ -41,7 +40,6 @@ const MainLayout = () => {
     const url = `http://localhost:3000/api/v1/users/${classroom?.creator}`;
     getCreator(url)
   }, [classroom?.creator])
-
 
   useEffect(() => {
     if (classroom?.members) {
