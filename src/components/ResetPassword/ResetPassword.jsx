@@ -3,7 +3,6 @@ import useAuth from '../../hooks/Auth/useAuth';
 
 const ResetPassword = () => {
     const { resetPassword,sendResetMail, errorMessage } = useAuth()
-    console.log(errorMessage)
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {

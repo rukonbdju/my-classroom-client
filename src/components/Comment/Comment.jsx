@@ -4,48 +4,56 @@ import { handleGetMethod } from '../../utilities/handleGetMethod';
 const Comment = ({ commentId }) => {
 
     const [comment, setComment] = useState({})
-    const [commentator,setCommentator]=useState({})
+    const [commentator, setCommentator] = useState({})
     useEffect(() => {
         const getComment = async () => {
-            const url = `http://localhost:3000/api/v1/comments/${commentId}`
+            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
             const result = await handleGetMethod(url)
             setComment(result);
         }
         getComment()
     }, [commentId])
 
-    useEffect(()=>{
-        const getCommentator=async(url)=>{
+    useEffect(() => {
+        const getCommentator = async (url) => {
             const result = await handleGetMethod(url)
             setCommentator(result);
         }
-        if(comment?.userId){
-            const url = `http://localhost:3000/api/v1/users/${comment.userId}`
+        if (comment?.userId) {
+            const url = `https://my-classroom-server.onrender.com/api/v1/users/${comment.userId}`
             getCommentator(url)
         }
-    },[comment,comment?.userId])
+    }, [comment, comment?.userId])
 
 
     return (
-        <div className='flex flex-row items-start gap-1 my-2 border p-2 rounded-md'>
-            <div className='basis-1/12'>
-                <button
-                    className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
-                >
-                    {commentator?.photo ? (
-                        <img src={commentator?.photo} />
-                    ) : (
-                        commentator?.name?.slice(0, 1)
-                    )}
-                </button>
+        <div className=' my-2 border p-1 rounded-md'>
+            <div className='flex flex-row gap-2'>
+                <div>
+                    <button
+                        className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-8 h-8"
+                    >
+                        {commentator?.photo ? (
+                            <img src={commentator?.photo} />
+                        ) : (
+                            commentator?.name?.slice(0, 1)
+                        )}
+                    </button>
+                </div>
+                <div>
+                    <h2 className='leading-none'>{commentator?.name}</h2>  
+                    <span className=' text-xs leading-none font-thin'>{comment?.timestamps}</span>
+                    <p className='bg-slate-300 text-sm rounded-md break-words'>
+                        <span className='p-1 inline-block'>{comment?.content}</span>
+                    </p>
+                </div>
             </div>
-            <div className='basis-11/12'>
-                <h2>{commentator?.name}</h2>
-                <span className='text-xs'>{comment?.timestamps}</span>
+            <div className=''>
+
                 <div className=' rounded-lg p-2 my-2'>
-                    <p className='bg-slate-200 p-4 rounded-lg'>{comment?.content}</p>
+                    
                     <div className='flex flex-row gap-2 justify-end my-2'>
-                        <button className='flex flex-row gap-1 border  p-1 items-center justify-center  rounded-md bg-slate-300 hover:bg-slate-400'>                        
+                        <button className='flex flex-row gap-1 border  p-1 items-center justify-center  rounded-md bg-slate-300 hover:bg-slate-400'>
                             <svg
                                 className='inline'
                                 xmlns="http://www.w3.org/2000/svg"

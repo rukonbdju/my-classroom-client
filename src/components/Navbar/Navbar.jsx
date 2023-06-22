@@ -33,36 +33,37 @@ const Navbar = () => {
           </div>
 
           {<UserInfo></UserInfo>}
-          <div className="block mg:hidden lg:hidden relative group ">
+          <div className="block mg:hidden lg:hidden group ">
             <button className="flex flex-row items-center justify-center" >
               <span className="material-symbols-outlined cursor-pointer">
                 menu
               </span>
             </button>
-            {
-              <div className="absolute right-0 hidden group-focus-within:block mt-4 py-2 pr-6 pl-2 rounded-md bg-slate-300">
-                <div className="flex flex-col gap-2">
-                  <Link
-                    to={"/classroom"}
-                    className="font-bold hover:text-blue-700"
+            <div className="absolute right-0 hidden group-focus-within:block mt-5 bg-slate-300">
+              <div className="w-screen">
+                <Link
+                  to={"/classroom"}
+                  className="font-bold hover:text-slate-50 hover:bg-slate-700 block p-1 text-center"
+                >
+                  Classroom
+                </Link>
+                <hr />
+                <Link
+                  to={"/classroom/create"}
+                  className="font-bold hover:text-slate-50 hover:bg-slate-700 block p-1 text-center"
                   >
-                    Classroom
-                  </Link>
-                  <Link
-                    to={"/classroom/create"}
-                    className="font-bold hover:text-blue-700"
+                  Create
+                </Link>
+                <hr />
+                <Link
+                  to={"/classroom/join"}
+                  className="font-bold hover:text-slate-50 hover:bg-slate-700 block p-1 text-center"
                   >
-                    Create
-                  </Link>
-                  <Link
-                    to={"/classroom/join"}
-                    className="font-bold hover:text-blue-700"
-                  >
-                    Join
-                  </Link>
-                </div>
-              </div>
-            }
+                  Join
+                </Link>
+                  </div>
+            </div>
+
           </div>
         </div>
       </div>

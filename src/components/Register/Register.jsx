@@ -14,7 +14,6 @@ const Register = () => {
   const [passwordConfirm, setPasswordConfirm] = useState(true);
   const [savedUserResult,setSavedUserResult]=useState({})
   const { user, createNewUserWithEmail, errorMessage, updateUserProfile,deleteCurrentUser } = useAuth();
-  console.log(user)
 
   //check confirmed password
   const handleConfirmPassword = (e) => {
@@ -58,7 +57,7 @@ const Register = () => {
           created_at: new Date().toString()
         }
         // save user in mongodb 
-        const url = "http://localhost:3000/api/v1/users";
+        const url = "https://my-classroom-server.onrender.com/api/v1/users";
         const addUserToDB= await handlePostMethod(url, data)
         setSavedUserResult(addUserToDB)
       }     
@@ -72,7 +71,6 @@ const Register = () => {
 
   useEffect(()=>{
     if (savedUserResult.acknowledged||user.displayName) {
-      console.log(savedUserResult)
       navigate(from, { replace: true });
     }
   },[savedUserResult,user.displayName])

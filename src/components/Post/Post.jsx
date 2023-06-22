@@ -3,29 +3,33 @@ import useAuth from '../../hooks/Auth/useAuth';
 import CommentBox from '../CommentBox/CommentBox';
 import { handlePutMethod } from '../../utilities/handlePutMethod';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
+import handleDeleteMethod from '../../utilities/handleDeleteMethod';
 
-const Post = ({ post }) => {
+const Post = ({ post,setPosts }) => {
     const { user } = useAuth()
     const [author, setAuthor] = useState({})
     const [openComment, setOpenComment] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
     const [likeCount, setLikeCount] = useState(post?.likes?.length)
-    const [commentCount,setCommentCount]=useState(post?.comments?.length)
+    const [commentCount, setCommentCount] = useState(post?.comments?.length)
+    const [loading, setLoading] = useState(false)
+    const [isDelete,setIsDelete]=useState(false)
     useEffect(() => {
+        setLoading(true)
         const getAuthor = async (url) => {
             const result = await handleGetMethod(url)
             setAuthor(result);
         }
         if (post.author) {
-            const url = `http://localhost:3000/api/v1/users/${post.author}`
+            const url = `https://my-classroom-server.onrender.com/api/v1/users/${post.author}`
             getAuthor(url)
         }
-    }, [post.author])
+        setLoading(false)
+    }, [post])
 
     //handle delete and update likes
     const handleUpdateLike = async (status) => {
-        const url = `http://localhost:3000/api/v1/posts/like/${post._id}`;
-        console.log(url)
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts/like/${post._id}`;
         const data = {
             userId: user.uid,
             like: status
@@ -45,6 +49,12 @@ const Post = ({ post }) => {
 
     }
 
+    const handleDeletePost=async()=>{
+        const url=`https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
+        const result = await handleDeleteMethod(url)
+        setPosts((prevPosts)=>prevPosts.filter((p)=>p._id!==post._id))
+    }
+
     useEffect(() => {
         for (let i = 0; i < post?.likes?.length; i++) {
             const id = post?.likes[i];
@@ -52,14 +62,57 @@ const Post = ({ post }) => {
                 setIsLiked(true)
             }
         }
-    }, [post, post.likes])
+    }, [post])
+
+
+    if (loading) {
+        return (
+            <div className='p-2 my-2 animate-pulse bg-slate-100 border rounded'>
+                <div className='flex flex-row gap-2 items-center'>
+                    <div className='w-12 h-12 rounded-full bg-slate-500 m-1'></div>
+                    <div className='h-4 w-1/5 rounded-full bg-slate-500 m-1'></div>
+                </div>
+                <div className='my-4'>
+                    <p className='h-2 rounded-full w-3/4 bg-stone-500 m-1'></p>
+                    <p className='h-2 rounded-full w-1/2 bg-stone-500 m-1'></p>
+                </div>
+                <div className='flex flex-row gap-2'>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                </div>
+            </div>
+        )
+    }
     return (
-        <div className='border p-4 rounded-md my-4 bg-slate-100'>
+        <div className='border relative p-2 rounded-md my-4 bg-slate-100'>
+            <div className="absolute  top-1 right-1">
+                <button className="relative group">
+                    <div className="flex items-center justify-center border rounded-full cursor-pointer
+               hover:bg-slate-400 p-1">
+                        <svg
+                            className="block"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                        </svg>
+                    </div>
+                    {post?.author == user.uid ? <div className="absolute hidden group-focus-within:block right-0 w-24 bg-slate-400 rounded">
+                        <div className='border'>
+                            <p className="p-1 hover:bg-slate-300 ">edit</p>
+                            <hr />
+                            <p onClick={()=>handleDeletePost()} className="p-1 hover:bg-slate-300 ">Delete</p>
+                        </div>
+                    </div> : <></>}
+                </button>
+            </div>
             <div className=''>
                 <div className='flex flex-row gap-2'>
                     <div className=''>
                         <button
-
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
                         >
                             {author?.photoURL ? (
@@ -74,12 +127,18 @@ const Post = ({ post }) => {
                         <span className='text-xs'>{post?.timestamps}</span>
                     </div>
                 </div>
-                <div className='my-2 bg-slate-200 rounded-md p-4'>
-                    {post?.content?.split('\n').map((text, index) => <p key={index}>{text}</p>)}
+                <div className='my-2 bg-slate-200 rounded-md p-2'>
+                    {post?.content?.split('\n').map((text, index) => <p className='text-sm' key={index}>{text}</p>)}
+                    <div>
+
+                    </div>
+
                 </div>
                 <div className='flex flex-row gap-2'>
                     <span className='text-sm'>{likeCount} Likes</span>
-                    <span className='text-sm'>{commentCount} Comments</span>
+                    <span
+                        onClick={() => setOpenComment(!openComment)}
+                        className='text-sm cursor-pointer hover:underline'>{commentCount} Comments</span>
                 </div>
                 <div className='flex flex-row justify-end gap-2 items-center'>
                     {
@@ -93,7 +152,7 @@ const Post = ({ post }) => {
                                 <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
                             </svg>
 
-                            <span>dislike</span>
+                            <span className='hidden md:inline lg:inline'>dislike</span>
                         </button> : <button onClick={() => handleUpdateLike('true')} className='flex flex-row gap-1 rounded-lg p-2 items-center justify-center  bg-slate-200'>
                             <svg
                                 className='inline'

@@ -9,8 +9,21 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
 
   const { user } = useAuth();
   const [postContent, setPostContent] = useState("");
+  const [file,setFile]=useState('')
   const [postCreationResult,setPostCreationResult]=useState({})
   const [loading, setLoading] = useState(false)
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const fileData = reader.result;
+      setFile(fileData);
+    };
+
+    reader.readAsDataURL(file);
+  };
 
   const getPostContent = (e) => {
     e.preventDefault();
@@ -21,23 +34,22 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log
+      
       let data = {
         author: user.uid,
         classId: params.id,
         content: postContent,
+        file:file,
         likes: [],
         comments: [],
         timestamps: new Date().toString()
       }
-      const postUrl = "http://localhost:3000/api/v1/posts"
-      console.log(postUrl)
+      const postUrl = "https://my-classroom-server.onrender.com/api/v1/posts"
       const result = await handlePostMethod(postUrl, data)
       const postId = result.insertedId;
-      console.log(postId)
-      const classroomUrl = `http://localhost:3000/api/v1/classrooms/${params.id}`
+
+      const classroomUrl = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`
       const addRefToClass = await handlePutMethod(classroomUrl, { postId })
-      console.log(addRefToClass)
       setPostCreationResult(addRefToClass)
       if (addRefToClass.modifiedCount) {
         data._id = postId;
@@ -66,6 +78,7 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
       ></textarea>
       <label htmlFor="fileInput">
         <input
+        onChange={handleFileChange}
           type="file"
           id="fileInput"
           accept=".jpg, .jpeg, .png, .pdf"

@@ -6,10 +6,11 @@ import bg from "../../assets/bg/gradient-bg.png"
 import Loader from "../Loader/Loader"
 
 const JoinClassroom = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const { user } = useAuth();
-  const [isJoined,setIsJoined]=useState({})
-  const [loading,setLoading]=useState(false)
+  const [isFound, setIsFound] = useState(true)
+  const [isAlreadyJoined, setIsAlreadyJoined] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleJoinClassroom = async (e) => {
     e.preventDefault();
@@ -17,30 +18,35 @@ const JoinClassroom = () => {
       setLoading(true)
       const code = e.target.code.value;
       //add student in the classroom
-      const url = `http://localhost:3000/api/v1/classrooms/join/${code}`
+      const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/join/${code}`
       const data = {
         userId: user.uid,
         role: 'student'
       }
       const result = await handlePutMethod(url, data)
-
-      // add classroom in the user data
-      const id = result.classroomId;
-      const url2 = `http://localhost:3000/api/v1/users/joined/${user.uid}`
-      const updateUserResult = await handlePutMethod(url2, { id });
-      setIsJoined(updateUserResult)
+      if (!result) {
+        setIsFound(false)
+        return
+      }
+      if (result.matchedCount == 0) {
+        setIsFound(false)
+      }
+      if (result.matchedCount) {
+        if (result.modifiedCount) {
+          navigate('/classroom')
+        }
+        else {
+          setIsAlreadyJoined(true)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
       setLoading(false)
-      e.target.reset()
-    } catch {
-      err => console.log(err)
+
     }
   };
-
-  useEffect(()=>{
-    if(isJoined.acknowledged){
-      navigate('/classroom')
-    }
-  },[isJoined.acknowledged])
 
   return (
     <div style={{ backgroundImage: `url(${bg})` }} className="w-screen h-screen flex items-center justify-center bg-cover">
@@ -58,12 +64,38 @@ const JoinClassroom = () => {
             name="code"
             id="code"
           />
+          {!isFound && <div
+            className="text-sm bg-orange-700 flex flex-row items-center gap-2 rounded font-bold p-2 bottom-16 transition-all duration-500 ease-in-out shadow-2xl text-slate-50 absolute">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+            </svg>
+            <span>Classroom not found.</span>
+          </div>}
+          {(isAlreadyJoined) && <div
+            className="text-sm bg-orange-700 flex rounded flex-row items-center gap-2 font-bold p-2 shadow-2xl text-slate-50 absolute bottom-16">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+            </svg>
+            <span>You have already joined to the classroom.</span>
+          </div>}
           <button
             className="w-full font-bold rounded-lg shadow-xl mb-4
              bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
             type="submit"
           >
-            {loading&&<Loader></Loader>}
+            {loading && <Loader></Loader>}
             Join Classroom
           </button>
           <span>

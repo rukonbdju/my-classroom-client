@@ -27,7 +27,6 @@ const useFirebase = () => {
       return result;
     }
     catch (error) {
-      console.log(error.message)
       setErrorMessage(error.message)
     }
   }
@@ -36,7 +35,6 @@ const useFirebase = () => {
   const signInWithEmail = async (email, password) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password)
-      console.log(user)
     } catch (error) {
       setErrorMessage(error.message)
     }
@@ -86,7 +84,6 @@ const useFirebase = () => {
   const deleteCurrentUser = async () => {
     try {
       const user = auth.currentUser;
-      console.log(user)
       await deleteUser(user)
       setUser('')
     } catch (error) {

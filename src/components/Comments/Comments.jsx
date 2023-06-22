@@ -11,7 +11,7 @@ const Comments = ({ postId }) => {
             setPost(result);
         }
         if (postId) {
-            const url = `http://localhost:3000/api/v1/posts/${postId}`
+            const url = `https://my-classroom-server.onrender.com/api/v1/posts/${postId}`
             getPost(url)
         }
 

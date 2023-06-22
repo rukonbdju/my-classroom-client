@@ -8,23 +8,45 @@ const Posts = ({ classroom }) => {
     const { user } = useAuth()
     const [openModal, setOpenModal] = useState(false)
     const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
+        setLoading(true)
         const getPosts = async (url) => {
             const result = await handleGetMethod(url)
-            console.log(result)
             setPosts(result)
         }
         if (classroom._id) {
-            const url = `http://localhost:3000/api/v1/posts?classId=${classroom._id}`
+            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom._id}`
             getPosts(url)
 
         }
-    }, [classroom?._id])
+        setLoading(false)
+    }, [classroom])
+    if (loading) {
+        return (
+            <div className='p-2 my-2 bg-slate-100 border rounded'>
+                <div className='flex flex-row gap-2 items-center'>
+                    <div className='w-12 h-12 rounded-full bg-slate-500 m-1'></div>
+                    <div className='h-4 w-1/5 rounded-full bg-slate-500 m-1'></div>
+                </div>
+                <div className='my-4'>
+                    <p className='h-2 rounded-full w-3/4 bg-stone-500 m-1'></p>
+                    <p className='h-2 rounded-full w-1/2 bg-stone-500 m-1'></p>
+                </div>
+                <div className='flex flex-row gap-2'>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
+                </div>
+            </div>
+        )
+    }
 
     return (
-        <div>
-            {openModal && <div className='fixed top-0 left-0 h-screen w-screen flex items-center justify-center bg-slate-400 bg-opacity-50'>
+        <div className='pb-24'>
+            {openModal && <div className='fixed z-50 top-0 left-0 h-screen w-screen flex items-center justify-center bg-slate-400 bg-opacity-50'>
                 <CreatePost setPosts={setPosts} setOpenModal={setOpenModal}></CreatePost>
             </div>}
 
@@ -42,7 +64,7 @@ const Posts = ({ classroom }) => {
                         </button>
                     </div>
                     <input
-                    onClick={()=>setOpenModal(true)}
+                        onClick={() => setOpenModal(true)}
                         className="px-4 rounded-full border w-full bg-slate-300 "
                         placeholder="Start Class Discussion"
                         type="text"
@@ -51,7 +73,12 @@ const Posts = ({ classroom }) => {
                     />
                 </div>
             </div>
-            {posts?.map((post) => <Post key={post._id} post={post}></Post>)}
+            {(classroom?.posts?.length == 0) && <div className='rounded-md bg-slate-200 mx-auto'>
+                <p className='p-2 h-24 flex items-center justify-center my-4'>
+                    <span className='text-xl'>Did not post anything yet</span>
+                </p>
+            </div>}
+            {posts?.map((post) => <Post key={post._id} post={post} setPosts={setPosts}></Post>)}
         </div>
     );
 };

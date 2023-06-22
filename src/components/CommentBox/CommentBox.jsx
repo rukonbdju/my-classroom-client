@@ -30,10 +30,10 @@ const CommentBox = ({ postId }) => {
                 replies: []
             }
             setStaticComment(data)
-            const commentUrl = `http://localhost:3000/api/v1/comments`
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             const commentId = saveCommentResult.insertedId;
-            const postUrl = `http://localhost:3000/api/v1/posts/comment/${postId}`
+            const postUrl = `https://my-classroom-server.onrender.com/api/v1/posts/comment/${postId}`
             const saveRefToPost = await handlePutMethod(postUrl, { commentId })
             setCommentResult(saveRefToPost)
         } catch (error) {

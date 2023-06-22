@@ -11,6 +11,7 @@ import NotFound from "./components/NotFound/NotFound";
 import LandingPage from "./components/LandingPage/LandingPage";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import MainLayout from "./layouts/MainLayout/MainLayout";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route
           path="/"
           element={<LandingPage></LandingPage>} />
+        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
         <Route
           path="/classroom"
           element={<AuthRoute><HomeLayout></HomeLayout></AuthRoute>}>
