@@ -3,26 +3,15 @@ import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
 import { useParams } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const CreatePost = ({ setPosts, setOpenModal }) => {
   const params = useParams()
   const { user } = useAuth();
   const [postContent, setPostContent] = useState("");
-  const [file,setFile]=useState('')
-  const [postCreationResult,setPostCreationResult]=useState({})
+  const [postCreationResult, setPostCreationResult] = useState({})
   const [loading, setLoading] = useState(false)
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const fileData = reader.result;
-      setFile(fileData);
-    };
-
-    reader.readAsDataURL(file);
-  };
 
   const getPostContent = (e) => {
     e.preventDefault();
@@ -33,12 +22,11 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      
+
       let data = {
         author: user.uid,
         classId: params.id,
         content: postContent,
-        file:file,
         likes: [],
         comments: [],
         timestamps: new Date().toString()
@@ -57,7 +45,7 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
     } catch (error) {
       console.log(error)
     }
-    finally{
+    finally {
       setLoading(false)
       setOpenModal(false)
     }
@@ -77,7 +65,6 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
       ></textarea>
       <label htmlFor="fileInput">
         <input
-        onChange={handleFileChange}
           type="file"
           id="fileInput"
           accept=".jpg, .jpeg, .png, .pdf"
@@ -96,26 +83,7 @@ const CreatePost = ({ setPosts, setOpenModal }) => {
           className="px-2 py-1 flex items-center justify-center rounded-md shadow-lg
             bg-slate-500 hover:bg-slate-700 text-slate-50  uppercase"
         >
-          {loading ? <svg
-            className="animate-spin inline-block -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg> : <span>Post</span>}
+          {loading && <Loader></Loader>}<span>Post</span>
         </button>
       </div>
     </form>
