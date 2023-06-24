@@ -55,12 +55,7 @@ const Posts = ({ classroom }) => {
                     <div>
                         <button
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12 ">
-                            {user?.photoURL ? (
-                                <img src="user?.photoURL" />
-                            ) : (
-                                user?.displayName?.slice(0, 1)
-
-                            )}
+                            {user?.displayName?.slice(0, 1)}
                         </button>
                     </div>
                     <input
@@ -73,11 +68,6 @@ const Posts = ({ classroom }) => {
                     />
                 </div>
             </div>
-            {(classroom?.posts?.length == 0) && <div className='rounded-md bg-slate-200 mx-auto'>
-                <p className='p-2 h-24 flex items-center justify-center my-4'>
-                    <span className='text-xl'>Did not post anything yet</span>
-                </p>
-            </div>}
             {posts?.map((post) => <Post key={post._id} post={post} setPosts={setPosts}></Post>)}
         </div>
     );

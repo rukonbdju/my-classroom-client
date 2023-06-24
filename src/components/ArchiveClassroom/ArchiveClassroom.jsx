@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/Auth/useAuth';
 import { handlePutMethod } from '../../utilities/handlePutMethod';
+import Loader from '../Loader/Loader'
 
-const ArchiveClassroom = ({setClassroomDeleteModal,classroomId}) => {
+const ArchiveClassroom = ({ setClassroomDeleteModal, classroomId }) => {
     const navigate = useNavigate()
     const { user } = useAuth()
-    const [loading,setLoading]=useState(false)
-    const handleDeleteClassroom = async () => {
+    const [loading, setLoading] = useState(false)
+
+    const handleArchiveClassroom = async () => {
         try {
             setLoading(true)
             const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/archive/${classroomId}`
-            const data={isArchived:true}
-            const result = await handlePutMethod(url,data)
-            if(result.modifiedCount){
+            const data = { userId: user.uid }
+            const result = await handlePutMethod(url, data)
+            if (result.modifiedCount) {
                 setLoading(false)
                 navigate('/classroom')
                 setClassroomDeleteModal(false)
@@ -22,6 +24,7 @@ const ArchiveClassroom = ({setClassroomDeleteModal,classroomId}) => {
             console.log(error)
         } finally {
             setClassroomDeleteModal(false)
+            setLoading(false)
         }
     }
     return (
@@ -33,8 +36,10 @@ const ArchiveClassroom = ({setClassroomDeleteModal,classroomId}) => {
                         onClick={() => setClassroomDeleteModal(false)}
                         className='bg-red-700 text-white rounded-md p-1 text-sm'>Cancel</button>
                     <button
-                        onClick={() => handleDeleteClassroom()}
-                        className='bg-red-700 text-white rounded-md p-1 text-sm'>Confirm</button>
+                        onClick={() => handleArchiveClassroom()}
+                        className='bg-red-700 text-white rounded-md p-1 text-sm'>
+                        {loading && <Loader></Loader>} Confirm
+                    </button>
                 </div>
             </div>
         </div>

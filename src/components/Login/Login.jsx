@@ -1,27 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import bg from "../../assets/bg/gradient-bg.png"
 import useAuth from "../../hooks/Auth/useAuth";
 import Loader from "../Loader/Loader";
+import { handlePostMethod } from "../../utilities/handlePostMethod";
 const Login = () => {
   const navigate = useNavigate()
   let location = useLocation();
+
   let from = location.state?.from?.pathname || "/";
-  const {signInWithGoogle, signInWithEmail, user, loading, errorMessage } = useAuth()
+
+  const [loading, setLoading] = useState()
+  const { signInWithGoogle, signInWithEmail, user, errorMessage } = useAuth()
+
+  //login with email and password
   const handleLogin = async (e) => {
     e.preventDefault()
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    await signInWithEmail(email, password)
-    if (user) {
+    try {
+      setLoading(true)
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      await signInWithEmail(email, password)
+    } catch (error) {
+      console.log(error)
+    } finally {
       e.target.reset();
+      setLoading(false)
     }
   }
-  useEffect(()=>{
+
+  //google sign in
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithGoogle()
+      const data = {
+        firebaseId: result.uid,
+        name: result.displayName,
+        email: result.email,
+        password: '',
+        photo: result.photoURL,
+        address: '',
+        created_at: new Date().toString()
+      }
+      // save user in mongodb 
+      const url = "https://my-classroom-server.onrender.com/api/v1/users";
+      const addUserToDB = await handlePostMethod(url, data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //navigate user where he wanted to go without Login
+  useEffect(() => {
     if (user) {
       navigate(from, { replace: true });
     }
-  },[user])
+  }, [user])
   return (
     <div style={{ backgroundImage: `url(${bg})` }} className=" flex flex-col justify-center items-center min-h-screen max-w-full bg-cover" >
       <div className="w-11/12 mx-auto md:max-w-md lg:max-w-xl">
@@ -53,7 +87,6 @@ const Login = () => {
             className="w-full font-bold rounded-lg shadow-xl
              bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
           >
-
             {loading ? (
               <span className="inline-block mx-1">
                 <Loader></Loader>
@@ -73,7 +106,7 @@ const Login = () => {
           <span className="inline-block border-b  border-slate-700 w-full"></span>
         </div>
         <button
-          onClick={()=>signInWithGoogle()}
+          onClick={() => handleGoogleSignIn()}
           className="w-full font-bold rounded-lg shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2">
           continue with google
         </button>

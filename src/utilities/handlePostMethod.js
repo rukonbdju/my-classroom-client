@@ -11,7 +11,7 @@ export const handlePostMethod = async (url, data) => {
     })
     const result = await response.json();
     return result;
-   }catch{
-    error=>console.log(error);
+   }catch(error){
+    console.log(error);
    }
 }

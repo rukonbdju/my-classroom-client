@@ -10,7 +10,7 @@ export const handlePutMethod=async(url,data)=>{
         const result=await response.json();
         return result;
         
-    }catch{
-        err=>console.log(err)
+    }catch(error){
+        console.log(error)
     }
 }

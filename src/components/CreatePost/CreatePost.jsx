@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 const CreatePost = ({ setPosts, setOpenModal }) => {
   const params = useParams()
-
   const { user } = useAuth();
   const [postContent, setPostContent] = useState("");
   const [file,setFile]=useState('')

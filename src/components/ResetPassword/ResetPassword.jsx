@@ -8,8 +8,8 @@ const ResetPassword = () => {
         try {
             const email = e.target.email.value;
             await resetPassword(email);
-        } catch {
-            err => console.log(err);
+        } catch (error) {
+            console.log(error);
         }
     }
     return (

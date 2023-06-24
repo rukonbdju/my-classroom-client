@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import useAuth from "../../hooks/Auth/useAuth";
-import { handleGetMethod } from "../../utilities/handleGetMethod";
-import Classroom from "../Classroom/Classroom";
-import { Link } from "react-router-dom";
-import Placeholder from "../Shared/Placeholder";
+import React, { useState,useEffect } from 'react';
+import Classroom from '../Classroom/Classroom';
+import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/Auth/useAuth';
+import { handleGetMethod } from '../../utilities/handleGetMethod';
+import Placeholder from '../Shared/Placeholder';
 
-const CreatedClassrooms = () => {
-  const { user } = useAuth();
+const ArchivedClassroom = () => {
+    const { user } = useAuth();
   const [classrooms, setClassrooms] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,15 +14,15 @@ const CreatedClassrooms = () => {
     const getClassrooms = async (url) => {
       try {
         setLoading(true);
-        const result = await handleGetMethod(url);
-        setClassrooms(result.filter(classroom=>!(classroom?.archived?.find(id=>id==user.uid))))
+        const result = await handleGetMethod(url); 
+        setClassrooms(result.filter(classroom=>classroom?.archived?.find(id=>id==user.uid)));
       } catch(error) {
-          console.log(error);
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
+    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms`;
     getClassrooms(url);
   }, [user.uid]);
   if (loading) {
@@ -49,4 +49,4 @@ const CreatedClassrooms = () => {
   );
 };
 
-export default CreatedClassrooms;
+export default ArchivedClassroom;

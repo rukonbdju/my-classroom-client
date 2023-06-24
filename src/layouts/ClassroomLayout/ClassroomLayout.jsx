@@ -1,11 +1,13 @@
 import React from 'react';
-import MainLayout from '../MainLayout/MainLayout';
+import { Outlet } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 
 const ClassroomLayout = () => {
     return (
-        <ClassroomProvider>
-            <MainLayout></MainLayout>
-        </ClassroomProvider>
+        <div>
+            <Navbar></Navbar>
+            <Outlet></Outlet>
+        </div>
     );
 };
 

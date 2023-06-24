@@ -7,8 +7,8 @@ const handleDeleteMethod=async(url)=>{
             }
         });
         return(response.json())
-    }catch{
-        error=>console.log(error)
+    }catch (error){
+        console.log(error)
     }
 }
 

@@ -6,24 +6,19 @@ import Register from "../src/components/Register/Register";
 import AuthRoute from "./routes/AuthRoute/AuthRoute";
 import CreateClassroom from "./components/CreateClassroom/CreateClassroom";
 import JoinClassroom from "./components/JoinClassroom/JoinClassroom";
-import HomeLayout from "./layouts/HomeLayout/HomeLayout";
 import NotFound from "./components/NotFound/NotFound";
 import LandingPage from "./components/LandingPage/LandingPage";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import ClassroomLayout from "./layouts/ClassroomLayout/ClassroomLayout";
 import MainLayout from "./layouts/MainLayout/MainLayout";
-import Dashboard from "./components/Dashboard/Dashboard";
-
 function App() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={<LandingPage></LandingPage>} />
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+        <Route path="/" element={<LandingPage></LandingPage>} />
         <Route
           path="/classroom"
-          element={<AuthRoute><HomeLayout></HomeLayout></AuthRoute>}>
+          element={<AuthRoute><ClassroomLayout></ClassroomLayout></AuthRoute>}>
           <Route
             index
             element={<Home></Home>}></Route>

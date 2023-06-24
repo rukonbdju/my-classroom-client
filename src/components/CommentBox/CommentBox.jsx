@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { handlePutMethod } from '../../utilities/handlePutMethod';
 import useAuth from '../../hooks/Auth/useAuth';
 import Comments from '../Comments/Comments';
 import { handlePostMethod } from '../../utilities/handlePostMethod';
 import StaticComment from '../StaticComment/StaticComment';
+import Loader from '../Loader/Loader';
 
 const CommentBox = ({ postId }) => {
     const { user } = useAuth()
@@ -30,12 +31,11 @@ const CommentBox = ({ postId }) => {
                 replies: []
             }
             setStaticComment(data)
-            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
+            const commentUrl = `http://localhost:3000/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
-            const commentId = saveCommentResult.insertedId;
-            const postUrl = `https://my-classroom-server.onrender.com/api/v1/posts/comment/${postId}`
-            const saveRefToPost = await handlePutMethod(postUrl, { commentId })
-            setCommentResult(saveRefToPost)
+            setCommentResult(saveCommentResult)
+            setLoading(false)
+
         } catch (error) {
             console.log(error)
         }
@@ -58,7 +58,8 @@ const CommentBox = ({ postId }) => {
                 <button
                     onClick={() => handleComment()}
                     className='flex flex-row items-center gap-2 border rounded-r-md  p-2 outline-0 bg-slate-300 hover:bg-slate-400'>
-                    <span className='hidden md:block lg:block'>comment</span>
+                    {loading&&<Loader></Loader>}
+                    <span className='hidden md:inline lg:inline'>comment</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"

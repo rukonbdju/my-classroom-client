@@ -8,12 +8,15 @@ import { handlePostMethod } from "../../utilities/handlePostMethod";
 const Register = () => {
   const navigate = useNavigate()
   let location = useLocation();
+
   let from = location.state?.from?.pathname || "/";
-  const [fetchLoading, setFetchLoading] = useState(false);
+  //state
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState(true);
   const [savedUserResult,setSavedUserResult]=useState({})
-  const { user, createNewUserWithEmail, errorMessage, updateUserProfile,deleteCurrentUser } = useAuth();
+
+  const { user, createNewUserWithEmail, errorMessage, updateUserProfile } = useAuth();
 
   //check confirmed password
   const handleConfirmPassword = (e) => {
@@ -31,8 +34,8 @@ const Register = () => {
   //handle create user in firebase, update name and save user info in mongoDB database
   const handleCreateUser = async (event) => {
     event.preventDefault();
-    setFetchLoading(true);
     try {
+      setLoading(true);
       const name = event.target.name.value;
       const email = event.target.email.value;
       const password = event.target.password.value;
@@ -50,9 +53,7 @@ const Register = () => {
           name: user.displayName,
           email: user.email,
           password: password,
-          photo: '',
-          cover_photo: '',
-          phone: '',
+          photo: user.photoURL,
           address: '',
           created_at: new Date().toString()
         }
@@ -65,15 +66,16 @@ const Register = () => {
       console.log(error)
     } finally {
       event.target.reset();
-      setFetchLoading(false)
+      setLoading(false)
     }
   };
 
   useEffect(()=>{
-    if (savedUserResult.acknowledged||user.displayName) {
+    if (savedUserResult.acknowledged) {
       navigate(from, { replace: true });
     }
-  },[savedUserResult,user.displayName])
+  },[savedUserResult])
+
   return (
     <div style={{ backgroundImage: `url(${bg})` }} className=" flex flex-col items-center justify-center min-h-screen max-w-full bg-no-repeat bg-cover">
       <div
@@ -134,7 +136,7 @@ const Register = () => {
             type="submit"
             className="font-bold rounded-lg shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
           >
-            {fetchLoading ? (
+            {loading ? (
               <span className="inline-block mx-1">
                 <Loader></Loader>
               </span>
@@ -148,15 +150,6 @@ const Register = () => {
             </span>
           )}
         </form>
-        <div className="flex flex-row items-center gap-1 my-4">
-          <span className="inline-block border-b border-slate-700 w-full"></span>
-          <span className="uppercase ">or</span>
-          <span className="inline-block border-b  border-slate-700 w-full"></span>
-        </div>
-        <button
-          className="w-full font-bold rounded-lg shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2">
-          continue with google
-        </button>
         <p className="mt-5">
           Already have an account? Please{" "}
           <Link

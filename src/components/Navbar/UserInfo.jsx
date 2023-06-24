@@ -13,15 +13,15 @@ const UserInfo = () => {
             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
           >
             {user.photoURL ? (
-              <img src={user.photoURL} />
+              <img className='rounded-full' src={user.photoURL} />
             ) : (
               user.displayName?.slice(0, 1)
             )}
           </button>
-          <div className="absolute hidden  group-focus-within:block right-0 bg-slate-300">
+          <div className="absolute hidden  group-focus-within:block right-0 bg-slate-200">
             <div className="p-2 flex flex-col items-center justify-center">
               {user.photoURL ? (
-                <img src={user?.photoURL} />
+                <img className='rounded-full' src={user?.photoURL} />
               ) : (
                 <div className="p-4 font-bold rounded-full w-10 h-10 bg-blue-600 text-slate-50 flex items-center justify-center">{user?.displayName?.slice(0, 1)}</div>
               )}

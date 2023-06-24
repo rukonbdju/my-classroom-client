@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 import Classroom from '../Classroom/Classroom';
+import Placeholder from '../Shared/Placeholder';
 
 const JoinedClassrooms = ({ id }) => {
     const [classroom, setClassroom] = useState({})
     const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         const getClassroom = async (url) => {
@@ -13,8 +15,8 @@ const JoinedClassrooms = ({ id }) => {
                 const result = await handleGetMethod(url);
                 setClassroom(result)
                 setLoading(false)
-            } catch {
-                err => console.log(err)
+            } catch(error) {
+                console.log(error)
             }
         }
         const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${id}`
@@ -23,10 +25,8 @@ const JoinedClassrooms = ({ id }) => {
 
     if (loading) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
-                <div className="w-80 h-48 rounded-md bg-slate-300"></div>
-                <div className="w-80 h-48 rounded-md bg-slate-300"></div>
-                <div className="w-80 h-48 rounded-md bg-slate-300"></div>
+            <div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
+                <Placeholder></Placeholder>
             </div>
         )
     }

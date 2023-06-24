@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 import Comment from '../Comment/Comment';
 
 const Comments = ({ postId }) => {
-    const [post, setPost] = useState({})
-    const [isComment, setIsComment] = useState(false)
+    const [comments, setComments] = useState([])
+    console.log(postId)
     useEffect(() => {
         const getPost = async (url) => {
             const result = await handleGetMethod(url)
-            setPost(result);
-        }
-        if (postId) {
+            setComments(result.comments.reverse());
+        }  
+            console.log('ccc')
             const url = `https://my-classroom-server.onrender.com/api/v1/posts/${postId}`
             getPost(url)
-        }
 
-    }, [postId,isComment])
+    }, [])
 
     return (
         <>
-            {post?.comments?.map(commentId => <Comment
+            {comments?.map(commentId => <Comment
                 key={commentId}
-                commentId={commentId}
-                setIsComment={setIsComment}>
+                commentId={commentId}>
             </Comment>)}
         </>
     );

@@ -4,11 +4,15 @@ import useAuth from "../../hooks/Auth/useAuth";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
 import CreatedClassrooms from "../CreatedClassrooms/CreatedClassrooms";
 import JoinedClassrooms from "../JoinedClassrooms/JoinedClassrooms";
+import ArchivedClassroom from "../ArchivedClassroom/ArchivedClassroom";
+import Placeholder from "../Shared/Placeholder";
 
 const Home = () => {
   const { user } = useAuth();
+  //state
   const [enrolledClassrooms, setEnrolledClassrooms] = useState([]);
   const [loading, setLoading] = useState(false);
+
   //get enrolled classrooms
   useEffect(() => {
     const getEnrolledClassrooms = async (url) => {
@@ -16,8 +20,8 @@ const Home = () => {
         setLoading(true);
         const result = await handleGetMethod(url);
         setEnrolledClassrooms(result);
-      } catch {
-        (error) => console.log(error);
+      } catch (error) {
+         console.log(error);
       } finally {
         setLoading(false);
       }
@@ -51,7 +55,11 @@ const Home = () => {
           <h3 className="text-2xl pb-2 border-b border-slate-700">
             Enrolled Classroom
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
+          {loading?<div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
+            <Placeholder></Placeholder>
+            <Placeholder></Placeholder>
+            <Placeholder></Placeholder>
+          </div>:<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
             {enrolledClassrooms?.joined?.map((id) => (
               <JoinedClassrooms key={id} id={id}></JoinedClassrooms>
             ))}
@@ -61,7 +69,13 @@ const Home = () => {
                 <p className="font-bold">Join New Classroom</p>
               </div>
             </Link>
-          </div>
+          </div>}
+        </div>
+        <div className="my-12">
+          <h3 className="text-2xl pb-2 border-b border-slate-700">
+            Archived Classroom
+          </h3>
+          <ArchivedClassroom></ArchivedClassroom>
         </div>
       </div>
     </div>

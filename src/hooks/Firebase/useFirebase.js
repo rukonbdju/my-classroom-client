@@ -16,17 +16,14 @@ const useFirebase = () => {
   const [user, setUser] = useState('')
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
-  const [updateName, setUpdateName] = useState(false)
   const [savedUserResult, setSavedUserResult] = useState({})
   const [sendResetMail, setSendResetMail] = useState(false)
-
   // create new user with email and password and update name and save to database
   const createNewUserWithEmail = async (email, password) => {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password)
       return result;
-    }
-    catch (error) {
+    }catch (error) {
       setErrorMessage(error.message)
     }
   }
@@ -44,7 +41,7 @@ const useFirebase = () => {
   const signInWithGoogle = async () => {
     try {
       const { user } = await signInWithPopup(auth, provider)
-
+      return user;
     } catch (error) {
       setErrorMessage(error.message)
     }
@@ -59,7 +56,7 @@ const useFirebase = () => {
       setErrorMessage(error.message)
     }
   }
-
+//update user profile
   const updateUserProfile = async (name) => {
     try {
       await updateProfile(auth.currentUser, {
@@ -93,8 +90,8 @@ const useFirebase = () => {
 
   //get user at any time
   useEffect(() => {
-    setLoading(true)
-    onAuthStateChanged(auth, (user) => {
+    setLoading(true) 
+      onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
       } else {
@@ -112,7 +109,7 @@ const useFirebase = () => {
     signInWithGoogle,
     resetPassword,
     deleteCurrentUser,
-    sendResetMail, user, savedUserResult, errorMessage, updateName, loading, auth
+    sendResetMail, user, savedUserResult, errorMessage, loading, auth
   };
 }
 

@@ -5,18 +5,18 @@ import Navbar from "../../components/Navbar/Navbar";
 import useAuth from "../../hooks/Auth/useAuth";
 import bg from "../../assets/bg/gradient-bg.png"
 import Posts from "../../components/Posts/Posts";
-import CreatePost from "../../components/CreatePost/CreatePost";
 import LeaveModal from "../../components/LeaveModal/LeaveModal";
 import ArchiveClassroom from "../../components/ArchiveClassroom/ArchiveClassroom";
 const MainLayout = () => {
   const { user } = useAuth();
   const params = useParams();
   const navigate = useNavigate()
+  //state 
   const [classroom, setClassroom] = useState({})
   const [creator, setCreator] = useState({})
   const [loading, setLoading] = useState(false)
-  const [openModal,setOpenModal]=useState(false)
-  const [classroomDeleteModal,setClassroomDeleteModal]=useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const [classroomDeleteModal, setClassroomDeleteModal] = useState(false)
 
   useEffect(() => {
     //get classroom by url with id
@@ -26,12 +26,12 @@ const MainLayout = () => {
         const result = await handleGetMethod(url);
         setClassroom(result);
         setLoading(false)
-      } catch {
-        (err) => console.log(err);
+      } catch (error) {
+        console.log(error);
       }
-    };
-    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
-    getClassroom(url)
+    };  
+      const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
+      getClassroom(url)
   }, [params.id])
 
   useEffect(() => {
@@ -44,22 +44,23 @@ const MainLayout = () => {
         if (result._id) {
           setLoading(false)
         }
-      } catch {
-        err => console.log(err)
+      } catch(error) {
+        console.log(error)
       }
     }
-    const url = `https://my-classroom-server.onrender.com/api/v1/users/${classroom?.creator}`;
-    getCreator(url)
+    if (classroom?.name) {
+      const url = `https://my-classroom-server.onrender.com/api/v1/users/${classroom?.creator}`;
+      getCreator(url)
+    }
+
   }, [classroom])
 
   useEffect(() => {
-    if (classroom?.members) {
-      const idExists = classroom?.members?.some(member => member.userId === user.uid);
-      if (!idExists) {
-        navigate('/')
+      const iSExists = classroom?.members?.find(member => member.userId === user.uid);
+      if(!iSExists?.userId && classroom?.members){
+        navigate("/classroom")
       }
-    }
-  }, [classroom, classroom?.members])
+  }, [classroom,user])
 
   if (loading || creator == null) {
     return (
@@ -146,13 +147,13 @@ const MainLayout = () => {
                       <div>
                         <p className="p-1 hover:bg-slate-300 ">Edit</p>
                         <hr />
-                        <p onClick={()=>setClassroomDeleteModal(true)} className="p-1 hover:bg-slate-300 ">Archive</p>
+                        <p onClick={() => setClassroomDeleteModal(true)} className="p-1 hover:bg-slate-300 ">Archive</p>
                         <hr />
-                        <p title={classroom.code} className="p-1 hover:bg-slate-300 ">View Code</p>
+                        <p className="p-1 hover:bg-slate-300 ">Code: <span className="text-red-500">{classroom.code}</span></p>
                       </div>
 
                       : <div>
-                        <p onClick={()=>setOpenModal(true)} className="p-1 hover:bg-slate-300 ">Leave</p>
+                        <p onClick={() => setOpenModal(true)} className="p-1 hover:bg-slate-300 ">Leave</p>
                       </div>}
                   </div>
                 </div>
