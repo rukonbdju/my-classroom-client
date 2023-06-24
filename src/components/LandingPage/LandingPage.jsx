@@ -7,7 +7,7 @@ const LandingPage = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <section className="mt-24 w-11/12 md:w-5/6 lg:max-w-5xl mx-auto text-center ">
+      <header className="mt-24 w-11/12 md:w-5/6 lg:max-w-5xl mx-auto text-center ">
         <img className="inline" src={classroom} alt="" />
         <div>
           <h1 className="mb-4 p-4 text-2xl md:text-3xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-700  to-violet-500">
@@ -35,7 +35,7 @@ const LandingPage = () => {
             </button>
           </Link>
         </div>
-      </section>
+      </header>
 
       <section className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-28">
         <div className="flex items-center flex-col border-2 rounded-md hover:shadow-md p-4">
