@@ -31,7 +31,7 @@ const CommentBox = ({ postId }) => {
                 replies: []
             }
             setStaticComment(data)
-            const commentUrl = `http://localhost:3000/api/v1/comments`
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             setCommentResult(saveCommentResult)
             setLoading(false)

@@ -16,7 +16,7 @@ const StaticComment = ({ staticComment }) => {
                 <div>
                     <h2 className='leading-none'>{user?.displayName}</h2>
                     <span className='text-xs leading-none font-thin'>{staticComment?.timestamps}</span>
-                    <p >{staticComment?.content}</p>
+                    <p className='py-1'>{staticComment?.content}</p>
                 </div>
             </div>
             <div className=' rounded-lg'>

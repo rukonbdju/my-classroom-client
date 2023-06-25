@@ -38,8 +38,8 @@ const Comment = ({ commentId }) => {
                 <div>
                     <h2 className='leading-none'>{commentator?.name}</h2>
                     <span className=' text-xs leading-none font-thin'>{comment?.timestamps}</span>
-                    <p className=' text-sm rounded-md break-words'>
-                        <span className='p-1 inline-block'>{comment?.content}</span>
+                    <p className='py-1 text-sm rounded-md break-words'>
+                        <span className='inline-block'>{comment?.content}</span>
                     </p>
                 </div>
             </div>
