@@ -26,7 +26,7 @@ const Home = memo(() => {
         setLoading(false);
       }
     };
-    const enrollUrl = `http://localhost:3000/api/v1/users/${user.uid}`;
+    const enrollUrl = `https://my-classroom-server.onrender.com/api/v1/users/${user.uid}`;
     getEnrolledClassrooms(enrollUrl);
   }, []);
 

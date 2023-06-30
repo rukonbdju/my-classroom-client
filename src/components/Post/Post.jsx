@@ -27,7 +27,7 @@ const Post = ({ post, setPosts }) => {
             setIsLiked(false)
             setLikeCount((prevCount) => prevCount - 1)
         }
-        const url = `http://localhost:3000/api/v1/posts/like/${post._id}`;
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts/like/${post._id}`;
         const data = {
             userId: user.uid,
             like: status
@@ -38,7 +38,7 @@ const Post = ({ post, setPosts }) => {
 
     const handleDeletePost = async () => {
         setLoading(true)
-        const url = `http://localhost:3000/api/v1/posts?id=${post._id}&classId=${post.classId}`
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
         await handleDeleteMethod(url)
         setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id))
         setLoading(false)

@@ -12,7 +12,7 @@ const Comment = ({setComments, commentId }) => {
         setLoading(true)
         const getComment = async () => {
             try {
-                const url = `http://localhost:3000/api/v1/comments/${commentId}`
+                const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
                 const result = await handleGetMethod(url)
                 setComment(result);
                 setLoading(false)
@@ -25,12 +25,11 @@ const Comment = ({setComments, commentId }) => {
 
     const handleDeleteComment=async()=>{
         try{
-            const url = `http://localhost:3000/api/v1/comments/${commentId}`
+            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
             const data={
                 postId:comment.postId
             }
             const res=await handleDeleteMethod(url,data)
-            console.log(res)
             setComments((prevComments)=>prevComments.filter((id)=>id=!res.commentId))
         }catch (error){
             console.log(error)

@@ -15,7 +15,6 @@ const CreatedClassrooms = () => {
       try {
         setLoading(true);
         const result = await handleGetMethod(url);
-        console.log(result)
         setClassrooms(result.filter(classroom=>!(classroom?.archived?.find(id=>id==user.uid))))
       } catch(error) {
           console.log(error);
@@ -23,7 +22,7 @@ const CreatedClassrooms = () => {
         setLoading(false);
       }
     };
-    const url = `http://localhost:3000/api/v1/classrooms/find/${user.uid}`;
+    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
     getClassrooms(url);
   }, [user.uid]);
   if (loading) {

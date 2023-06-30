@@ -54,10 +54,8 @@ const CreatePost = ({ id, setOpenModal,setPosts}) => {
         comments: [],
         timestamps: new Date().toString()
       }
-      console.log(data)
-      const postUrl = "http://localhost:3000/api/v1/posts"
+      const postUrl = "https://my-classroom-server.onrender.com/api/v1/posts"
       const result = await handlePostMethod(postUrl, data)
-      console.log(result)
       const postId = result.postId;
       if (result.modifiedCount) {
         data._id = postId;

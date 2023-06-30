@@ -18,7 +18,7 @@ const CommentBox = ({setCommentCount, postId }) => {
             const result = await handleGetMethod(url)
             setComments(result.comments.reverse());
         }
-        const url = `http://localhost:3000/api/v1/posts/${postId}`
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts/${postId}`
         getPost(url)
 
     }, [])
@@ -45,7 +45,7 @@ const CommentBox = ({setCommentCount, postId }) => {
             }
             setStaticComment(data)
             setCommentCount((prevCount)=>prevCount+1)
-            const commentUrl = `http://localhost:3000/api/v1/comments`
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             setComments(prev=>[saveCommentResult.commentId,...prev])
             setLoading(false)

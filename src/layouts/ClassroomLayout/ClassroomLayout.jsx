@@ -5,7 +5,6 @@ import useAuth from '../../hooks/Auth/useAuth';
 
 const ClassroomLayout = memo(() => {
     const {user}=useAuth()
-    console.log(user)
     return (
         <>
             <Navbar></Navbar>
