@@ -11,6 +11,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ClassroomLayout from "./layouts/ClassroomLayout/ClassroomLayout";
 import MainLayout from "./layouts/MainLayout/MainLayout";
+import CreatePost from "./components/CreatePost/CreatePost";
 function App() {
   return (
     <>

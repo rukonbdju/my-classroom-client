@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
+import useAuth from '../../hooks/Auth/useAuth';
 
-const ClassroomLayout = () => {
+const ClassroomLayout = memo(() => {
+    const {user}=useAuth()
+    console.log(user)
     return (
-        <div>
+        <>
             <Navbar></Navbar>
             <Outlet></Outlet>
-        </div>
+        </>
     );
-};
+});
 
 export default ClassroomLayout;

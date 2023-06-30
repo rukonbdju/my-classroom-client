@@ -1,42 +1,84 @@
 import React, { memo, useEffect, useState } from 'react';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
+import Loader from '../Loader/Loader';
+import useAuth from '../../hooks/Auth/useAuth';
+import handleDeleteMethod from '../../utilities/handleDeleteMethod';
 
-const Comment = ({ commentId }) => {
-
+const Comment = ({setComments, commentId }) => {
+    const {user}=useAuth()
     const [comment, setComment] = useState({})
-    const [commentator, setCommentator] = useState({})
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
+        setLoading(true)
         const getComment = async () => {
-            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
-            const result = await handleGetMethod(url)
-            setComment(result);
+            try {
+                const url = `http://localhost:3000/api/v1/comments/${commentId}`
+                const result = await handleGetMethod(url)
+                setComment(result);
+                setLoading(false)
+            } catch (error) {
+                console.log(error)
+            }
         }
         getComment()
-    }, [commentId])
+    }, [])
 
-    useEffect(() => {
-        const getCommentator = async (url) => {
-            const result = await handleGetMethod(url)
-            setCommentator(result);
+    const handleDeleteComment=async()=>{
+        try{
+            const url = `http://localhost:3000/api/v1/comments/${commentId}`
+            const data={
+                postId:comment.postId
+            }
+            const res=await handleDeleteMethod(url,data)
+            console.log(res)
+            setComments((prevComments)=>prevComments.filter((id)=>id=!res.commentId))
+        }catch (error){
+            console.log(error)
         }
-        if (comment?.userId) {
-            const url = `https://my-classroom-server.onrender.com/api/v1/users/${comment.userId}`
-            getCommentator(url)
-        }
-    }, [comment, comment?.userId])
+    }
 
-
+    if(loading){
+        return <div className='flex items-center justify-center'>
+            <Loader></Loader>
+        </div>
+    }
     return (
-        <div className=' my-2 border p-1 rounded-md'>
+        <div className=' my-2 border relative p-1 rounded-md'>
+            <div className="absolute  top-1 right-1">
+                <button className="relative group">
+                    <div className="flex items-center justify-center border rounded-full cursor-pointer
+               hover:bg-slate-400 p-1">
+                        <svg
+                            className="block"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                        </svg>
+                    </div>
+                    {comment?.author?.id == user.uid ? <div className="absolute hidden group-focus-within:block right-0 w-24 bg-slate-400 rounded">
+                        <div className='border'>
+                            <p className="p-1 flex hover:bg-slate-300 ">Edit</p>
+                            <hr />
+                            <p onClick={() => handleDeleteComment()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
+                                {loading && <Loader></Loader>}<span>Delete</span>
+                            </p>
+                        </div>
+                    </div> : <></>}
+                </button>
+            </div>
             <div className='flex flex-row gap-2'>
                 <div>
                     <button className="flex  flex-row items-center font-bold justify-center
                          bg-blue-700 text-white rounded-full border-2 w-8 h-8">
-                        {commentator?.name?.slice(0, 1)}
+                        {comment?.author?.photoURL ? <img className='rounded-full' src={comment?.author?.photoURL} />
+                            : comment?.author?.name?.slice(0, 1)}
                     </button>
                 </div>
                 <div>
-                    <h2 className='leading-none'>{commentator?.name}</h2>
+                    <h2 className='leading-none'>{comment?.author?.name}</h2>
                     <span className=' text-xs leading-none font-thin'>{comment?.timestamps}</span>
                     <p className='py-1 text-sm rounded-md break-words'>
                         <span className='inline-block'>{comment?.content}</span>

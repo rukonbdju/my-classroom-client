@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
@@ -7,7 +7,7 @@ import JoinedClassrooms from "../JoinedClassrooms/JoinedClassrooms";
 import ArchivedClassroom from "../ArchivedClassroom/ArchivedClassroom";
 import Placeholder from "../Shared/Placeholder";
 
-const Home = () => {
+const Home = memo(() => {
   const { user } = useAuth();
   //state
   const [enrolledClassrooms, setEnrolledClassrooms] = useState([]);
@@ -21,12 +21,12 @@ const Home = () => {
         const result = await handleGetMethod(url);
         setEnrolledClassrooms(result);
       } catch (error) {
-         console.log(error);
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    const enrollUrl = `https://my-classroom-server.onrender.com/api/v1/users/${user.uid}`;
+    const enrollUrl = `http://localhost:3000/api/v1/users/${user.uid}`;
     getEnrolledClassrooms(enrollUrl);
   }, []);
 
@@ -55,11 +55,11 @@ const Home = () => {
           <h3 className="text-2xl pb-2 border-b border-slate-700">
             Enrolled Classroom
           </h3>
-          {loading?<div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
+          {loading ? <div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
-          </div>:<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
+          </div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
             {enrolledClassrooms?.joined?.map((id) => (
               <JoinedClassrooms key={id} id={id}></JoinedClassrooms>
             ))}
@@ -80,6 +80,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Home;

@@ -5,14 +5,23 @@ import Comments from '../Comments/Comments';
 import { handlePostMethod } from '../../utilities/handlePostMethod';
 import StaticComment from '../StaticComment/StaticComment';
 import Loader from '../Loader/Loader';
+import { handleGetMethod } from '../../utilities/handleGetMethod';
 
-const CommentBox = ({ postId }) => {
+const CommentBox = ({setCommentCount, postId }) => {
     const { user } = useAuth()
     const [comment, setComment] = useState('')
     const [staticComment, setStaticComment] = useState('')
-    const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)
-    const [commentResult, setCommentResult] = useState({})
+    const [comments, setComments] = useState([])
+    useEffect(() => {
+        const getPost = async (url) => {
+            const result = await handleGetMethod(url)
+            setComments(result.comments.reverse());
+        }
+        const url = `http://localhost:3000/api/v1/posts/${postId}`
+        getPost(url)
+
+    }, [])
 
     const getCommentFromUser = (event) => {
         const text = event.target.value;
@@ -22,18 +31,23 @@ const CommentBox = ({ postId }) => {
     const handleComment = async () => {
         try {
             setLoading(true)
-            const data = {
+            let data = {
                 postId: postId,
-                userId: user.uid,
+                author: {
+                    id:user.uid,
+                    name:user.displayName,
+                    photoURL:user.photoURL
+                },
                 content: comment,
                 timestamps: new Date().toString(),
                 likes: [],
                 replies: []
             }
             setStaticComment(data)
-            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
+            setCommentCount((prevCount)=>prevCount+1)
+            const commentUrl = `http://localhost:3000/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
-            setCommentResult(saveCommentResult)
+            setComments(prev=>[saveCommentResult.commentId,...prev])
             setLoading(false)
 
         } catch (error) {
@@ -45,7 +59,6 @@ const CommentBox = ({ postId }) => {
     }
     return (
         <div className='my-4'>
-
             <div className='flex flex-row items-center border w-full border-slate-600 rounded-md'>
                 <input
                     className=' w-full p-1 md:p-2 lg:p2  rounded-l-md outline-0'
@@ -70,9 +83,7 @@ const CommentBox = ({ postId }) => {
                     </svg>
                 </button>
             </div>
-
-            {commentResult?.acknowledged && <StaticComment staticComment={staticComment}></StaticComment>}
-            <Comments postId={postId}></Comments>
+            <Comments setComments={setComments} comments={comments}></Comments>
         </div>
     );
 };

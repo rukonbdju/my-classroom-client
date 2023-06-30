@@ -10,7 +10,8 @@ const StaticComment = ({ staticComment }) => {
                     <button
                         className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-8 h-8"
                     >
-                        {user?.displayName?.slice(0, 1)}
+                        {user.photoURL ? <img className='rounded-full' src={user.photoURL} />
+                            : comment?.author?.name?.slice(0, 1)}
                     </button>
                 </div>
                 <div>

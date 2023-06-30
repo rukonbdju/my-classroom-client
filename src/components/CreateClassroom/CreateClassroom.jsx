@@ -23,7 +23,11 @@ const CreateClassroom = () => {
       const data = {
         name: e.target.name.value,
         description: e.target.description.value,
-        creator: user.uid,
+        author: {
+          id:user.uid,
+          name:user.displayName,
+          photoURL:user.photoURL
+        },
         members: [{
           userId: user.uid,
           role: 'teacher'
@@ -33,12 +37,12 @@ const CreateClassroom = () => {
       }
 
       //create new classroom
-      const url = "https://my-classroom-server.onrender.com/api/v1/classrooms";
+      const url = "http://localhost:3000/api/v1/classrooms";
       const postClassroomResult = await handlePostMethod(url, data);
 
       //update user by class id
       const id = postClassroomResult.insertedId;
-      const url2 = `https://my-classroom-server.onrender.com/api/v1/users/create/${user?.uid}`;
+      const url2 = `http://localhost:3000/api/v1/users/create/${user?.uid}`;
       const res=await handlePutMethod(url2, { id })
       setClassCreationResult(postClassroomResult);
       setLoading(false);

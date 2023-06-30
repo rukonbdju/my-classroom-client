@@ -18,7 +18,7 @@ const JoinClassroom = () => {
       setLoading(true)
       const code = e.target.code.value;
       //add student in the classroom
-      const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/join/${code}`
+      const url = `http://localhost:3000/api/v1/classrooms/join/${code}`
       const data = {
         userId: user.uid,
         role: 'student'

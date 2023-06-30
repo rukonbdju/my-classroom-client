@@ -4,55 +4,44 @@ import CommentBox from '../CommentBox/CommentBox';
 import { handlePutMethod } from '../../utilities/handlePutMethod';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 import handleDeleteMethod from '../../utilities/handleDeleteMethod';
+import Placeholder from './Placeholder';
+import Loader from '../Loader/Loader';
 
-const Post = ({ post,setPosts }) => {
+const Post = ({ post, setPosts }) => {
     const { user } = useAuth()
-    const [author, setAuthor] = useState({})
     const [openComment, setOpenComment] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
     const [likeCount, setLikeCount] = useState(post?.likes?.length)
     const [commentCount, setCommentCount] = useState(post?.comments?.length)
-    const [loading, setLoading] = useState(false)
-    const [isDelete,setIsDelete]=useState(false)
-    useEffect(() => {
-        setLoading(true)
-        const getAuthor = async (url) => {
-            const result = await handleGetMethod(url)
-            setAuthor(result);
-        }
-        if (post.author) {
-            const url = `https://my-classroom-server.onrender.com/api/v1/users/${post.author}`
-            getAuthor(url)
-        }
-        setLoading(false)
-    }, [post])
+    const [isDelete, setIsDelete] = useState(false)
+    const [loading,setLoading]=useState(false)
 
     //handle delete and update likes
     const handleUpdateLike = async (status) => {
-        const url = `https://my-classroom-server.onrender.com/api/v1/posts/like/${post._id}`;
+        if (status == 'true') {
+
+            setIsLiked(true)
+            setLikeCount((prevCount) => prevCount + 1)
+        }
+        else {
+            setIsLiked(false)
+            setLikeCount((prevCount) => prevCount - 1)
+        }
+        const url = `http://localhost:3000/api/v1/posts/like/${post._id}`;
         const data = {
             userId: user.uid,
             like: status
         }
-        const result = await handlePutMethod(url, data)
-        if (result.acknowledged) {
-            if (status == 'true') {
-
-                setIsLiked(true)
-                setLikeCount((prevCount) => prevCount + 1)
-            }
-            else {
-                setIsLiked(false)
-                setLikeCount((prevCount) => prevCount - 1)
-            }
-        }
+        await handlePutMethod(url, data)
 
     }
 
-    const handleDeletePost=async()=>{
-        const url=`https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
-        const result = await handleDeleteMethod(url)
-        setPosts((prevPosts)=>prevPosts.filter((p)=>p._id!==post._id))
+    const handleDeletePost = async () => {
+        setLoading(true)
+        const url = `http://localhost:3000/api/v1/posts?id=${post._id}&classId=${post.classId}`
+        await handleDeleteMethod(url)
+        setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id))
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -64,26 +53,6 @@ const Post = ({ post,setPosts }) => {
         }
     }, [post])
 
-
-    if (loading) {
-        return (
-            <div className='p-2 my-2 animate-pulse bg-slate-100 border rounded'>
-                <div className='flex flex-row gap-2 items-center'>
-                    <div className='w-12 h-12 rounded-full bg-slate-500 m-1'></div>
-                    <div className='h-4 w-1/5 rounded-full bg-slate-500 m-1'></div>
-                </div>
-                <div className='my-4'>
-                    <p className='h-2 rounded-full w-3/4 bg-stone-500 m-1'></p>
-                    <p className='h-2 rounded-full w-1/2 bg-stone-500 m-1'></p>
-                </div>
-                <div className='flex flex-row gap-2'>
-                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
-                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
-                    <div className='bg-slate-300 h-6 basis-1/3 rounded'></div>
-                </div>
-            </div>
-        )
-    }
     return (
         <div className='border relative p-2 rounded-md my-4 bg-slate-100'>
             <div className="absolute  top-1 right-1">
@@ -100,11 +69,13 @@ const Post = ({ post,setPosts }) => {
                             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                         </svg>
                     </div>
-                    {post?.author == user.uid ? <div className="absolute hidden group-focus-within:block right-0 w-24 bg-slate-400 rounded">
+                    {post?.author?.id == user.uid ? <div className="absolute hidden group-focus-within:block right-0 w-24 bg-slate-400 rounded">
                         <div className='border'>
-                            <p className="p-1 hover:bg-slate-300 ">edit</p>
+                            <p className="p-1 flex hover:bg-slate-300 ">Edit</p>
                             <hr />
-                            <p onClick={()=>handleDeletePost()} className="p-1 hover:bg-slate-300 ">Delete</p>
+                            <p onClick={() => handleDeletePost()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
+                                {loading && <Loader></Loader>}<span>Delete</span>
+                            </p>
                         </div>
                     </div> : <></>}
                 </button>
@@ -115,24 +86,23 @@ const Post = ({ post,setPosts }) => {
                         <button
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
                         >
-                            {author?.photoURL ? (
-                                <img src="user?.photoURL" />
+                            {post?.author?.photoURL? (
+                                <img className='rounded-full' src={post?.author?.photoURL} />
                             ) : (
-                                author?.name?.slice(0, 1)
+                                post?.author?.name?.slice(0, 1)
                             )}
                         </button>
                     </div>
                     <div>
-                        <h3 className="text xl font-bold">{author?.name}</h3>
+                        <h3 className="text xl font-bold">{post?.author?.name}</h3>
                         <span className='text-xs'>{post?.timestamps}</span>
                     </div>
                 </div>
                 <div className='my-2 bg-slate-200 rounded-md p-2'>
                     {post?.content?.split('\n').map((text, index) => <p className='text-sm' key={index}>{text}</p>)}
-                    <div>
-
-                    </div>
-
+                    {post?.media?.url && <div className=' max-w-full my-2'>
+                        <img className='max-w-full mx-auto' src={post?.media?.url} alt="photo" />
+                    </div>}
                 </div>
                 <div className='flex flex-row gap-2'>
                     <span className='text-sm'>{likeCount} Likes</span>

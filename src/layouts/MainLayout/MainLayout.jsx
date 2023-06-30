@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
 import Navbar from "../../components/Navbar/Navbar";
@@ -7,96 +7,48 @@ import bg from "../../assets/bg/gradient-bg.png"
 import Posts from "../../components/Posts/Posts";
 import LeaveModal from "../../components/LeaveModal/LeaveModal";
 import ArchiveClassroom from "../../components/ArchiveClassroom/ArchiveClassroom";
+import Placeholder from "./Placeholder";
 const MainLayout = () => {
   const { user } = useAuth();
   const params = useParams();
   const navigate = useNavigate()
   //state 
   const [classroom, setClassroom] = useState({})
-  const [creator, setCreator] = useState({})
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [classroomDeleteModal, setClassroomDeleteModal] = useState(false)
 
   useEffect(() => {
-    //get classroom by url with id
+    //get classroom by id
+    console.log('lcls')
     const getClassroom = async (url) => {
       try {
         setLoading(true)
         const result = await handleGetMethod(url);
+        console.log(result)
         setClassroom(result);
         setLoading(false)
       } catch (error) {
         console.log(error);
       }
-    };  
-      const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
-      getClassroom(url)
-  }, [params.id])
+    };
+    const url = `http://localhost:3000/api/v1/classrooms/${params.id}`;
+    getClassroom(url)
+  }, [])
 
   useEffect(() => {
-    //get user by creator id
-    const getCreator = async (url) => {
-      try {
-        setLoading(true)
-        const result = await handleGetMethod(url)
-        setCreator(result)
-        if (result._id) {
-          setLoading(false)
-        }
-      } catch(error) {
-        console.log(error)
-      }
+    console.log('ccc')
+    const iSExists = classroom?.members?.find(member => member.userId === user.uid);
+    if (!iSExists?.userId && classroom?.members) {
+      navigate("/classroom")
     }
-    if (classroom?.name) {
-      const url = `https://my-classroom-server.onrender.com/api/v1/users/${classroom?.creator}`;
-      getCreator(url)
-    }
+  }, [classroom?.name])
 
-  }, [classroom])
-
-  useEffect(() => {
-      const iSExists = classroom?.members?.find(member => member.userId === user.uid);
-      if(!iSExists?.userId && classroom?.members){
-        navigate("/classroom")
-      }
-  }, [classroom,user])
-
-  if (loading || creator == null) {
+  if (loading) {
     return (
       <div>
         <Navbar></Navbar>
-        <div className=" animate-pulse bg-cover w-3/4 mt-24 mx-auto">
-          <div className="rounded-md bg-slate-200 p-4">
-            <div className="h-4 w-64 rounded-md bg-slate-600"></div>
-            <div className="h-4 w-48 rounded-md mt-4 bg-slate-600"></div>
-            <div className="mt-8">
-              <div className="h-2 rounded-full mb-2-4 bg-slate-600"></div>
-              <div className="h-2 rounded-full w-64 my-4 bg-slate-600"></div>
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between gap-4 my-4">
-            <div>
-              <div className="w-12 h-12 rounded-full bg-slate-500"></div>
-            </div>
-            <div className="h-12 w-full rounded-full bg-slate-500"></div>
-          </div>
-          <div className='p-2 my-2 bg-slate-100 border rounded'>
-            <div className='flex flex-row gap-2 items-center'>
-              <div className='w-12 h-12 rounded-full bg-slate-700 m-1'></div>
-              <div className='h-4 w-1/5 rounded-full bg-slate-700 m-1'></div>
-            </div>
-            <div className='my-4'>
-              <p className='h-2 rounded-full w-3/4 bg-stone-700 m-1'></p>
-              <p className='h-2 rounded-full w-1/2 bg-stone-700 m-1'></p>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='bg-slate-700 h-6 basis-1/3 rounded'></div>
-              <div className='bg-slate-700 h-6 basis-1/3 rounded'></div>
-              <div className='bg-slate-700 h-6 basis-1/3 rounded'></div>
-            </div>
-          </div>
-        </div>
+        <Placeholder></Placeholder>
       </div>
     )
   }
@@ -118,8 +70,7 @@ const MainLayout = () => {
       </div>
     );
   }
-
-  return (
+  if (classroom.name) return (
     <div>
       <Navbar></Navbar>
       {openModal && <LeaveModal setOpenModal={setOpenModal} classroomId={classroom._id}></LeaveModal>}
@@ -143,7 +94,7 @@ const MainLayout = () => {
                 </div>
                 <div className="absolute hidden group-focus-within:block right-0 w-24  bg-slate-400 rounded">
                   <div className='border'>
-                    {classroom?.creator == user.uid ?
+                    {classroom?.author?.id == user.uid ?
                       <div>
                         <p className="p-1 hover:bg-slate-300 ">Edit</p>
                         <hr />
@@ -160,15 +111,17 @@ const MainLayout = () => {
               </button>
             </div>
             <h1 className="text-3xl">{classroom?.name}</h1>
-            <p className="font-bold">Teacher: {creator?.name}</p>
+            <p className="font-bold">Teacher: {classroom?.author?.name}</p>
             <p className="my-4">{classroom?.description}</p>
             <p>{classroom?.members?.length - 1} Students</p>
           </div>
         </div>
-        <Posts classroom={classroom}></Posts>
+        {classroom?.name && <Posts classroom={classroom}></Posts>}
       </div>
     </div>
   );
+
+
 };
 
 export default MainLayout;

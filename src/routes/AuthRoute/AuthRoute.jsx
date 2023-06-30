@@ -1,19 +1,22 @@
 import React from "react";
 import useAuth from "../../hooks/Auth/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
-import Home from "../../components/Home/Home";
 import Loader from "../../components/Loader/Loader";
-
 const AuthRoute = ({ children }) => {
   const { user, loading } = useAuth();
+
   let location = useLocation();
   if (loading) {
-    return <Loader></Loader>;
+    return <div className="h-screen w-screen flex items-center justify-center">
+      <Loader></Loader>
+    </div>;
   }
-  if (!user) {
+  if (user) {
+    return children
+  }
+  else {
     return <Navigate to={"/login"} state={{ from: location }} replace></Navigate>
   }
-  return children;
 };
 
 export default AuthRoute;
