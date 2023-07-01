@@ -1,7 +1,5 @@
-
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { app } from '../../../firebase.config';
-import { useState } from 'react';
 const useFirebaseStorage = () => {
     const storage = getStorage(app)
     const handleUpload = async (file) => {

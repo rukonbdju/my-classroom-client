@@ -44,7 +44,7 @@ const Register = () => {
         return
       }
       //create new user
-      const {user}=await createNewUserWithEmail(email, password);
+      const user=await createNewUserWithEmail(email, password);
       //update user name
       await updateUserProfile(name)
       if(user.displayName){
@@ -58,7 +58,7 @@ const Register = () => {
           created_at: new Date().toString()
         }
         // save user in mongodb 
-        const url = "https://my-classroom-server.onrender.com/api/v1/users";
+        const url = "http://localhost:3000/api/v1/users";
         const addUserToDB= await handlePostMethod(url, data)
         setSavedUserResult(addUserToDB)
       }     

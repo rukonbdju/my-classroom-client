@@ -12,7 +12,7 @@ const ArchiveClassroom = ({ setClassroomDeleteModal, classroomId }) => {
     const handleArchiveClassroom = async () => {
         try {
             setLoading(true)
-            const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/archive/${classroomId}`
+            const url = `http://localhost:3000/api/v1/classrooms/archive/${classroomId}`
             const data = { userId: user.uid }
             const result = await handlePutMethod(url, data)
             if (result.modifiedCount) {

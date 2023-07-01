@@ -10,9 +10,12 @@ import {
 } from "firebase/auth";
 import { auth } from "../../../firebase.config";
 import { useEffect, useState } from "react";
+import { handlePostMethod } from "../../utilities/handlePostMethod";
+import useCookie from "../cookie/useCookie";
 
 const useFirebase = () => {
   const provider = new GoogleAuthProvider();
+  const {setCookie}=useCookie()
   const [user, setUser] = useState('')
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
@@ -21,8 +24,10 @@ const useFirebase = () => {
   // create new user with email and password and update name and save to database
   const createNewUserWithEmail = async (email, password) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password)
-      return result;
+      const {user} = await createUserWithEmailAndPassword(auth, email, password)
+      const data={id:user.uid, email:user.email}  
+      await setCookie(data,"_classroom_jwt_token")
+      return user
     }catch (error) {
       setErrorMessage(error.message)
     }
@@ -32,6 +37,8 @@ const useFirebase = () => {
   const signInWithEmail = async (email, password) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password)
+      const data={id:user.uid, email:user.email }    
+      await setCookie(data,"_classroom_jwt_token")
     } catch (error) {
       setErrorMessage(error.message)
     }
@@ -41,6 +48,8 @@ const useFirebase = () => {
   const signInWithGoogle = async () => {
     try {
       const { user } = await signInWithPopup(auth, provider)
+      const data={id:user.uid, email:user.email }     
+      await setCookie(data,"_classroom_jwt_token")
       return user;
     } catch (error) {
       setErrorMessage(error.message)

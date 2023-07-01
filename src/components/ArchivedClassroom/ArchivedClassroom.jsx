@@ -15,14 +15,16 @@ const ArchivedClassroom = () => {
       try {
         setLoading(true);
         const result = await handleGetMethod(url); 
-        setClassrooms(result.filter(classroom=>classroom?.archived?.find(id=>id==user.uid)));
+        if(result?.length){
+          setClassrooms(result?.filter(classroom=>classroom?.archived?.find(id=>id==user.uid)));
+        }
       } catch(error) {
         console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms`;
+    const url = `http://localhost:3000/api/v1/classrooms`;
     getClassrooms(url);
   }, [user.uid]);
   if (loading) {
