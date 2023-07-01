@@ -1,52 +1,36 @@
-import React, { memo, useEffect, useState } from 'react';
-import { handleGetMethod } from '../../utilities/handleGetMethod';
+import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import useAuth from '../../hooks/Auth/useAuth';
 import handleDeleteMethod from '../../utilities/handleDeleteMethod';
 
-const Comment = ({setComments, commentId }) => {
-    const {user}=useAuth()
-    const [comment, setComment] = useState({})
+const Comment = ({ setComments, setCommentCount, comment }) => {
+    const { user } = useAuth()
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        setLoading(true)
-        const getComment = async () => {
-            try {
-                const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
-                const result = await handleGetMethod(url)
-                setComment(result);
-                setLoading(false)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getComment()
-    }, [])
 
-    const handleDeleteComment=async()=>{
-        try{
-            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${commentId}`
-            const data={
-                postId:comment.postId
+    //delete comment
+    const handleDeleteComment = async () => {
+        try {
+            setLoading(true)
+            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${comment._id}`
+            const data = {
+                postId: comment.postId
             }
-            const res=await handleDeleteMethod(url,data)
-            setComments((prevComments)=>prevComments.filter((id)=>id=!res.commentId))
-        }catch (error){
+            const res = await handleDeleteMethod(url, data)
+            console.log(res)
+            setComments(prev => prev.filter(c => c._id !== res.commentId))
+            setCommentCount(prev => prev - 1)
+            setLoading(false)
+        } catch (error) {
             console.log(error)
         }
     }
 
-    if(loading){
-        return <div className='flex items-center justify-center'>
-            <Loader></Loader>
-        </div>
-    }
     return (
         <div className=' my-2 border relative p-1 rounded-md'>
             <div className="absolute  top-1 right-1">
                 <button className="relative group">
                     <div className="flex items-center justify-center border rounded-full cursor-pointer
-               hover:bg-slate-400 p-1">
+                    hover:bg-slate-400 p-1">
                         <svg
                             className="block"
                             xmlns="http://www.w3.org/2000/svg"
@@ -61,9 +45,9 @@ const Comment = ({setComments, commentId }) => {
                         <div className='border'>
                             <p className="p-1 flex hover:bg-slate-300 ">Edit</p>
                             <hr />
-                            <p onClick={() => handleDeleteComment()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
+                            <div onClick={() => handleDeleteComment()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
                                 {loading && <Loader></Loader>}<span>Delete</span>
-                            </p>
+                            </div>
                         </div>
                     </div> : <></>}
                 </button>

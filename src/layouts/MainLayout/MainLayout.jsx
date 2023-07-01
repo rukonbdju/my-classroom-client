@@ -57,7 +57,7 @@ const MainLayout = () => {
           <h1 className="text-2xl">Classroom not found.</h1>
           <Link to={"/classroom"}>
             <button
-              className="block mt-4 w-full rounded-md shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500
+              className="block mt-4 w-full rounded-md shadow-xl bg-gradient-to-r from-sky-500 to-indigo-500
                 text-slate-100 px-4 py-2 uppercase"
             >
               Back to Classroom
@@ -74,7 +74,7 @@ const MainLayout = () => {
       {classroomDeleteModal && <ArchiveClassroom setClassroomDeleteModal={setClassroomDeleteModal} classroomId={classroom._id}></ArchiveClassroom>}
       <div className="w-11/12 md:w-5/6  lg:w-2/3 mx-auto mt-24">
         <div>
-          <div style={{ backgroundImage: `url(${bg})` }} className="p-5 rounded-xl shadow-md bg-cover relative">
+          <div className="p-5 rounded-xl shadow-md bg-gradient-to-r from-sky-500 to-indigo-500 relative">
             <div className="absolute top-1 right-1">
               <button className="relative group">
                 <div className="flex items-center justify-center border rounded-full cursor-pointer

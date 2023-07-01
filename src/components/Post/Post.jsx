@@ -6,6 +6,7 @@ import { handleGetMethod } from '../../utilities/handleGetMethod';
 import handleDeleteMethod from '../../utilities/handleDeleteMethod';
 import Placeholder from './Placeholder';
 import Loader from '../Loader/Loader';
+import LazyLoader from '../Shared/LazyLoader';
 
 const Post = ({ post, setPosts }) => {
     const { user } = useAuth()
@@ -14,12 +15,13 @@ const Post = ({ post, setPosts }) => {
     const [likeCount, setLikeCount] = useState(post?.likes?.length)
     const [commentCount, setCommentCount] = useState(post?.comments?.length)
     const [isDelete, setIsDelete] = useState(false)
-    const [loading,setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
+    const [imageLoad, setImageLoad] = useState(true)
+    console.log(imageLoad)
 
     //handle delete and update likes
     const handleUpdateLike = async (status) => {
         if (status == 'true') {
-
             setIsLiked(true)
             setLikeCount((prevCount) => prevCount + 1)
         }
@@ -39,8 +41,8 @@ const Post = ({ post, setPosts }) => {
     const handleDeletePost = async () => {
         setLoading(true)
         const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
-        await handleDeleteMethod(url)
         setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id))
+        await handleDeleteMethod(url)
         setLoading(false)
     }
 
@@ -86,7 +88,7 @@ const Post = ({ post, setPosts }) => {
                         <button
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
                         >
-                            {post?.author?.photoURL? (
+                            {post?.author?.photoURL ? (
                                 <img className='rounded-full' src={post?.author?.photoURL} />
                             ) : (
                                 post?.author?.name?.slice(0, 1)
@@ -101,7 +103,7 @@ const Post = ({ post, setPosts }) => {
                 <div className='my-2 bg-slate-200 rounded-md p-2'>
                     {post?.content?.split('\n').map((text, index) => <p className='text-sm' key={index}>{text}</p>)}
                     {post?.media?.url && <div className=' max-w-full my-2'>
-                        <img className='max-w-full mx-auto' src={post?.media?.url} alt="photo" />
+                        <LazyLoader url={post?.media?.url}></LazyLoader>
                     </div>}
                 </div>
                 <div className='flex flex-row gap-2'>

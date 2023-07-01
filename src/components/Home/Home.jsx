@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
@@ -7,7 +7,7 @@ import JoinedClassrooms from "../JoinedClassrooms/JoinedClassrooms";
 import ArchivedClassroom from "../ArchivedClassroom/ArchivedClassroom";
 import Placeholder from "../Shared/Placeholder";
 
-const Home = memo(() => {
+const Home = () => {
   const { user } = useAuth();
   //state
   const [enrolledClassrooms, setEnrolledClassrooms] = useState([]);
@@ -36,7 +36,7 @@ const Home = memo(() => {
         <div className="">
           <h1 className="text-2xl md:text-4xl lg:text-5xl capitalize font-bold ">
             Welcome {user?.displayName} to your{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">
               classroom
             </span>
           </h1>
@@ -46,13 +46,13 @@ const Home = memo(() => {
           </p>
         </div>
         <div className="my-12">
-          <h3 className="text-2xl pb-2 border-b border-slate-700">
+          <h3 className="text-2xl pb-2 border-b border-indigo-700">
             Created Classroom
           </h3>
           <CreatedClassrooms></CreatedClassrooms>
         </div>
         <div className="">
-          <h3 className="text-2xl pb-2 border-b border-slate-700">
+          <h3 className="text-2xl pb-2 border-b border-indigo-700">
             Enrolled Classroom
           </h3>
           {loading ? <div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
@@ -64,7 +64,7 @@ const Home = memo(() => {
               <JoinedClassrooms key={id} id={id}></JoinedClassrooms>
             ))}
             <Link to={"/classroom/join"}>
-              <div className="bg-slate-200 p-6 rounded-lg shadow-md cursor-pointer hover:bg-blue-300 text-center">
+              <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md cursor-pointer text-center">
                 <span className="text-5xl font-bold">+</span>
                 <p className="font-bold">Join New Classroom</p>
               </div>
@@ -72,7 +72,7 @@ const Home = memo(() => {
           </div>}
         </div>
         <div className="my-12">
-          <h3 className="text-2xl pb-2 border-b border-slate-700">
+          <h3 className="text-2xl pb-2 border-b border-indigo-700">
             Archived Classroom
           </h3>
           <ArchivedClassroom></ArchivedClassroom>
@@ -80,6 +80,6 @@ const Home = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 export default Home;

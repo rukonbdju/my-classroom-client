@@ -1,36 +1,39 @@
-import React, { memo, useEffect, useState } from 'react';
-import { handlePutMethod } from '../../utilities/handlePutMethod';
+import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/Auth/useAuth';
-import Comments from '../Comments/Comments';
 import { handlePostMethod } from '../../utilities/handlePostMethod';
-import StaticComment from '../StaticComment/StaticComment';
 import Loader from '../Loader/Loader';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
+import Comment from '../Comment/Comment';
+import Placeholder from './Placeholder';
 
 const CommentBox = ({setCommentCount, postId }) => {
     const { user } = useAuth()
     const [comment, setComment] = useState('')
-    const [staticComment, setStaticComment] = useState('')
     const [loading, setLoading] = useState(false)
     const [comments, setComments] = useState([])
-    useEffect(() => {
-        const getPost = async (url) => {
-            const result = await handleGetMethod(url)
-            setComments(result.comments.reverse());
+
+    //get all comments of a post
+    useEffect(()=>{
+        setLoading(true)
+        const getComments=async(url)=>{
+            const result=await handleGetMethod(url)
+            setComments(result)
+            console.log(result)
+            setLoading(false)
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/posts/${postId}`
-        getPost(url)
+        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${postId}`
+        getComments(url)
+    },[])
 
-    }, [])
-
-    const getCommentFromUser = (event) => {
+    //get user comment form input
+    const getUserComment = (event) => {
         const text = event.target.value;
         setComment(text)
     }
 
+    //comment save to database
     const handleComment = async () => {
         try {
-            setLoading(true)
             let data = {
                 postId: postId,
                 author: {
@@ -43,13 +46,11 @@ const CommentBox = ({setCommentCount, postId }) => {
                 likes: [],
                 replies: []
             }
-            setStaticComment(data)
             setCommentCount((prevCount)=>prevCount+1)
             const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
-            setComments(prev=>[saveCommentResult.commentId,...prev])
-            setLoading(false)
-
+            data._id=saveCommentResult.commentId;
+            setComments(prev=>[data,...prev])
         } catch (error) {
             console.log(error)
         }
@@ -57,6 +58,11 @@ const CommentBox = ({setCommentCount, postId }) => {
             setComment('')
         }
     }
+
+    if(loading){
+        return <Placeholder></Placeholder>
+    }
+    
     return (
         <div className='my-4'>
             <div className='flex flex-row items-center border w-full border-slate-600 rounded-md'>
@@ -65,7 +71,7 @@ const CommentBox = ({setCommentCount, postId }) => {
                     placeholder='write comment'
                     type="text"
                     value={comment}
-                    onChange={getCommentFromUser}
+                    onChange={getUserComment}
                     name="comment"
                     id="comment" />
                 <button
@@ -83,7 +89,7 @@ const CommentBox = ({setCommentCount, postId }) => {
                     </svg>
                 </button>
             </div>
-            <Comments setComments={setComments} comments={comments}></Comments>
+            {comments?.length?comments?.map((comment)=><Comment key={comment._id} setCommentCount={setCommentCount} setComments={setComments} comment={comment}></Comment>):<></>}
         </div>
     );
 };

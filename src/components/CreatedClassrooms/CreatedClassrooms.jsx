@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
 import Classroom from "../Classroom/Classroom";
@@ -10,6 +10,7 @@ const CreatedClassrooms = () => {
   const [classrooms, setClassrooms] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  //get classroom
   useEffect(() => {
     const getClassrooms = async (url) => {
       try {
@@ -24,7 +25,7 @@ const CreatedClassrooms = () => {
     };
     const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
     getClassrooms(url);
-  }, [user.uid]);
+  }, []);
   if (loading) {
     return (
       <div className="flex flex-col md:flex-row lg:flex-row gap-3 mt-6">
@@ -40,7 +41,7 @@ const CreatedClassrooms = () => {
         <Classroom key={classroom._id} classroom={classroom}></Classroom>
       ))}
       <Link to={"/classroom/create"}>
-        <div className="bg-slate-200 p-6 rounded-lg shadow-md cursor-pointer hover:bg-blue-300 text-center">
+        <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md cursor-pointer text-center">
           <span className="text-5xl font-bold">+</span>
           <p className="font-bold">Create New Classroom</p>
         </div>
@@ -49,4 +50,4 @@ const CreatedClassrooms = () => {
   );
 };
 
-export default memo(CreatedClassrooms);
+export default CreatedClassrooms;

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import Classroom from '../Classroom/Classroom';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/Auth/useAuth';
@@ -39,12 +39,6 @@ const ArchivedClassroom = () => {
       {classrooms?.map((classroom) => (
         <Classroom key={classroom._id} classroom={classroom}></Classroom>
       ))}
-      <Link to={"/classroom/create"}>
-        <div className="bg-slate-200 p-6 rounded-lg shadow-md cursor-pointer hover:bg-blue-300 text-center">
-          <span className="text-5xl font-bold">+</span>
-          <p className="font-bold">Create New Classroom</p>
-        </div>
-      </Link>
     </div>
   );
 };

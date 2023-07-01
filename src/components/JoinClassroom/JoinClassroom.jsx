@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
-import bg from "../../assets/bg/gradient-bg.png"
 import Loader from "../Loader/Loader"
 
 const JoinClassroom = () => {
@@ -12,6 +11,10 @@ const JoinClassroom = () => {
   const [isAlreadyJoined, setIsAlreadyJoined] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const handleCodeChange=()=>{
+    console.log('cc')
+    setIsAlreadyJoined(false)
+  }
   const handleJoinClassroom = async (e) => {
     e.preventDefault();
     try {
@@ -49,7 +52,7 @@ const JoinClassroom = () => {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${bg})` }} className="w-screen h-screen flex items-center justify-center bg-cover">
+    <div className="w-screen h-screen flex items-center justify-center">
       <div className="w-5/6 mx-auto">
         <form
           onSubmit={handleJoinClassroom}
@@ -57,6 +60,7 @@ const JoinClassroom = () => {
         >
           <h1 className="text-5xl mb-6 text-center">Join Classroom!</h1>
           <input
+          onChange={handleCodeChange}
             required
             className="p-2 border-2 rounded-lg w-full"
             placeholder="Enter class code"
@@ -77,7 +81,7 @@ const JoinClassroom = () => {
             </svg>
             <span>Classroom not found.</span>
           </div>}
-          {(isAlreadyJoined) && <div
+          {isAlreadyJoined && <div
             className="text-sm bg-orange-700 flex rounded flex-row items-center gap-2 font-bold p-2 shadow-2xl text-slate-50 absolute bottom-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,12 +95,12 @@ const JoinClassroom = () => {
             <span>You have already joined to the classroom.</span>
           </div>}
           <button
-            className="w-full font-bold rounded-lg shadow-xl mb-4
-             bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
+            className="w-full flex flex-row item justify-center font-bold rounded-lg shadow-xl mb-4
+             bg-gradient-to-r from-sky-500 to-indigo-500 text-slate-100 px-4 uppercase py-2"
             type="submit"
           >
             {loading && <Loader></Loader>}
-            Join Classroom
+            <span>Join Classroom</span>
           </button>
           <span>
             if you are a teacher create classroom{" "}
