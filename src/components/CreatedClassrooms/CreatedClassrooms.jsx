@@ -23,7 +23,7 @@ const CreatedClassrooms = () => {
         setLoading(false);
       }
     };
-    const url = `http://localhost:3000/api/v1/classrooms/find/${user.uid}`;
+    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
     getClassrooms(url);
   }, []);
   return (

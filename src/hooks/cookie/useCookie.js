@@ -3,7 +3,7 @@ import { handlePostMethod } from "../../utilities/handlePostMethod";
 const useCookie = () => {
     const setCookie = async (data, name,) => {
         try {
-            const res = await handlePostMethod('http://localhost:3000/jwt', data)
+            const res = await handlePostMethod('https://my-classroom-server.onrender.com/jwt', data)
             console.log(res)
             const expirationDate = new Date();
             expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);

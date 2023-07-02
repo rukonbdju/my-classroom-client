@@ -21,7 +21,7 @@ const CommentBox = ({setCommentCount, postId }) => {
             console.log(result)
             setLoading(false)
         }
-        const url = `http://localhost:3000/api/v1/comments?postId=${postId}`
+        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${postId}`
         getComments(url)
     },[])
 
@@ -47,7 +47,7 @@ const CommentBox = ({setCommentCount, postId }) => {
                 replies: []
             }
             setCommentCount((prevCount)=>prevCount+1)
-            const commentUrl = `http://localhost:3000/api/v1/comments`
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             data._id=saveCommentResult.commentId;
             setComments(prev=>[data,...prev])

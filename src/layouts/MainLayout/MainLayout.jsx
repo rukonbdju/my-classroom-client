@@ -29,7 +29,7 @@ const MainLayout = () => {
         console.log(error);
       }
     };
-    const url = `http://localhost:3000/api/v1/classrooms/${params.id}`;
+    const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
     getClassroom(url)
   }, [])
 

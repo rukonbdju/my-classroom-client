@@ -19,7 +19,7 @@ const Posts = ({ classroom }) => {
             setPosts(result)
             setLoading(false)
         }
-        const url = `http://localhost:3000/api/v1/posts?classId=${classroom._id}`
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom._id}`
         getPosts(url)
     }, [])
     if (loading) {
