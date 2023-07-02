@@ -58,17 +58,17 @@ const CreateClassroom = () => {
           onSubmit={handleCreateClassroom}
           className="flex flex-col gap-6 items-center justify-center max-w-xl mx-auto"
         >
-          <h1 className="text-5xl mb-12 text-center">Create new Classroom!</h1>
+          <h1 className="text-5xl mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">Create new Classroom!</h1>
           <input
             required
-            className="p-2 border-2 rounded-lg w-full"
+            className="p-2 border-2 rounded-lg w-full outline-indigo-700"
             placeholder="Enter classroom name"
             type="text"
             name="name"
             id="name"
           />
           <input
-            className="p-2 border-2 rounded-lg w-full"
+            className="p-2 border-2 rounded-lg w-full outline-indigo-700"
             placeholder="Enter description (Optional)"
             type="text"
             name="description"

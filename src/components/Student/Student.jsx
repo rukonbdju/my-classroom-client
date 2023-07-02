@@ -1,0 +1,55 @@
+import { useEffect, useState } from "react"
+import { handleGetMethod } from "../../utilities/handleGetMethod"
+import RemoveModal from "./RemoveModal"
+import Placeholder from "../Shared/Placeholder"
+
+const Student = ({ student }) => {
+    const [studentInfo, setStudentInfo] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [openModal,setOpenModal]=useState(false)
+    useEffect(() => {
+        const getStudent = async (url) => {
+            try {
+                setLoading(true)
+                const result = await handleGetMethod(url)
+                console.log(result)
+                setStudentInfo(result)
+            } catch (error) {
+                console.log(error)
+            }
+            finally {
+                setLoading(false)
+            }
+
+        }
+        const url = `http://localhost:3000/api/v1/users/${student.userId}`
+        getStudent(url)
+    }, [student])
+
+    if (student.role == 'teacher') return;
+    if(loading){
+        return <Placeholder></Placeholder>
+    }
+    return (
+        <div className="bg-indigo-300 p-2 my-2 rounded-md">
+            {openModal&& <RemoveModal userId={student.userId} setOpenModal={setOpenModal}></RemoveModal>}
+            <div className="flex flex-col md:flex-row lg:flex-row  gap-2 justify-between items-center  w-full">
+                <div className="flex flex-col md:flex-row lg:flex-row items-center gap-2">
+                    {studentInfo?.photoURL ? (
+                        <img className='rounded-full' src={studentInfo?.photoURL} />
+                    ) : (
+                        <div className="p-4 font-bold rounded-full w-10 h-10 bg-blue-600 text-slate-50 flex items-center justify-center">{studentInfo?.name?.slice(0, 1)}</div>
+                    )}
+                    <div>
+                        <h2 className="text-md font-bold">{studentInfo.name}</h2>
+                        <h2>{studentInfo?.email}</h2>
+                    </div>
+                </div>
+                <div>
+                    <span onClick={()=>setOpenModal(true)} className="inline-block cursor-pointer p-1 bg-red-500 hover:bg-red-700 text-white rounded-md">Remove</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default Student;

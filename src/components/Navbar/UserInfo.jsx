@@ -19,7 +19,7 @@ const UserInfo = () => {
               user.displayName?.slice(0, 1)
             )}
           </button>
-          <div className="absolute hidden  group-focus-within:block right-0 bg-slate-200">
+          <div className="absolute hidden  group-focus-within:block right-0 bg-indigo-600">
             <div className="p-2 flex flex-col items-center justify-center">
               {user.photoURL ? (
                 <img className='rounded-full' src={user?.photoURL} />
@@ -30,12 +30,8 @@ const UserInfo = () => {
               <h2 className="text-sm">{user?.email}</h2>
             </div>
             <hr />
-            <Link className="block text-center hover:bg-slate-700 py-1 hover:text-slate-50">Update Profile</Link>
-            <hr />
-            <Link className="block text-center hover:bg-slate-700 py-1 hover:text-slate-50">Activity</Link>
-            <hr />
-            <div onClick={() => emailLogOut()} className='text-center cursor-pointer py-1 hover:bg-slate-700 hover:text-slate-50'>
-              <button>Logout</button>
+            <div onClick={() => emailLogOut()} className='cursor-pointer p-2 hoverslate-50'>
+              <button className='text-slate-50'>Logout</button>
             </div>
           </div>
         </div>

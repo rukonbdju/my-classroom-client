@@ -34,11 +34,11 @@ const ArchiveClassroom = ({ setClassroomDeleteModal, classroomId }) => {
                 <div className='flex flex-row justify-end gap-2'>
                     <button
                         onClick={() => setClassroomDeleteModal(false)}
-                        className='bg-red-700 text-white rounded-md p-1 text-sm'>Cancel</button>
+                        className='bg-red-700 flex flex-row text-white rounded-md p-1 text-sm'>Cancel</button>
                     <button
                         onClick={() => handleArchiveClassroom()}
-                        className='bg-red-700 text-white rounded-md p-1 text-sm'>
-                        {loading && <Loader></Loader>} Confirm
+                        className='bg-red-700 flex flex-row text-white rounded-md p-1 text-sm'>
+                        {loading && <Loader></Loader>} <span>Confirm</span>
                     </button>
                 </div>
             </div>

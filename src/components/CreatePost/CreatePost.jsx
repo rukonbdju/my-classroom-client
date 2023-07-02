@@ -97,6 +97,7 @@ const CreatePost = ({ id, setOpenModal, setPosts }) => {
         <hr className="mb-2" />
         <div>
           <textarea
+            autoFocus
             onChange={getPostContent}
             className="border-0 w-full bg-slate-100  resize-none outline-none p-2 rounded-lg"
             value={postContent}

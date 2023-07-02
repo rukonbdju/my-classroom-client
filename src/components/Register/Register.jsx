@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import bg from "../../assets/bg/gradient-bg.png";
 import useAuth from "../../hooks/Auth/useAuth";
 import Loader from "../Loader/Loader";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
@@ -21,9 +20,12 @@ const Register = () => {
   //check confirmed password
   const handleConfirmPassword = (e) => {
     const password2 = e.target.value;
-    if (password2.length > 5) {
+    if (password2.length >= password.length) {
       if (password != password2) {
         setPasswordConfirm(false)
+      }
+      else{
+        setPasswordConfirm(true)
       }
     }
     else {
@@ -77,15 +79,18 @@ const Register = () => {
   },[savedUserResult])
 
   return (
-    <div style={{ backgroundImage: `url(${bg})` }} className=" flex flex-col items-center justify-center min-h-screen max-w-full bg-no-repeat bg-cover">
+    <div className=" flex flex-col items-center justify-center min-h-screen max-w-full bg-indigo-100 ">
       <div
         className="w-11/12 mx-auto md:max-w-md lg:max-w-xl"
       >
         <div className="mb-8 text-center">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font bold">
+          <h1 className="text-2xl md:text-3xl lg:text-5xl inline-block font bold bg-clip-text text-transparent bg-gradient-to-r
+         from-sky-500 to-indigo-500">
             Welcome To Classroom!
           </h1>
-          <h3 className="text-lg md:text-xl lg:text-2xl">Registration now</h3>
+          <br />
+          <h3 className="text-lg md:text-xl lg:text-2xl inline-block font-bold bg-clip-text text-transparent bg-gradient-to-r
+         to-sky-500 from-indigo-500">Registration now</h3>
         </div>
 
         <form
@@ -94,21 +99,21 @@ const Register = () => {
         >
           <input
             required
-            className="border rounded-lg p-2 block"
+            className="border rounded-lg p-2 block outline-indigo-700"
             type="text"
             placeholder="Enter name"
             name="name"
           />
           <input
             required
-            className="border rounded-lg p-2 block"
+            className="border rounded-lg p-2 block outline-indigo-700"
             placeholder="Enter Email"
             type="email"
             name="email"
           />
           <input
             required
-            className="border rounded-lg p-2 block"
+            className="border rounded-lg p-2 block outline-indigo-700"
             placeholder="Enter New Password"
             minLength={6}
             onChange={(e) => setPassword(e.target.value)}
@@ -118,9 +123,10 @@ const Register = () => {
           <div>
             <input
               required
-              style={{ outlineColor: `${passwordConfirm ? 'black' : 'red'}` }}
+              style={{ outlineColor: `${passwordConfirm ? '#4338ca' : 'red'}` }}
               className="border w-full rounded-lg p-2 block"
               placeholder="Confirm Password"
+              minLength={6}
               onChange={(e) => handleConfirmPassword(e)}
               type="password"
               name="password2"
@@ -134,7 +140,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="font-bold rounded-lg shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
+            className="font-bold rounded-lg shadow-xl bg-gradient-to-r from-indigo-500 to-sky-500 text-slate-100 px-4 uppercase py-2"
           >
             {loading ? (
               <span className="inline-block mx-1">
@@ -153,7 +159,7 @@ const Register = () => {
         <p className="mt-5">
           Already have an account? Please{" "}
           <Link
-            className="font-bold text-blue-700 hover:underline"
+            className=" text-indigo-700 hover:underline"
             to={"/login"}
           >
             Login

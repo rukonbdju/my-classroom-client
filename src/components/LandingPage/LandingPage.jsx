@@ -10,7 +10,7 @@ const LandingPage = () => {
       <header className="mt-24 w-11/12 md:w-5/6 lg:max-w-5xl mx-auto text-center ">
         <img className="inline" src={classroom} alt="" />
         <div>
-          <h1 className="mb-4 p-4 text-2xl md:text-3xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-700  to-violet-500">
+          <h1 className="mb-4 p-4 text-2xl inline-block md:text-3xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">
             MyClassroom
           </h1>
         </div>
@@ -24,7 +24,7 @@ const LandingPage = () => {
         </p>
         <div className="flex flex-row gap-1 items-center justify-center">
           <Link to={"/register"}>
-            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 border-blue-700 text-blue-700 rounded-lg p-2 hover:text-slate-50 hover:bg-blue-700 hover:shadow-md">
+            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 border-blue-700 text-white rounded-lg p-2 bg-blue-700 hover:bg-slate-50 hover:text-blue-700 hover:shadow-md">
               Registration Now
             </button>
           </Link>
@@ -88,7 +88,9 @@ const LandingPage = () => {
         <div className="text-center">
           <img className="inline" src={classroom} alt="" />
         </div>
-        <h1 className="text-5xl text-center mb-16">Features</h1>
+        <div className="text-center">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl inline-block bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">Features</h1>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
           <div>
             <img
@@ -97,38 +99,38 @@ const LandingPage = () => {
               alt=""
             />
           </div>
-          <ul className="mx-2">
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-200">
+          <ul className="mx-2 text-indigo-700">
+            <li className=" rounded-md p-2 text-xl my-3 bg-blue-200">
               Schedule posts to multiple classes
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-100">
+            <li className=" rounded-md p-2 text-xl my-3 bg-slate-100">
               Add students to a new course by sharing a link or code
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-200">
+            <li className=" rounded-md p-2 text-xl my-3 bg-blue-200">
               Manage multiple classes at once
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-100">
+            <li className=" rounded-md p-2 text-xl my-3 bg-slate-100">
               Automatic notifications about assignments, deadlines, and student
               summaries
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-200">
+            <li className=" rounded-md p-2 text-xl my-3 bg-blue-200">
               Set up student accounts to support an individualized education
               plan
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-100">
+            <li className=" rounded-md p-2 text-xl my-3 bg-slate-100">
               Classroom audit logs access right from the Admin console
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-200">
+            <li className=" rounded-md p-2 text-xl my-3 bg-blue-200">
               Restrict class activity to class members only
             </li>
-            <li className="text-green-700 font-bold rounded-md p-2 text-xl my-3 bg-slate-100">
+            <li className=" rounded-md p-2 text-xl my-3 bg-slate-100">
               No advertising in Classroom
             </li>
           </ul>
         </div>
       </section>
 
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center w-3/4 mx-auto mb-24 bg-slate-100 p-5 rounded-lg">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center w-11/12 md:w-11/12 lg:w-4/5 mx-auto mb-24 bg-slate-100 p-5 rounded-lg">
         <div>
           <img
             className="w-full rounded-lg"
@@ -164,7 +166,8 @@ const LandingPage = () => {
           <div className="flex flex-row items-center gap-5">
             <p>Follow us: </p>
             <svg
-              className="p-2 rounded-full  hover:bg-slate-200"
+              className="p-2 rounded-full  hover:bg-blue-300"
+              fill="blue"
               xmlns="http://www.w3.org/2000/svg"
               width="40px"
               viewBox="0 0 16 16"
@@ -173,7 +176,8 @@ const LandingPage = () => {
             </svg>
 
             <svg
-              className="p-2 rounded-full hover:bg-slate-200 "
+              className="p-2 rounded-full hover:bg-red-300"
+              fill="red"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
               viewBox="0 0 16 16"
@@ -181,7 +185,8 @@ const LandingPage = () => {
               <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
             </svg>
             <svg
-              className="p-2 rounded-full  hover:bg-slate-200"
+            fill="#1E90FF"
+              className="p-2 rounded-full hover:bg-blue-300"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
               viewBox="0 0 16 16"
@@ -190,6 +195,7 @@ const LandingPage = () => {
             </svg>
           </div>
         </div>
+        <div>Privacy & policy</div>
         <div>©2023 MyClassroom.</div>
       </footer>
     </div>

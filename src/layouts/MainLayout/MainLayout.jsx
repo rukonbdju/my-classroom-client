@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
 import Navbar from "../../components/Navbar/Navbar";
 import useAuth from "../../hooks/Auth/useAuth";
-import bg from "../../assets/bg/gradient-bg.png"
 import Posts from "../../components/Posts/Posts";
 import LeaveModal from "../../components/LeaveModal/LeaveModal";
 import ArchiveClassroom from "../../components/ArchiveClassroom/ArchiveClassroom";
@@ -17,7 +16,7 @@ const MainLayout = () => {
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [classroomDeleteModal, setClassroomDeleteModal] = useState(false)
-
+  console.log(classroom)
   useEffect(() => {
     //get classroom by id
     const getClassroom = async (url) => {
@@ -49,7 +48,6 @@ const MainLayout = () => {
       </div>
     )
   }
-
   if (classroom == null) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -72,9 +70,9 @@ const MainLayout = () => {
       <Navbar></Navbar>
       {openModal && <LeaveModal setOpenModal={setOpenModal} classroomId={classroom._id}></LeaveModal>}
       {classroomDeleteModal && <ArchiveClassroom setClassroomDeleteModal={setClassroomDeleteModal} classroomId={classroom._id}></ArchiveClassroom>}
-      <div className="w-11/12 md:w-5/6  lg:w-2/3 mx-auto mt-24">
+      <div className="w-11/12 md:w-5/6  lg:w-2/3 mx-auto mt-20">
         <div>
-          <div className="p-5 rounded-xl shadow-md bg-gradient-to-r from-sky-500 to-indigo-500 relative">
+          <div className="p-5 rounded-xl shadow-md bg-gradient-to-r from-indigo-500 to-sky-500 relative">
             <div className="absolute top-1 right-1">
               <button className="relative group">
                 <div className="flex items-center justify-center border rounded-full cursor-pointer
@@ -89,7 +87,7 @@ const MainLayout = () => {
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                   </svg>
                 </div>
-                <div className="absolute hidden group-focus-within:block right-0 w-24  bg-slate-400 rounded">
+                <div className="absolute hidden group-focus-within:block right-0 w-24  bg-indigo-400 rounded">
                   <div className='border'>
                     {classroom?.author?.id == user.uid ?
                       <div>
@@ -109,8 +107,10 @@ const MainLayout = () => {
             </div>
             <h1 className="text-3xl">{classroom?.name}</h1>
             <p className="font-bold">Teacher: {classroom?.author?.name}</p>
-            <p className="my-4">{classroom?.description}</p>
-            <p>{classroom?.members?.length - 1} Students</p>
+            <p className="my-1">{classroom?.description}</p>
+            <Link to={`/classroom/${classroom?._id}/students`}>
+              <p className="hover:underline ">{classroom?.members?.length - 1} Students</p>
+            </Link>
           </div>
         </div>
         {classroom?.name && <Posts classroom={classroom}></Posts>}

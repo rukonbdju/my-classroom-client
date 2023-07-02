@@ -23,24 +23,55 @@ const Posts = ({ classroom }) => {
         getPosts(url)
     }, [])
     if (loading) {
-        return <Placeholder></Placeholder>
+        return <div className="grid grid-cols-1gap-3 mt-6">
+            <Placeholder></Placeholder>
+            <Placeholder></Placeholder>
+            <Placeholder></Placeholder>
+        </div>
+    }
+    if(posts.length==0){
+        return <div>
+            {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
+            <div className='bg-indigo-300 p-2 rounded-md my-2'>
+                <div className="flex flex-row items-center gap-2">
+                    <div>
+                        <button
+                            className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12 ">
+                            {user?.photoURL ? <img className='rounded-full' src={user.photoURL} />
+                                : user?.displayName?.slice(0, 1)}
+                        </button>
+                    </div>
+                    <input
+                        onClick={() => setOpenModal(true)}
+                        className="px-4 py-2 rounded-full border border-slate-700 w-full bg-indigo-100 "
+                        placeholder="Start Class Discussion"
+                        type="text"
+                        name="post"
+                        id=""
+                    />
+                </div>
+            </div>
+            <div className="text-3xl flex items-center justify-center h-40 rounded-md bg-indigo-200">
+                <h1 className="text-xl text-center">There are no posts in this classroom.</h1>
+            </div>
+        </div>
     }
 
     return (
         <div className='pb-24'>
             {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
-            <div>
-                <div className="flex flex-row items-center gap-2 mt-4">
+            <div className='bg-indigo-300 p-2 rounded-md my-2'>
+                <div className="flex flex-row items-center gap-2">
                     <div>
                         <button
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12 ">
-                            {user?.photoURL?<img className='rounded-full' src={user.photoURL}/>
-                            :user?.displayName?.slice(0, 1)}
+                            {user?.photoURL ? <img className='rounded-full' src={user.photoURL} />
+                                : user?.displayName?.slice(0, 1)}
                         </button>
                     </div>
                     <input
                         onClick={() => setOpenModal(true)}
-                        className="px-4 py-2 rounded-full border border-slate-700 w-full bg-slate-200 "
+                        className="px-4 py-2 rounded-full border border-slate-700 w-full bg-indigo-100 "
                         placeholder="Start Class Discussion"
                         type="text"
                         name="post"

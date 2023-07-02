@@ -76,7 +76,7 @@ const CommentBox = ({setCommentCount, postId }) => {
                     id="comment" />
                 <button
                     onClick={() => handleComment()}
-                    className='flex flex-row items-center gap-2 border rounded-r-md  p-2 outline-0 bg-slate-300 hover:bg-slate-400'>
+                    className='flex flex-row items-center gap-2 border rounded-r-md  p-2 outline-0 bg-indigo-300 hover:bg-indigo-400'>
                     {loading&&<Loader></Loader>}
                     <span className='hidden md:inline lg:inline'>comment</span>
                     <svg

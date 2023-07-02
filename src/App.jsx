@@ -11,7 +11,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ClassroomLayout from "./layouts/ClassroomLayout/ClassroomLayout";
 import MainLayout from "./layouts/MainLayout/MainLayout";
-import CreatePost from "./components/CreatePost/CreatePost";
+import Students from "./components/Students/Students";
 function App() {
   return (
     <>
@@ -47,6 +47,10 @@ function App() {
         <Route
           path='/classroom/:id'
           element={<AuthRoute><MainLayout></MainLayout></AuthRoute>}>
+        </Route>
+        <Route
+          path='/classroom/:id/students'
+          element={<AuthRoute><Students></Students></AuthRoute>}>
         </Route>
         <Route path="*" element={<NotFound></NotFound>}>
         </Route>

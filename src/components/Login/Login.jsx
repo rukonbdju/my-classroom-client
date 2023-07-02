@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import bg from "../../assets/bg/gradient-bg.png"
 import useAuth from "../../hooks/Auth/useAuth";
 import Loader from "../Loader/Loader";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
@@ -44,7 +43,7 @@ const Login = () => {
       }
       // save user in mongodb 
       const url = "http://localhost:3000/api/v1/users";
-       await handlePostMethod(url, data)
+      await handlePostMethod(url, data)
 
     } catch (error) {
       console.log(error)
@@ -57,18 +56,21 @@ const Login = () => {
     }
   }, [user])
   return (
-    <div style={{ backgroundImage: `url(${bg})` }} className=" flex flex-col justify-center items-center min-h-screen max-w-full bg-cover" >
+    <div className=" flex flex-col justify-center items-center min-h-screen max-w-full bg-indigo-100" >
       <div className="w-11/12 mx-auto md:max-w-md lg:max-w-xl">
         <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font bold">
+          <h1 className="text-2xl md:text-3xl lg:text-5xl inline-block font bold bg-clip-text text-transparent bg-gradient-to-r
+         from-sky-500 to-indigo-500">
             Welcome Back!
           </h1>
-          <h3 className="text-lg md:text-xl lg:text-2xl">Login</h3>
+          <br />
+          <h3 className="text-lg md:text-xl lg:text-2xl inline-block bg-clip-text text-transparent bg-gradient-to-r
+         to-sky-500 from-indigo-500">Login</h3>
         </div>
         <form onSubmit={handleLogin} className=" flex flex-col items-center justify-center gap-4">
           <input
             required
-            className="w-full p-2 border-2 rounded-lg"
+            className="w-full p-2 border-2 rounded-lg outline-indigo-700"
             placeholder="Enter Email"
             type="email"
             name="email"
@@ -76,7 +78,7 @@ const Login = () => {
           />
           <input
             required
-            className="w-full p-2 border-2 rounded-lg"
+            className="w-full p-2 border-2 rounded-lg outline-indigo-700"
             placeholder="Enter Password"
             type="password"
             name="password"
@@ -85,7 +87,7 @@ const Login = () => {
           <button
             type="submit"
             className="w-full font-bold rounded-lg shadow-xl
-             bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
+            bg-gradient-to-r from-indigo-500 to-sky-500 text-slate-100 px-4 uppercase py-2"
           >
             {loading ? (
               <span className="inline-block mx-1">
@@ -107,7 +109,7 @@ const Login = () => {
         </div>
         <button
           onClick={() => handleGoogleSignIn()}
-          className="w-full font-bold rounded-lg shadow-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2">
+          className="w-full font-bold rounded-lg shadow-xl bg-gradient-to-r from-indigo-500 to-sky-500 text-slate-100 px-4 uppercase py-2">
           continue with google
         </button>
         <div>
@@ -115,7 +117,7 @@ const Login = () => {
             New user? Please register{" "}
             <Link
               to="/register"
-              className="text-blue-600 font-bold hover:underline"
+              className="text-indigo-700 hover:underline"
             >
               here
             </Link>

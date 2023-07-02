@@ -26,7 +26,7 @@ const Comment = ({ setComments, setCommentCount, comment }) => {
     }
 
     return (
-        <div className=' my-2 border relative p-1 rounded-md'>
+        <div className=' my-2 border relative p-1 rounded-md bg-indigo-300'>
             <div className="absolute  top-1 right-1">
                 <button className="relative group">
                     <div className="flex items-center justify-center border rounded-full cursor-pointer
@@ -70,7 +70,7 @@ const Comment = ({ setComments, setCommentCount, comment }) => {
             </div>
             <div className=' rounded-lg p-2'>
                 <div className='flex flex-row gap-2 justify-end'>
-                    <button className='flex flex-row gap-1 border  p-1 items-center justify-center  rounded-md bg-slate-300 hover:bg-slate-400'>
+                    <button className='flex flex-row gap-1 border  p-1 items-center justify-center  rounded-md bg-indigo-400 hover:bg-indigo-500'>
                         <svg
                             className='inline'
                             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ const Comment = ({ setComments, setCommentCount, comment }) => {
                         </svg>
                         <span>likes</span>
                     </button>
-                    <button className='flex flex-row gap-1 border p-1 items-center justify-center  rounded-md bg-slate-300 hover:bg-slate-400'>
+                    <button className='flex flex-row gap-1 border p-1 items-center justify-center  rounded-md bg-indigo-400 hover:bg-indigo-500'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
