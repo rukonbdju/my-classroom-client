@@ -3,25 +3,52 @@ import Post from '../Post/Post'
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 import CreatePost from '../CreatePost/CreatePost';
 import useAuth from '../../hooks/Auth/useAuth';
-import { Link } from 'react-router-dom';
 import Placeholder from './Placeholder';
 
 const Posts = ({ classroom }) => {
     const { user } = useAuth()
     const [openModal, setOpenModal] = useState(false)
+    const [page, setPage] = useState(1);
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
 
+    const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+        if (scrollTop + clientHeight >= scrollHeight - 200) {
+            setPage((prevPage) => prevPage < 20 ? prevPage + 1 : prevPage);
+        }
+    };
+
     useEffect(() => {
-        setLoading(true)
+        if (page < 2) {
+            setLoading(true)
+        }
         const getPosts = async (url) => {
             const result = await handleGetMethod(url)
-            setPosts(result)
+            if (page === 1) {
+                setPosts(result);
+            }
+            else {
+                setPosts(prevPosts => [...prevPosts, ...result]);
+            }
             setLoading(false)
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom._id}`
-        getPosts(url)
-    }, [])
+        if (page < 20) {
+            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom._id}&page=${page}`
+            getPosts(url)
+        }
+
+    }, [page])
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     if (loading) {
         return <div className="grid grid-cols-1gap-3 mt-6">
             <Placeholder></Placeholder>
@@ -29,7 +56,7 @@ const Posts = ({ classroom }) => {
             <Placeholder></Placeholder>
         </div>
     }
-    if(posts.length==0){
+    if (posts.length == 0) {
         return <div>
             {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
             <div className='bg-indigo-300 p-2 rounded-md my-2'>

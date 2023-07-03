@@ -18,7 +18,6 @@ const CommentBox = ({setCommentCount, postId }) => {
         const getComments=async(url)=>{
             const result=await handleGetMethod(url)
             setComments(result)
-            console.log(result)
             setLoading(false)
         }
         const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${postId}`

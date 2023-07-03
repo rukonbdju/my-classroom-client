@@ -1,5 +1,4 @@
 const RemoveModal = ({ userId, setOpenModal }) => {
-    console.log(userId)
     return (
         <div className="absolute h-screen bg-indigo-200 bg-opacity-50 w-screen top-0 left-0 flex items-center justify-center">
             <div className="bg-indigo-400 rounded-md p-2 w-11/12 md:w-3/5 lg:w-2/5 ">

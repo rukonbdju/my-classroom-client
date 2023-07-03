@@ -10,7 +10,6 @@ const JoinedClassrooms = () => {
     const { user } = useAuth();
     const [enrolledClassrooms, setEnrolledClassrooms] = useState([]);
     const [loading, setLoading] = useState(false);
-    console.log(enrolledClassrooms)
     //get enrolled classrooms
     useEffect(() => {
         const getEnrolledClassrooms = async (url) => {

@@ -12,7 +12,6 @@ const Student = ({ student }) => {
             try {
                 setLoading(true)
                 const result = await handleGetMethod(url)
-                console.log(result)
                 setStudentInfo(result)
             } catch (error) {
                 console.log(error)

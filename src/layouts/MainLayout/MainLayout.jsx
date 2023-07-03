@@ -16,7 +16,6 @@ const MainLayout = () => {
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [classroomDeleteModal, setClassroomDeleteModal] = useState(false)
-  console.log(classroom)
   useEffect(() => {
     //get classroom by id
     const getClassroom = async (url) => {

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const UserInfo = () => {
   const { user, emailLogOut } = useAuth()
-  console.log(user)
   return (
     <div>
       {user ? (

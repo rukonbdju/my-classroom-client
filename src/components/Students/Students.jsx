@@ -10,7 +10,6 @@ const Students = () => {
     const [classroom, setClassroom] = useState({})
     const [students, setStudents] = useState([])
     const [loading, setLoading] = useState(false)
-    console.log(students)
     useEffect(() => {
         //get classroom by id
         const getClassroom = async (url) => {

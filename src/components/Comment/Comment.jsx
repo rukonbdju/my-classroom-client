@@ -16,7 +16,6 @@ const Comment = ({ setComments, setCommentCount, comment }) => {
                 postId: comment.postId
             }
             const res = await handleDeleteMethod(url, data)
-            console.log(res)
             setComments(prev => prev.filter(c => c._id !== res.commentId))
             setCommentCount(prev => prev - 1)
             setLoading(false)
