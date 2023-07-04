@@ -1,9 +1,4 @@
 ## This is a classroom app
-![Github Banner](assets/github-banner.jpg)
-
-## Hi there my gorgeous friend <img src="assets/hello.gif" width="28px" alt="hi">
-
-I'm Sumit, a Full Stack Web Application Developer from <img src="assets/bangladesh.png" width="18"/> Bangladesh and Content Creator on [Youtube](https://youtube.com/learnwithsumit). I Spend most of time coding outstanding projects or recording tutorials.
 
 :coffee: &emsp;Connect with me!
 
@@ -14,7 +9,7 @@ I'm Sumit, a Full Stack Web Application Developer from <img src="assets/banglade
 ⚡ &emsp;Fun fact: I co-founded my country's first ever and largest digital marketing agency Analyzen.
 
 
-### My Projects & Ventures
+### My Projects Features
 
 <table>
   <thead align="center">
@@ -63,27 +58,10 @@ I'm Sumit, a Full Stack Web Application Developer from <img src="assets/banglade
   </tbody>
 </table>
 
-### 📺 &emsp;Latest YouTube Videos
-
-<!-- YOUTUBE:START -->
-- [ECMAScript 2023 - ES14: Discover Four Exciting New Array Features!](https://www.youtube.com/watch?v=qaQZZmBTTIw)
-- [array with](https://www.youtube.com/watch?v=RIfoZD_tXgk)
-- [Mastering the art of Job Interview - @Foyzul &amp; @LearnwithSumit](https://www.youtube.com/watch?v=UBW_yJhDdSg)
-- [Mastering Web Application Development: Building Scalable and High-Performance Websites - devConf 1.0](https://www.youtube.com/watch?v=iYZIlnRxQsA)
-- [Full stack: A dream for some and joke for many - @tapasadhikary - devConf 1.0](https://www.youtube.com/watch?v=5Lkez-i-Ae4)
-<!-- YOUTUBE:END -->
 
 #### Business
 
 :email: &emsp;sayhitorainmaker@gmail.com
-<br >
-:email: &emsp;sumit@learnwithsumit.com
-<br >
-:email: &emsp;sumit@analyzenbd.com
-
-#### Profile Visits
-
-![visitors](https://visitor-badge.glitch.me/badge?page_id=learnwithsumit.learnwithsumit)
 
 <details>
 <summary>
