@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate()
   let location = useLocation();
 
-  let from = location.state?.from?.pathname || "/";
+  let from = location.state?.from?.pathname || "/classroom";
 
   const [loading, setLoading] = useState()
   const { signInWithGoogle, signInWithEmail, user, errorMessage } = useAuth()
@@ -93,7 +93,7 @@ const Login = () => {
               <span className="inline-block mx-1">
                 <Loader></Loader>
               </span>
-            ) : <span className="inline-block mr-2">Login</span>}
+            ) : <span className="inline-block mr-2 ">Login</span>}
           </button>
         </form>
         <Link to={'/reset_password'}>

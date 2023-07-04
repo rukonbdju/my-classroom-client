@@ -8,7 +8,7 @@ const Register = () => {
   const navigate = useNavigate()
   let location = useLocation();
 
-  let from = location.state?.from?.pathname || "/";
+  let from = location.state?.from?.pathname || "/classroom";
   //state
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('')
@@ -73,10 +73,10 @@ const Register = () => {
   };
 
   useEffect(()=>{
-    if (savedUserResult.acknowledged) {
+    if (savedUserResult.acknowledged ||user) {
       navigate(from, { replace: true });
     }
-  },[savedUserResult])
+  },[savedUserResult,user])
 
   return (
     <div className=" flex flex-col items-center justify-center min-h-screen max-w-full bg-indigo-100 ">

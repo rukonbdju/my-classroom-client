@@ -37,8 +37,8 @@ const UserInfo = () => {
       ) : (
         <Link to={"/login"}>
           <button
-            className="w-full font-bold rounded-lg shadow-xl
-                  bg-gradient-to-r from-violet-500 to-fuchsia-500 text-slate-100 px-4 uppercase py-2"
+            className="w-full font-bold rounded-lg shadow-xl bg-gradient-to-r from-sky-500 to-indigo-500
+             text-slate-100 px-4 uppercase py-2"
           >
             Login
           </button>

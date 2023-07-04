@@ -24,13 +24,15 @@ const LandingPage = () => {
         </p>
         <div className="flex flex-row gap-1 items-center justify-center">
           <Link to={"/register"}>
-            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 border-blue-700 text-white rounded-lg p-2 bg-blue-700 hover:bg-slate-50 hover:text-blue-700 hover:shadow-md">
+            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 text-white 
+            rounded-lg p-2 bg-gradient-to-r from-sky-500 to-indigo-500  hover:shadow-xl">
               Registration Now
             </button>
           </Link>
           <span>OR</span>
           <Link to={"classroom/join"}>
-            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 border-blue-700 text-blue-700 rounded-lg p-2 hover:text-slate-50 hover:bg-blue-700 hover:shadow-md">
+            <button className="text-sm md:text-lg lg:text-xl uppercase rounded-lg p-2 
+            text-slate-50 bg-gradient-to-r from-sky-500 to-indigo-500 hover:shadow-md">
               Join Classroom
             </button>
           </Link>
@@ -161,12 +163,12 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <footer className="p-4 bg-slate-100 flex flex-col lg:flex-row items-center justify-evenly">
+      <footer className="p-4 bg-indigo-200 flex flex-col lg:flex-row items-center justify-evenly">
         <div>
           <div className="flex flex-row items-center gap-5">
             <p>Follow us: </p>
             <svg
-              className="p-2 rounded-full  hover:bg-blue-300"
+              className="p-2 rounded-full cursor-pointer bg-blue-300"
               fill="blue"
               xmlns="http://www.w3.org/2000/svg"
               width="40px"
@@ -176,7 +178,7 @@ const LandingPage = () => {
             </svg>
 
             <svg
-              className="p-2 rounded-full hover:bg-red-300"
+              className="p-2 rounded-full cursor-pointer bg-red-300"
               fill="red"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
@@ -186,7 +188,7 @@ const LandingPage = () => {
             </svg>
             <svg
             fill="#1E90FF"
-              className="p-2 rounded-full hover:bg-blue-300"
+              className="p-2 rounded-full cursor-pointer bg-blue-300"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
               viewBox="0 0 16 16"

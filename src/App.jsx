@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "../src/components/Home/Home";
 import Login from "../src/components/Login/Login";
 import Register from "../src/components/Register/Register";
 import AuthRoute from "./routes/AuthRoute/AuthRoute";
@@ -12,6 +11,7 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ClassroomLayout from "./layouts/ClassroomLayout/ClassroomLayout";
 import MainLayout from "./layouts/MainLayout/MainLayout";
 import Students from "./components/Students/Students";
+import Classrooms from "./components/Classrooms/Classrooms";
 function App() {
   return (
     <>
@@ -22,7 +22,7 @@ function App() {
           element={<AuthRoute><ClassroomLayout></ClassroomLayout></AuthRoute>}>
           <Route
             index
-            element={<Home></Home>}></Route>
+            element={<Classrooms></Classrooms>}></Route>
           <Route
             path="create"
             element={<CreateClassroom></CreateClassroom>}>

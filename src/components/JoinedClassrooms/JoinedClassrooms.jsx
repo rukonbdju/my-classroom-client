@@ -40,7 +40,7 @@ const JoinedClassrooms = () => {
                 <Placeholder></Placeholder>
             </div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-6">
                 {enrolledClassrooms?.map((id, index) => <GetClassroom key={index} id={id}></GetClassroom>)}
-                <Link to={"/classroom/create"}>
+                <Link to={"/classroom/join"}>
                     <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md cursor-pointer text-center">
                         <span className="text-5xl font-bold">+</span>
                         <p className="font-bold">Join Classroom</p>
