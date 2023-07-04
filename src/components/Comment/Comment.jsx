@@ -2,11 +2,41 @@ import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import useAuth from '../../hooks/Auth/useAuth';
 import handleDeleteMethod from '../../utilities/handleDeleteMethod';
+import { handlePutMethod } from '../../utilities/handlePutMethod';
+import ReplyBox from '../ReplyBox/ReplyBox';
 
 const Comment = ({ setComments, setCommentCount, comment }) => {
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
+    const [userReply,setUserReply]=useState('')
+    const [replies,setReplies]=useState(comment.replies)
+    const getUserReply=(e)=>{
+        console.log(e.target)
+        setUserReply(e.target.value)
+    }
 
+    const handleReply=async()=>{
+        try{
+            let data = {
+                commentId: comment._id,
+                author: {
+                    id:user.uid,
+                    name:user.displayName,
+                    photoURL:user.photoURL ||''
+                },
+                content: userReply,
+                timestamps: new Date().toString(),
+                likes: []
+            }
+            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments/${comment._id}`
+            await handlePutMethod(commentUrl, data)
+            setUserReply('')
+            setReplies(pre=>[data,...pre])
+        }catch(error){
+            console.log(error)
+        }
+
+    }
     //delete comment
     const handleDeleteComment = async () => {
         try {
@@ -81,18 +111,33 @@ const Comment = ({ setComments, setCommentCount, comment }) => {
                         </svg>
                         <span>likes</span>
                     </button>
-                    <button className='flex flex-row gap-1 border p-1 items-center justify-center  rounded-md bg-indigo-400 hover:bg-indigo-500'>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            viewBox="0 0 16 16">
-                            <path fillRule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
-                        </svg>
-                        <span>Reply</span>
-                    </button>
+                    <div className='flex flex-row gap-1 items-center justify-center  rounded-md bg-indigo-400 hover:bg-indigo-500'>
+                        <div className='flex flex-row items-center border w-full border-slate-600 rounded-md'>
+                            <input
+                                onChange={getUserReply}
+                                className=' w-full p-1 md:p-2 lg:p-2  rounded-l-md outline-indigo-700'
+                                placeholder='Reply here'
+                                value={userReply}
+                                type="text"
+                                name="reply"
+                                id="reply" />
+                            <button 
+                                onClick={()=>handleReply()}
+                                className='flex flex-row items-center gap-2 rounded-r-md p-1 md:p-2 lg:p-2 outline-0'>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path fillRule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
+                                </svg>
+                                <span className='hidden md:inline lg:inline'> Reply</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <ReplyBox replies={replies}></ReplyBox>
             </div>
         </div>
     );

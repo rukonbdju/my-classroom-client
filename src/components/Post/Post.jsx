@@ -15,7 +15,6 @@ const Post = ({ post, setPosts }) => {
     const [likeCount, setLikeCount] = useState(post?.likes?.length)
     const [commentCount, setCommentCount] = useState(post?.comments?.length)
     const [loading, setLoading] = useState(false)
-    const [imageLoad, setImageLoad] = useState(true)
 
     //handle delete and update likes
     const handleUpdateLike = async (status) => {

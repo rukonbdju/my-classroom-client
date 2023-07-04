@@ -5,6 +5,7 @@ import Loader from '../Loader/Loader';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 import Comment from '../Comment/Comment';
 import Placeholder from './Placeholder';
+import ReplyBox from '../ReplyBox/ReplyBox';
 
 const CommentBox = ({setCommentCount, postId }) => {
     const { user } = useAuth()
@@ -88,7 +89,12 @@ const CommentBox = ({setCommentCount, postId }) => {
                     </svg>
                 </button>
             </div>
-            {comments?.length?comments?.map((comment)=><Comment key={comment._id} setCommentCount={setCommentCount} setComments={setComments} comment={comment}></Comment>):<></>}
+            {comments?.length?comments?.map((comment)=><Comment 
+            key={comment._id} 
+            setCommentCount={setCommentCount} 
+            setComments={setComments} 
+            comment={comment}
+            ></Comment>):<></>}
         </div>
     );
 };
