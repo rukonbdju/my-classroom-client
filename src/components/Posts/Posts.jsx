@@ -106,7 +106,7 @@ const Posts = ({ classroom }) => {
                     />
                 </div>
             </div>
-            {posts?.map((post) => <Post key={post._id} post={post} setPosts={setPosts}></Post>)}
+            {posts?.map((post,index) => <Post key={index} post={post} setPosts={setPosts}></Post>)}
         </div>
     );
 };

@@ -20,6 +20,7 @@ const useFirebaseStorage = () => {
         try {
             const storageRef = ref(storage, file.name);
             const res = await deleteObject(storageRef)
+            return res;
         } catch (error) {
             console.log(error)
         }
