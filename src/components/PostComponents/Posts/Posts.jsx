@@ -1,54 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Post from '../Post/Post'
-import { handleGetMethod } from '../../utilities/handleGetMethod';
-import CreatePost from '../CreatePost/CreatePost';
-import useAuth from '../../hooks/Auth/useAuth';
-import Placeholder from './Placeholder';
+import { useContext, useState } from "react";
+import { PostContext } from "../../../context_api/PostProvider/PostProvider";
+import useAuth from "../../../hooks/Auth/useAuth";
+import { ClassroomContext } from "../../../context_api/ClassroomProvider/ClassroomProvider";
+import Placeholder from "./Placeholder";
+import CreatePost from "../../CreatePost/CreatePost";
+import Post from "../Post/Post";
 
-const Posts = ({ classroom }) => {
+const Posts=()=>{
+    const {loading,posts,dispatch}=useContext(PostContext)
+    const {classroom}=useContext(ClassroomContext)
     const { user } = useAuth()
     const [openModal, setOpenModal] = useState(false)
-    const [page, setPage] = useState(1);
-    const [posts, setPosts] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    const handleScroll = () => {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
-        if (scrollTop + clientHeight >= scrollHeight - 200) {
-            setPage((prevPage) => prevPage < 20 ? prevPage + 1 : prevPage);
-        }
-    };
-
-    useEffect(() => {
-        if (page < 2) {
-            setLoading(true)
-        }
-        const getPosts = async (url) => {
-            const result = await handleGetMethod(url)
-            if (page === 1) {
-                setPosts(result);
-            }
-            else {
-                setPosts(prevPosts => [...prevPosts, ...result]);
-            }
-            setLoading(false)
-        }
-        if (page < 20) {
-            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom._id}&page=${page}`
-            getPosts(url)
-        }
-
-    }, [page])
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
     if (loading) {
         return <div className="grid grid-cols-1gap-3 mt-6">
             <Placeholder></Placeholder>
@@ -56,7 +18,7 @@ const Posts = ({ classroom }) => {
             <Placeholder></Placeholder>
         </div>
     }
-    if (posts.length == 0) {
+    if (posts?.length == 0) {
         return <div>
             {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
             <div className='bg-indigo-300 p-2 rounded-md my-2'>
@@ -86,7 +48,7 @@ const Posts = ({ classroom }) => {
 
     return (
         <div className='pb-24'>
-            {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
+            {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal}></CreatePost>}
             <div className='bg-indigo-300 p-2 rounded-md my-2'>
                 <div className="flex flex-row items-center gap-2">
                     <div>
@@ -106,9 +68,8 @@ const Posts = ({ classroom }) => {
                     />
                 </div>
             </div>
-            {posts?.map((post,index) => <Post key={index} post={post} setPosts={setPosts}></Post>)}
+            {posts?.map((post,index) => <Post key={index} post={post}></Post>)}
         </div>
     );
-};
-
+}
 export default Posts;

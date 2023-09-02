@@ -1,13 +1,37 @@
-import { createContext, useReducer } from "react";
-import classroomReducer from "../../reducer/classroomReducer";
+import { createContext, useEffect, useReducer, useState } from "react";
+import ClassroomReducer from "../../reducer/ClassroomReducer/ClassroomReducer";
+import { useParams } from "react-router-dom";
+import { handleGetMethod } from "../../utilities/handleGetMethod";
 
-const ClassroomContext=createContext()
-const ClassroomProvider=({children})=>{
-    const [classroom,dispatch]=useReducer(classroomReducer,initialClassroom)
-return(
-    <ClassroomContext.Provider value={classroom}>
-        {children}
-    </ClassroomContext.Provider>
-)
+export const ClassroomContext = createContext()
+
+const ClassroomProvider = ({ children }) => {
+    const params = useParams()
+    const [isLoading,setIsLoading]=useState(false)
+    const [classroom, dispatch] = useReducer(ClassroomReducer, null)
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                setIsLoading(true)
+                const result = await handleGetMethod(url)
+                dispatch({ type: 'initialState', payload: result })
+            } catch (error) {
+                console.log(error)
+            }
+            finally{
+                setIsLoading(false)
+            }
+
+        }
+        const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
+        getData()
+    }, [])
+
+    console.log(classroom)
+    return (
+        <ClassroomContext.Provider value={{isLoading, classroom, dispatch }}>
+            {children}
+        </ClassroomContext.Provider>
+    )
 }
 export default ClassroomProvider;

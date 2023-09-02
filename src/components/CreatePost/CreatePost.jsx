@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
 import Loader from "../Loader/Loader";
 import useFirebaseStorage from "../../hooks/Firebase/useFirebaseStorage";
+import { PostContext } from "../../context_api/PostProvider/PostProvider";
 
-const CreatePost = ({ id, setOpenModal, setPosts }) => {
+const CreatePost = ({ id, setOpenModal }) => {
   const { user } = useAuth();
   const { handleUpload } = useFirebaseStorage()
   const [file, setFile] = useState({})
@@ -12,6 +13,7 @@ const CreatePost = ({ id, setOpenModal, setPosts }) => {
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false)
   const [fileSizeError, setFileSizeError] = useState(false)
+  const {dispatch}=useContext(PostContext)
 
   //file upload on UI
   const handleChangeFile = (e) => {
@@ -69,7 +71,11 @@ const CreatePost = ({ id, setOpenModal, setPosts }) => {
       const postId = result.postId;
       if (result.modifiedCount) {
         data._id = postId;
-        setPosts((prevPosts) => [data, ...prevPosts])
+        //setPosts((prevPosts) => [data, ...prevPosts])
+        dispatch({
+          type:'add',
+          payload:data
+        })
       }
       setOpenModal(false)
     } catch (error) {

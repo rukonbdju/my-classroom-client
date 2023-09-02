@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import useAuth from '../../hooks/Auth/useAuth';
-import CommentBox from '../CommentBox/CommentBox';
-import DeletePost from '../DeletePost/DeletePost';
-import UpdateLike from '../Updatelike/UpdateLike';
-import PostInfo from '../PostInfo/PostInfo';
+import CommentBox from '../../CommentBox/CommentBox';
+import DeletePost from '../../DeletePost/DeletePost';
+import UpdateLike from '../../Updatelike/UpdateLike';
+import PostInfo from '../../PostInfo/PostInfo';
+import useAuth from '../../../hooks/Auth/useAuth';
 
-const Post = ({ post, setPosts }) => {
+const Post = ({ post }) => {
     const { user } = useAuth()
     const [openComment, setOpenComment] = useState(false)
     const [commentCount, setCommentCount] = useState(post?.comments?.length)
     const [isLiked, setIsLiked] = useState(false)
-    const [likeCount, setLikeCount] = useState(post?.likes?.length)
-
+    const [likeCount, setLikeCount] = useState(post?.likes?.length?post?.likes?.length:0)
     useEffect(() => {
         for (let i = 0; i < post?.likes?.length; i++) {
             const id = post?.likes[i];
@@ -23,7 +22,7 @@ const Post = ({ post, setPosts }) => {
 
     return (
         <div className='border relative p-2 rounded-md my-8 bg-indigo-100'>
-            <DeletePost post={post} setPosts={setPosts}></DeletePost>
+            <DeletePost post={post} ></DeletePost>
             <div className=''>
                 <PostInfo post={post}></PostInfo>
                 <div className='flex flex-row gap-2'>
@@ -37,7 +36,7 @@ const Post = ({ post, setPosts }) => {
                         isLiked={isLiked}
                         setIsLiked={setIsLiked}
                         setLikeCount={setLikeCount}
-                        postId={post._id}>
+                        postId={post?._id}>
                     </UpdateLike>
                     <button
                         onClick={() => setOpenComment(!openComment)}

@@ -1,5 +1,8 @@
-const classroomReducer = (classroom, action) => {
+const ClassroomReducer = (classroom,action) => {
     switch (action.type) {
+        case 'initialState': {
+            return action.payload;
+        }
         case 'add': {
 
         }
@@ -15,4 +18,4 @@ const classroomReducer = (classroom, action) => {
     }
 }
 
-export default classroomReducer;
+export default ClassroomReducer;

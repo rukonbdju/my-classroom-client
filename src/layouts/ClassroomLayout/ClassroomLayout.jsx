@@ -1,4 +1,3 @@
-import React, { memo } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 
@@ -7,6 +6,7 @@ const ClassroomLayout = () => {
         <>
             <Navbar></Navbar>
             <Outlet></Outlet>
+
         </>
     );
 };
