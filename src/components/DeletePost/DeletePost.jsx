@@ -3,14 +3,14 @@ import useAuth from "../../hooks/Auth/useAuth"
 import handleDeleteMethod from "../../utilities/handleDeleteMethod"
 import Loader from "../Loader/Loader"
 
-const DeletePost = ({post,setPosts}) => {
+const DeletePost = ({post}) => {
     const {user}=useAuth()
     const [loading,setLoading]=useState(false)
 
     const handleDeletePost = async () => {
         setLoading(true)
         const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
-        setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id))
+        /* setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id)) */
         await handleDeleteMethod(url)
         setLoading(false)
     }

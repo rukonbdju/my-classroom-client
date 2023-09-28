@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useReducer, useState } from "react"
+import { createContext, memo, useContext, useEffect, useReducer, useState } from "react"
 import PostReducer from "../../reducer/PostReducer/PostReducer";
 import { ClassroomContext } from "../ClassroomProvider/ClassroomProvider";
 import { handleGetMethod } from "../../utilities/handleGetMethod";
 
-export const PostContext=createContext()
+export const PostContext = createContext()
 
-const PostProvider=({children})=>{
-    const {classroom}=useContext(ClassroomContext)
-    const[posts,dispatch]=useReducer(PostReducer,null)
+const PostProvider = ({ children }) => {
+    const { classroom } = useContext(ClassroomContext)
+    const [posts, dispatch] = useReducer(PostReducer, null)
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false)
 
@@ -24,28 +24,29 @@ const PostProvider=({children})=>{
         if (page < 2) {
             setLoading(true)
         }
-        const getPosts = async (url) => {
+        const getPosts = async () => {
+            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom?._id}&page=${page}`
             const result = await handleGetMethod(url)
             if (page === 1) {
                 //setPosts(result);
                 dispatch({
-                    type:'initialState',
-                    payload:result
+                    type: 'initialState',
+                    payload: result
                 })
             }
-            else {
-                //setPosts(prevPosts => [...prevPosts, ...result]);
+            else if (page < 20) {
+                const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom?._id}&page=${page}`
+                const result = await handleGetMethod(url)
                 dispatch({
-                    type:'onScroll',
-                    payload:result
+                    type: 'onScroll',
+                    payload: result
                 })
+
+
             }
             setLoading(false)
         }
-        if (page < 20) {
-            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom?._id}&page=${page}`
-            getPosts(url)
-        }
+        getPosts()
 
     }, [page])
 
@@ -55,11 +56,11 @@ const PostProvider=({children})=>{
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-    return(
-        <PostContext.Provider value={{loading,posts,dispatch}}>
+    return (
+        <PostContext.Provider value={{ loading, posts, dispatch }}>
             {children}
         </PostContext.Provider>
     )
 }
 
-export default PostProvider;
+export default memo(PostProvider);

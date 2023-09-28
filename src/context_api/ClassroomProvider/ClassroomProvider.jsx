@@ -27,7 +27,6 @@ const ClassroomProvider = ({ children }) => {
         getData()
     }, [])
 
-    console.log(classroom)
     return (
         <ClassroomContext.Provider value={{isLoading, classroom, dispatch }}>
             {children}

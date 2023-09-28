@@ -38,7 +38,7 @@ const ReplyBox = ({ comment }) => {
             <div className='flex flex-row gap-1 items-center justify-center my-2'>
                 <div>
                     <button
-                        className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
+                        className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-8 h-8"
                     >
                         {user.photoURL ? (
                             <img className='rounded-full' src={user.photoURL} />
@@ -50,7 +50,7 @@ const ReplyBox = ({ comment }) => {
                 <div className='flex flex-row items-center border w-full rounded-full bg-indigo-200 '>
                     <input
                         onChange={getUserReply}
-                        className=' w-full p-1 md:p-2 lg:p-2 outline-none bg-indigo-200 rounded-full'
+                        className=' w-full p-1 outline-none bg-indigo-200 rounded-full'
                         placeholder='Reply here'
                         value={userReply}
                         type="text"
@@ -58,7 +58,7 @@ const ReplyBox = ({ comment }) => {
                         id="reply" />
                     <button
                         onClick={() => handleReply()}
-                        className='flex flex-row items-center bg-indigo-300 hover:bg-indigo-400 gap-2 rounded-r-full p-1 md:p-2 lg:p-2 outline-0'>
+                        className='flex flex-row items-center bg-indigo-300 hover:bg-indigo-400 gap-2 rounded-r-full p-1 outline-0'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"

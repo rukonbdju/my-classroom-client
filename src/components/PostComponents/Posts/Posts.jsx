@@ -12,7 +12,7 @@ const Posts=()=>{
     const { user } = useAuth()
     const [openModal, setOpenModal] = useState(false)
     if (loading) {
-        return <div className="grid grid-cols-1gap-3 mt-6">
+        return <div className="grid grid-cols-1 gap-3 mt-6">
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
@@ -20,7 +20,7 @@ const Posts=()=>{
     }
     if (posts?.length == 0) {
         return <div>
-            {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal} setPosts={setPosts}></CreatePost>}
+            {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal}></CreatePost>}
             <div className='bg-indigo-300 p-2 rounded-md my-2'>
                 <div className="flex flex-row items-center gap-2">
                     <div>

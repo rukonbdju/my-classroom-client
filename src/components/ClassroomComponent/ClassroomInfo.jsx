@@ -13,7 +13,7 @@ const ClassrooomInfo = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className="w-11/12 md:w-5/6  lg:w-2/3 mx-auto mt-20">
+            <div className="w-11/12 md:w-3/5  lg:w-3/5 mx-auto mt-20">
                 <div>
                     <div className="p-5 rounded-xl shadow-md bg-gradient-to-r from-indigo-500 to-sky-500 relative">
                         <div className="absolute top-1 right-1">

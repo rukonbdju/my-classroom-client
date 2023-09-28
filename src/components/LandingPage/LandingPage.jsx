@@ -24,14 +24,14 @@ const LandingPage = () => {
         </p>
         <div className="flex flex-row gap-1 items-center justify-center">
           <Link to={"/register"}>
-            <button className="text-sm md:text-lg lg:text-xl uppercase border-2 text-white 
-            rounded-lg p-2 bg-gradient-to-r from-sky-500 to-indigo-500  hover:shadow-xl">
+            <button className="text-sm  uppercase border-2 text-white 
+            rounded-lg py-2 px-4 bg-gradient-to-r from-sky-500 to-indigo-500  hover:shadow-xl">
               Registration Now
             </button>
           </Link>
           <span>OR</span>
           <Link to={"classroom/join"}>
-            <button className="text-sm md:text-lg lg:text-xl uppercase rounded-lg p-2 
+            <button className="text-sm uppercase rounded-lg py-2 px-4 
             text-slate-50 bg-gradient-to-r from-sky-500 to-indigo-500 hover:shadow-md">
               Join Classroom
             </button>
