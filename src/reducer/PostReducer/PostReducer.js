@@ -21,7 +21,7 @@ const PostReducer=(posts,action)=>{
 
         }
         case actionTypes.delete: {
-
+            return posts.filter((post)=>post._id!==action.payload.id)
         }
         case actionTypes.like: {
 

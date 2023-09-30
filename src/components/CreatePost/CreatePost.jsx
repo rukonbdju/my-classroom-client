@@ -71,7 +71,6 @@ const CreatePost = ({ id, setOpenModal }) => {
       const postId = result.postId;
       if (result.modifiedCount) {
         data._id = postId;
-        //setPosts((prevPosts) => [data, ...prevPosts])
         dispatch({
           type:'add',
           payload:data

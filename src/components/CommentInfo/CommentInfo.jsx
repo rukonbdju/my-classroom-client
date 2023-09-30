@@ -11,7 +11,7 @@ const CommentInfo = ({ comment }) => {
             <div>
                 <h2 className='leading-none'>{comment?.author?.name}</h2>
                 <span className=' text-xs leading-none font-thin'>{comment?.timestamps}</span>
-                <p className='py-1 text-sm rounded-md break-words p-2'>
+                <p className='text-sm rounded-md break-words py-1'>
                     <span className='inline-block'>{comment?.content}</span>
                 </p>
             </div>

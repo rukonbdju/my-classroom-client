@@ -1,17 +1,25 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import useAuth from "../../hooks/Auth/useAuth"
 import handleDeleteMethod from "../../utilities/handleDeleteMethod"
 import Loader from "../Loader/Loader"
+import { PostContext } from "../../context_api/PostProvider/PostProvider"
 
 const DeletePost = ({post}) => {
     const {user}=useAuth()
     const [loading,setLoading]=useState(false)
+    const {dispatch}=useContext(PostContext)
 
     const handleDeletePost = async () => {
         setLoading(true)
         const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
-        /* setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id)) */
-        await handleDeleteMethod(url)
+        const result=await handleDeleteMethod(url)
+        console.log(result)
+        dispatch({
+            type:'delete',
+            payload:{
+                id:post._id
+            }
+        })
         setLoading(false)
     }
     return (

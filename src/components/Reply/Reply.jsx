@@ -2,7 +2,7 @@ import DeleteReply from "../DeleteReply/DeleteReply"
 
 const Reply = ({ reply }) => {
     return (
-        <div className=" relative bg-indigo-300 my-2 p-2 rounded-md">
+        <div className=" relative bg-indigo-100 my-2 p-2 rounded-md">
             <DeleteReply></DeleteReply>
             <div className='flex flex-row gap-2'>
             <div>
@@ -15,7 +15,7 @@ const Reply = ({ reply }) => {
             <div>
                 <h2 className='leading-none'>{reply?.author?.name}</h2>
                 <span className=' text-xs leading-none font-thin'>{reply?.timestamps}</span>
-                <p className='py-1 text-sm rounded-md break-words bg-indigo-300 p-2'>
+                <p className='py-1 text-sm rounded-md break-words'>
                     <span className='inline-block'>{reply?.content}</span>
                 </p>
             </div>
