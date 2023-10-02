@@ -1,15 +1,19 @@
 import { actionTypes } from "../PostReducer/actionTypes";
 
-const CommentReducer=()=>{
+const CommentReducer=(comments,action)=>{
+    console.log(comments)
     switch (action.type) {
+        case 'initialValue': {
+            return action.payload
+        }
         case actionTypes.add: {
-            
+            return[action.payload,...comments]
         }
         case actionTypes.edit: {
 
         }
         case actionTypes.delete: {
-
+            return comments.filter((comment)=>comment._id!==action.payload.commentId)
         }
         case actionTypes.like: {
 

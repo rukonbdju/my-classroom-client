@@ -3,7 +3,7 @@ import useAuth from "../../hooks/Auth/useAuth"
 import handleDeleteMethod from "../../utilities/handleDeleteMethod"
 import Loader from "../Loader/Loader"
 
-const DeleteComment = ({ setCommentCount, setComments, comment }) => {
+const DeleteComment = ({ commentDispatch,dispatch, comment }) => {
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
 
@@ -16,8 +16,18 @@ const DeleteComment = ({ setCommentCount, setComments, comment }) => {
                 postId: comment.postId
             }
             const res = await handleDeleteMethod(url, data)
-            setComments(prev => prev.filter(c => c._id !== res.commentId))
-            setCommentCount(prev => prev - 1)
+            commentDispatch({
+                type:'delete',
+                payload:{
+                    commentId:comment._id
+                }
+            })
+            dispatch({
+                type:'deleteComment',
+                payload:{
+                    commentId:comment._id
+                }
+            })
             setLoading(false)
         } catch (error) {
             console.log(error)

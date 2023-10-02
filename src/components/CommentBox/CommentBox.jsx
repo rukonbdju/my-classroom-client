@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import useAuth from '../../hooks/Auth/useAuth';
 import { handlePostMethod } from '../../utilities/handlePostMethod';
 import Loader from '../Loader/Loader';
@@ -6,23 +6,29 @@ import { handleGetMethod } from '../../utilities/handleGetMethod';
 import Comment from '../Comment/Comment';
 import Placeholder from './Placeholder';
 import ReplyBox from '../ReplyBox/ReplyBox';
+import CommentReducer from '../../reducer/CommentReducer/CommentReducer';
 
-const CommentBox = ({ post,dispatch,setOpenComments }) => {
+const CommentBox = ({ post,dispatch}) => {
     const { user } = useAuth()
     const [comment, setComment] = useState('')
     const [loading, setLoading] = useState(false)
-    const [comments, setComments] = useState([])
+    //const [comments, setComments] = useState([])
+    const [comments,commentDispatch]=useReducer(CommentReducer,[])
     //get all comments of a post
     useEffect(() => {
         setLoading(true)
         const getComments = async (url) => {
             const result = await handleGetMethod(url)
             console.log(result)
-            setComments(result)
+            commentDispatch({
+                type:"initialValue",
+                payload:result
+            })
             setLoading(false)
         }
         const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${post._id}`
          getComments(url)
+         
     }, [])
 
     //get user comment form input
@@ -55,7 +61,11 @@ const CommentBox = ({ post,dispatch,setOpenComments }) => {
                     commentId:saveCommentResult.commentId
                 }
             })
-            setComments((prevComments)=>[data,...prevComments])
+            commentDispatch({
+                type:'add',
+                payload:data
+            })
+            //setComments((prevComments)=>[data,...prevComments])
         } catch (error) {
             console.log(error)
         }
@@ -108,7 +118,8 @@ const CommentBox = ({ post,dispatch,setOpenComments }) => {
             </div>
             {comments?.length ? comments?.map((comment) => <Comment
                 key={comment._id}
-                setComments={setComments}
+                commentDispatch={commentDispatch}
+                dispatch={dispatch}
                 comment={comment}
             ></Comment>) : <></>}
         </div>

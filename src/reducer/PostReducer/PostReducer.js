@@ -7,6 +7,9 @@ const PostReducer = (post, action) => {
         case 'updateComments': {
             return {...post,comments:[...post.comments,action.payload.commentId]};
         }
+        case 'deleteComment': {
+            return {...post,comments:post.comments.filter(id=>id!==action.payload.commentId)};
+        }
         case actionTypes.like: {
             return { ...post, likes: [...post?.likes, action.payload.userId] }
         }

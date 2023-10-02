@@ -3,8 +3,6 @@ import CommentBox from '../../CommentBox/CommentBox';
 import DeletePost from '../../DeletePost/DeletePost';
 import UpdateLike from '../../Updatelike/UpdateLike';
 import PostInfo from '../../PostInfo/PostInfo';
-import useAuth from '../../../hooks/Auth/useAuth';
-import { PostContext } from '../../../context_api/PostProvider/PostProvider';
 import { handleGetMethod } from '../../../utilities/handleGetMethod';
 import Placeholder from '../Posts/Placeholder';
 import PostReducer from '../../../reducer/PostReducer/PostReducer';
