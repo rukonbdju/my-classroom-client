@@ -6,12 +6,11 @@ import { handleGetMethod } from "../../utilities/handleGetMethod";
 export const PostContext = createContext()
 
 const PostProvider = ({ children }) => {
-    const { classroom } = useContext(ClassroomContext)
-    const [posts, dispatch] = useReducer(PostReducer, null)
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false)
-
-    const handleScroll = () => {
+    const [post, dispatch] = useReducer(PostReducer, null)
+    
+    //const [page, setPage] = useState(1);
+    //const [loading, setLoading] = useState(false)
+    /* const handleScroll = () => {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
         const clientHeight = document.documentElement.clientHeight;
@@ -55,9 +54,9 @@ const PostProvider = ({ children }) => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, []); */
     return (
-        <PostContext.Provider value={{ loading, posts, dispatch }}>
+        <PostContext.Provider value={{ post, dispatch }}>
             {children}
         </PostContext.Provider>
     )

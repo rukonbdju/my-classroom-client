@@ -2,25 +2,27 @@ import { useContext, useState } from "react"
 import useAuth from "../../hooks/Auth/useAuth"
 import handleDeleteMethod from "../../utilities/handleDeleteMethod"
 import Loader from "../Loader/Loader"
-import { PostContext } from "../../context_api/PostProvider/PostProvider"
+import { ClassroomContext } from "../../context_api/ClassroomProvider/ClassroomProvider"
 
 const DeletePost = ({post}) => {
     const {user}=useAuth()
     const [loading,setLoading]=useState(false)
-    const {dispatch}=useContext(PostContext)
-
+    const {dispatch}=useContext(ClassroomContext)
     const handleDeletePost = async () => {
         setLoading(true)
         const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
         const result=await handleDeleteMethod(url)
-        console.log(result)
         dispatch({
             type:'delete',
             payload:{
-                id:post._id
+                postId:post?._id
             }
         })
         setLoading(false)
+    }
+    const handleEditPost = async () => {
+       //edit post  
+        
     }
     return (
         <div className="absolute  top-1 right-1">
@@ -39,7 +41,9 @@ const DeletePost = ({post}) => {
                 </div>
                 {post?.author?.id == user.uid ? <div className="absolute hidden group-focus-within:block right-0 w-24 bg-slate-400 rounded">
                     <div className='border'>
-                        <p className="p-1 flex hover:bg-slate-300 ">Edit</p>
+                        <p onClick={() => handleEditPost()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
+                            {loading && <Loader></Loader>}<span>Edit</span>
+                        </p>
                         <hr />
                         <p onClick={() => handleDeletePost()} className="p-1 flex flex-row items-center gap-2 hover:bg-slate-300 ">
                             {loading && <Loader></Loader>}<span>Delete</span>

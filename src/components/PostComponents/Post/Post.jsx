@@ -1,24 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import CommentBox from '../../CommentBox/CommentBox';
 import DeletePost from '../../DeletePost/DeletePost';
 import UpdateLike from '../../Updatelike/UpdateLike';
 import PostInfo from '../../PostInfo/PostInfo';
 import useAuth from '../../../hooks/Auth/useAuth';
+import { PostContext } from '../../../context_api/PostProvider/PostProvider';
+import { handleGetMethod } from '../../../utilities/handleGetMethod';
+import Placeholder from '../Posts/Placeholder';
+import PostReducer from '../../../reducer/PostReducer/PostReducer';
 
-const Post = ({ post }) => {
-    const { user } = useAuth()
+const Post = ({ id}) => {
+    const [post, dispatch] = useReducer(PostReducer, {})
     const [openComment, setOpenComment] = useState(false)
-    const [commentCount, setCommentCount] = useState(post?.comments?.length)
-    const [isLiked, setIsLiked] = useState(false)
-    const [likeCount, setLikeCount] = useState(post?.likes?.length ? post?.likes?.length : 0)
+    const [loading, setLaoding] = useState(false)
     useEffect(() => {
-        for (let i = 0; i < post?.likes?.length; i++) {
-            const id = post?.likes[i];
-            if (post?.likes[i] == user?.uid) {
-                setIsLiked(true)
-            }
+        
+        setLaoding(true)
+        const getPostById = async () => {
+            const url = `http://localhost:3000/api/v1/posts/${id}`;
+            const result = await handleGetMethod(url)
+            dispatch({
+                type:'initialState',
+                payload:result
+            })
+            setLaoding(false)
         }
-    }, [post])
+        getPostById()
+
+    }, [id])
+    if (loading) {
+        return <Placeholder></Placeholder>
+    }
 
     return (
         <div className='border border-indigo-500 relative p-2 rounded-md my-8'>
@@ -39,17 +51,14 @@ const Post = ({ post }) => {
                     <PostInfo post={post}></PostInfo>
                     <div className='flex flex-row justify-between items-end'>
                         <div className='flex flex-row  gap-2'>
-                            <span className='text-xs'>{likeCount} Likes</span>
+                            <span className='text-xs'>{post?.likes?.length} Likes</span>
                             <span
                                 onClick={() => setOpenComment(!openComment)}
-                                className='text-xs cursor-pointer hover:underline'>{commentCount} Comments</span>
+                                className='text-xs cursor-pointer hover:underline'>{post?.comments?.length} Comments</span>
                         </div>
                         <div className='flex flex-row justify-end gap-2 items-center'>
                             <UpdateLike
-                                isLiked={isLiked}
-                                setIsLiked={setIsLiked}
-                                setLikeCount={setLikeCount}
-                                postId={post?._id}>
+                                post={post} dispatch={dispatch}>
                             </UpdateLike>
                             <button
                                 onClick={() => setOpenComment(!openComment)}
@@ -64,15 +73,13 @@ const Post = ({ post }) => {
                                     <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                     <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z" />
                                 </svg>
-                                {/* <span className='hidden md:inline lg:inline'>comments</span> */}
                             </button>
                         </div>
                     </div>
 
                     <div className=''>
                         {openComment && <CommentBox
-                            setCommentCount={setCommentCount}
-                            postId={post?._id}
+                            post={post} dispatch={dispatch}
                             setOpenComment={setOpenComment}>
                         </CommentBox>}
                     </div>

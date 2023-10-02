@@ -9,7 +9,6 @@ const ClassrooomInfo = () => {
     const { user } = useAuth()
     const [classrooms, setClassrooms] = useState([]);
     const [loading, setLoading] = useState(false);
-    console.log(classrooms)
 
     //get classroom
     useEffect(() => {

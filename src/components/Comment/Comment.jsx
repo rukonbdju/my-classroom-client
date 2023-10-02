@@ -3,12 +3,11 @@ import ReplyBox from '../ReplyBox/ReplyBox';
 import CommentInfo from '../CommentInfo/CommentInfo';
 import DeleteComment from '../DeleteComment/DeleteComment';
 
-const Comment = ({ setComments, setCommentCount, comment }) => {
+const Comment = ({ setComments, comment }) => {
     const [displayReply, setDisplayReply] = useState(false)
     return (
         <div className=' my-2 relative p-2 bg-indigo-50 rounded-md'>
             <DeleteComment
-                setCommentCount={setCommentCount}
                 setComments={setComments}
                 comment={comment}>
             </DeleteComment>

@@ -4,6 +4,7 @@ import { handlePostMethod } from "../../utilities/handlePostMethod";
 import Loader from "../Loader/Loader";
 import useFirebaseStorage from "../../hooks/Firebase/useFirebaseStorage";
 import { PostContext } from "../../context_api/PostProvider/PostProvider";
+import { ClassroomContext } from "../../context_api/ClassroomProvider/ClassroomProvider";
 
 const CreatePost = ({ id, setOpenModal }) => {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ const CreatePost = ({ id, setOpenModal }) => {
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false)
   const [fileSizeError, setFileSizeError] = useState(false)
-  const {dispatch}=useContext(PostContext)
+  const {dispatch}=useContext(ClassroomContext)
 
   //file upload on UI
   const handleChangeFile = (e) => {
@@ -70,10 +71,11 @@ const CreatePost = ({ id, setOpenModal }) => {
       const result = await handlePostMethod(postUrl, data)
       const postId = result.postId;
       if (result.modifiedCount) {
-        data._id = postId;
         dispatch({
           type:'add',
-          payload:data
+          payload:{
+            id:postId
+          }
         })
       }
       setOpenModal(false)

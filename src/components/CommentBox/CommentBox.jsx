@@ -7,22 +7,22 @@ import Comment from '../Comment/Comment';
 import Placeholder from './Placeholder';
 import ReplyBox from '../ReplyBox/ReplyBox';
 
-const CommentBox = ({ setCommentCount, postId }) => {
+const CommentBox = ({ post,dispatch,setOpenComments }) => {
     const { user } = useAuth()
     const [comment, setComment] = useState('')
     const [loading, setLoading] = useState(false)
     const [comments, setComments] = useState([])
-
     //get all comments of a post
     useEffect(() => {
         setLoading(true)
         const getComments = async (url) => {
             const result = await handleGetMethod(url)
+            console.log(result)
             setComments(result)
             setLoading(false)
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${postId}`
-        getComments(url)
+        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${post._id}`
+         getComments(url)
     }, [])
 
     //get user comment form input
@@ -35,7 +35,7 @@ const CommentBox = ({ setCommentCount, postId }) => {
     const handleComment = async () => {
         try {
             let data = {
-                postId: postId,
+                postId: post._id,
                 author: {
                     id: user.uid,
                     name: user.displayName,
@@ -46,11 +46,16 @@ const CommentBox = ({ setCommentCount, postId }) => {
                 likes: [],
                 replies: []
             }
-            setCommentCount((prevCount) => prevCount + 1)
             const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             data._id = saveCommentResult.commentId;
-            setComments(prev => [data, ...prev])
+            dispatch({
+                type:'updateComments',
+                payload:{
+                    commentId:saveCommentResult.commentId
+                }
+            })
+            setComments((prevComments)=>[data,...prevComments])
         } catch (error) {
             console.log(error)
         }
@@ -103,7 +108,6 @@ const CommentBox = ({ setCommentCount, postId }) => {
             </div>
             {comments?.length ? comments?.map((comment) => <Comment
                 key={comment._id}
-                setCommentCount={setCommentCount}
                 setComments={setComments}
                 comment={comment}
             ></Comment>) : <></>}

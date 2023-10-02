@@ -7,18 +7,17 @@ import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../Post/Post";
 
 const Posts=()=>{
-    const {loading,posts,dispatch}=useContext(PostContext)
-    const {classroom}=useContext(ClassroomContext)
+    const {classroom,dispatch}=useContext(ClassroomContext)
     const { user } = useAuth()
     const [openModal, setOpenModal] = useState(false)
-    if (loading) {
+    /* if (loading) {
         return <div className="grid grid-cols-1 gap-3 mt-6">
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
             <Placeholder></Placeholder>
         </div>
-    }
-    if (posts?.length == 0) {
+    } */
+    if (classroom?.posts?.length == 0) {
         return <div>
             {openModal && <CreatePost id={classroom._id} setOpenModal={setOpenModal}></CreatePost>}
             <div className='bg-indigo-300 p-2 rounded-md my-2'>
@@ -54,7 +53,7 @@ const Posts=()=>{
                     <div>
                         <button
                             className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12 ">
-                            {user?.photoURL ? <img className='rounded-full' src={user.photoURL} />
+                            {user?.photoURL ? <img className='rounded-full' src={user?.photoURL} />
                                 : user?.displayName?.slice(0, 1)}
                         </button>
                     </div>
@@ -68,7 +67,7 @@ const Posts=()=>{
                     />
                 </div>
             </div>
-            {posts?.map((post,index) => <Post key={index} post={post}></Post>)}
+            {classroom?.posts?.map((id) => <Post key={id} id={id} classroomDispatch={dispatch}></Post>)}
         </div>
     );
 }
