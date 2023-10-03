@@ -1,0 +1,28 @@
+import { useEffect, useState } from "react";
+import { handleGetMethod } from "../../utilities/handleGetMethod";
+import useAuth from "../Auth/useAuth";
+
+const useCreatedClassroom=()=>{
+    const { user } = useAuth();
+    const [createdClassrooms, setCreatedClassrooms] = useState([]);
+    const [loading, setLoading] = useState(false);
+  
+    //get classroom
+    useEffect(() => {
+      const getClassrooms = async (url) => {
+        try {
+          setLoading(true);
+          const result = await handleGetMethod(url);
+          setCreatedClassrooms(result?.filter(classroom => !(classroom?.archived?.find(id => id == user.uid))))
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      const url = `http://localhost:3000/api/v1/classrooms/find/${user.uid}`;
+      getClassrooms(url);
+    }, []);
+    return {loading,createdClassrooms}
+}
+export default useCreatedClassroom;

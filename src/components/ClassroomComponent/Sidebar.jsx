@@ -1,29 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
-import { ClassroomContext } from '../../context_api/ClassroomProvider/ClassroomProvider'
-import useAuth from '../../hooks/Auth/useAuth'
 import { Link } from 'react-router-dom'
-import { handleGetMethod } from '../../utilities/handleGetMethod'
+import useArchivedClassroom from '../../hooks/API/useArchivedClassroom'
+import useCreatedClassroom from '../../hooks/API/useCreatedClassroom'
+import useEnrolledClassroom from '../../hooks/API/useEnrolledClassroom'
 const Sidebar = () => {
-    const { user } = useAuth()
-    const [classrooms, setClassrooms] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    //get classroom
-    useEffect(() => {
-        const getClassrooms = async (url) => {
-            try {
-                setLoading(true);
-                const result = await handleGetMethod(url);
-                setClassrooms(result?.filter(classroom => !(classroom?.archived?.find(id => id == user.uid))))
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
-        getClassrooms(url);
-    }, []);
+    const {archivedClassroom}=useArchivedClassroom()
+    const {createdClassrooms}=useCreatedClassroom()
+    const{loading,enrolledClassroom}=useEnrolledClassroom()
     if (loading) {
         return <div className='w-8 h-3 animate-ping'></div>
     }
@@ -34,8 +16,8 @@ const Sidebar = () => {
                     <h2 className='text-xl font-bold'>Enrolled</h2>
                     <div className='flex flex-col gap-2'>
                         {
-                            classrooms.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
-                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer' >{classroom?.name}</li>
+                            enrolledClassroom?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
+                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer active:scale-90 transition-all' >{classroom?.name}</li>
                             </Link>)
                         }
                     </div>
@@ -46,8 +28,8 @@ const Sidebar = () => {
                     <h2 className='text-xl font-bold'>Created</h2>
                     <div className='flex flex-col gap-2'>
                         {
-                            classrooms.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
-                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer' >{classroom?.name}</li>
+                            createdClassrooms?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
+                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer active:scale-90 transition-all' >{classroom?.name}</li>
                             </Link>)
                         }
                     </div>
@@ -58,8 +40,8 @@ const Sidebar = () => {
                     <h2 className='text-xl font-bold'>Archived</h2>
                     <div className='flex flex-col gap-2'>
                         {
-                            classrooms.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
-                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer' >{classroom?.name}</li>
+                            archivedClassroom?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
+                                <li className='bg-indigo-500 p-2 rounded list-none cursor-pointer active:scale-90 transition-all' >{classroom?.name}</li>
                             </Link>)
                         }
                     </div>

@@ -26,7 +26,7 @@ const CommentBox = ({ post,dispatch}) => {
             })
             setLoading(false)
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${post._id}`
+        const url = `http://localhost:3000/api/v1/comments?postId=${post._id}`
          getComments(url)
          
     }, [])
@@ -52,7 +52,7 @@ const CommentBox = ({ post,dispatch}) => {
                 likes: [],
                 replies: []
             }
-            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments`
+            const commentUrl = `http://localhost:3000/api/v1/comments`
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             data._id = saveCommentResult.commentId;
             dispatch({

@@ -24,7 +24,7 @@ const PostProvider = ({ children }) => {
             setLoading(true)
         }
         const getPosts = async () => {
-            const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom?._id}&page=${page}`
+            const url = `http://localhost:3000/api/v1/posts?classId=${classroom?._id}&page=${page}`
             const result = await handleGetMethod(url)
             if (page === 1) {
                 //setPosts(result);
@@ -34,7 +34,7 @@ const PostProvider = ({ children }) => {
                 })
             }
             else if (page < 20) {
-                const url = `https://my-classroom-server.onrender.com/api/v1/posts?classId=${classroom?._id}&page=${page}`
+                const url = `http://localhost:3000/api/v1/posts?classId=${classroom?._id}&page=${page}`
                 const result = await handleGetMethod(url)
                 dispatch({
                     type: 'onScroll',

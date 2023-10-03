@@ -5,7 +5,7 @@ import classroom from "/classroom.svg";
 
 const LandingPage = () => {
   //for server start 
-  fetch('https://my-classroom-server.onrender.com/').then((res)=>console.log(res.status))
+  fetch('http://localhost:3000/').then((res)=>console.log(res.status))
   return (
     <div>
       <Navbar></Navbar>

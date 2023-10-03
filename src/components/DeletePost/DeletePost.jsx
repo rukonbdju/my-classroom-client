@@ -10,7 +10,7 @@ const DeletePost = ({post}) => {
     const {dispatch}=useContext(ClassroomContext)
     const handleDeletePost = async () => {
         setLoading(true)
-        const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
+        const url = `http://localhost:3000/api/v1/posts?id=${post._id}&classId=${post.classId}`
         const result=await handleDeleteMethod(url)
         dispatch({
             type:'delete',

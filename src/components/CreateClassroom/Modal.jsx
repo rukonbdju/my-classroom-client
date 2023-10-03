@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const Modal = ({ classCode }) => {
     const navigate = useNavigate()
     const handleCloseModal = () => {
-        navigate("/classroom");
+        navigate("/classrooms");
     };
     return (
         <div className="absolute h-screen w-screen bg-slate-700 bg-opacity-50 top-0 left-0 flex items-center justify-center">

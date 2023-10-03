@@ -11,7 +11,7 @@ const DeleteComment = ({ commentDispatch,dispatch, comment }) => {
     const handleDeleteComment = async () => {
         try {
             setLoading(true)
-            const url = `https://my-classroom-server.onrender.com/api/v1/comments/${comment._id}`
+            const url = `http://localhost:3000/api/v1/comments/${comment._id}`
             const data = {
                 postId: comment.postId
             }

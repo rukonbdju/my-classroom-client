@@ -24,7 +24,7 @@ const ReplyBox = ({ comment }) => {
                 timestamps: new Date().toString(),
                 likes: []
             }
-            const commentUrl = `https://my-classroom-server.onrender.com/api/v1/comments/${comment._id}`
+            const commentUrl = `http://localhost:3000/api/v1/comments/${comment._id}`
             await handlePutMethod(commentUrl, data)
             setUserReply('')
             setReplies(pre => [data, ...pre])

@@ -21,7 +21,7 @@ const Student = ({ student }) => {
             }
 
         }
-        const url = `https://my-classroom-server.onrender.com/api/v1/users/${student.userId}`
+        const url = `http://localhost:3000/api/v1/users/${student.userId}`
         getStudent(url)
     }, [student])
 
