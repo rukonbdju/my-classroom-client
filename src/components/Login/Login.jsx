@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate()
   let location = useLocation();
 
-  let from = location.state?.from?.pathname || "/classroom";
+  let from = location.state?.from?.pathname || "/classrooms";
 
   const [loading, setLoading] = useState()
   const { signInWithGoogle, signInWithEmail, user, errorMessage } = useAuth()
@@ -42,7 +42,7 @@ const Login = () => {
         created_at: new Date().toString()
       }
       // save user in mongodb 
-      const url = "http://localhost:3000/api/v1/users";
+      const url = "https://my-classroom-server.onrender.com/api/v1/users";
       await handlePostMethod(url, data)
 
     } catch (error) {

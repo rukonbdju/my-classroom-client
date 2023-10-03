@@ -23,7 +23,7 @@ const Students = () => {
                 console.log(error);
             }
         };
-        const url = `http://localhost:3000/api/v1/classrooms/${id}`;
+        const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${id}`;
         getClassroom(url)
     }, [id])
     if (loading) {

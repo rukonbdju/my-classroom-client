@@ -43,7 +43,7 @@ const Navbar = () => {
               <div className="absolute top-6 right-0 hidden group-focus-within:block mt-5 bg-slate-300">
                 <div className="bg-indigo-700 p-2">
                   <Link
-                    to={"/classroom"}
+                    to={"/classrooms"}
                     className="font-bold text-white hover:bg-indigo-950 block p-2 text-left pr-5"
                   >
                     Classroom

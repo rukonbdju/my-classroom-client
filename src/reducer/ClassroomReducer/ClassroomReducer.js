@@ -7,7 +7,7 @@ const ClassroomReducer = (classroom, action) => {
             return action.payload;
         }
         case 'add': {
-            if (classroom.posts.find(id => id === action.payload.id)) {
+            if (classroom?.posts?.find(id => id === action.payload.id)) {
                 return classroom
             }
             else {

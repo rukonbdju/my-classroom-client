@@ -8,7 +8,7 @@ const Register = () => {
   const navigate = useNavigate()
   let location = useLocation();
 
-  let from = location.state?.from?.pathname || "/classroom";
+  let from = location.state?.from?.pathname || "/classrooms";
   //state
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('')
@@ -60,7 +60,7 @@ const Register = () => {
           created_at: new Date().toString()
         }
         // save user in mongodb 
-        const url = "http://localhost:3000/api/v1/users";
+        const url = "https://my-classroom-server.onrender.com/api/v1/users";
         const addUserToDB= await handlePostMethod(url, data)
         setSavedUserResult(addUserToDB)
       }     

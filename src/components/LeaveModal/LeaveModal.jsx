@@ -8,7 +8,7 @@ const LeaveModal = ({ setOpenModal,classroomId }) => {
     const {user}=useAuth()
     const handleLeaveClassroom=async()=>{
         try{
-            const url=`http://localhost:3000/api/v1/classrooms/leave/${classroomId}`
+            const url=`https://my-classroom-server.onrender.com/api/v1/classrooms/leave/${classroomId}`
             const data={userId:user.uid}
             const result =await handlePutMethod(url,data)
             if(result.deleteClassroomId.modifiedCount && result.deleteMemberInfo.modifiedCount){

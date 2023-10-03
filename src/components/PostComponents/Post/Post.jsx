@@ -15,7 +15,7 @@ const Post = ({ id}) => {
         
         setLaoding(true)
         const getPostById = async () => {
-            const url = `http://localhost:3000/api/v1/posts/${id}`;
+            const url = `https://my-classroom-server.onrender.com/api/v1/posts/${id}`;
             const result = await handleGetMethod(url)
             dispatch({
                 type:'initialState',

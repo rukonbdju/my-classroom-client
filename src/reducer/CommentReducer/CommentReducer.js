@@ -1,7 +1,6 @@
 import { actionTypes } from "../PostReducer/actionTypes";
 
 const CommentReducer=(comments,action)=>{
-    console.log(comments)
     switch (action.type) {
         case 'initialValue': {
             return action.payload

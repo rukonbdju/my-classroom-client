@@ -12,11 +12,9 @@ const useEnrolledClassroom = () => {
                 setLoading(true);
                 const result = await handleGetMethod(url);
                 const data={ids:result?.joined}
-                console.log(data)
                 if (result?.joined) {
-                        const url = 'http://localhost:3000/api/v1/classrooms/joinedClassrooms'
+                        const url = 'https://my-classroom-server.onrender.com/api/v1/classrooms/joinedClassrooms'
                         const result2 = await handleGetMethod(url,data); 
-                        console.log(result2)
                         setEnrolledClassroom(result2)  
                 }
             } catch (error) {
@@ -25,7 +23,7 @@ const useEnrolledClassroom = () => {
                 setLoading(false);
             }
         };
-        const enrollUrl = `http://localhost:3000/api/v1/users/${user.uid}`;
+        const enrollUrl = `https://my-classroom-server.onrender.com/api/v1/users/${user.uid}`;
         getEnrolledClassrooms(enrollUrl);
     }, []);
     return {loading,enrolledClassroom}

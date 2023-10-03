@@ -20,7 +20,7 @@ const useArchivedClassroom = () => {
                 setLoading(false);
             }
         };
-        const url = `http://localhost:3000/api/v1/classrooms`;
+        const url = `https://my-classroom-server.onrender.com/api/v1/classrooms`;
         getClassrooms(url);
     }, [])
 

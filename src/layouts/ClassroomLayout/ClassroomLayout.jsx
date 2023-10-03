@@ -6,25 +6,8 @@ import PostLayout from '../PostLayout/PostLayout';
 import { handleGetMethod } from '../../utilities/handleGetMethod';
 
 const ClassroomLayout = () => {
-    const params = useParams()
     const { user } = useAuth()
-    const { classroom,dispatch} = useContext(ClassroomContext)
-    /* useEffect(() => {
-        const getData = async () => {
-            try {
-                const result = await handleGetMethod(url)
-                dispatch({ type: 'newState', payload: result })
-            } catch (error) {
-                console.log(error)
-            }
-            finally{
-                
-            }
-
-        }
-        const url = `http://localhost:3000/api/v1/classrooms/${params.id}`;
-        getData()
-    }, [params]) */
+    const { classroom} = useContext(ClassroomContext)
     return (
         <div className='flex flex-row justify-between w-full'>
                     <main className='w-11/12 md:w-4/5  lg:w-3/5 mx-auto  mt-20'>

@@ -15,7 +15,6 @@ const PostReducer = (post, action) => {
         }
         case actionTypes.dislike: {
             const newArr = post?.likes?.filter(id => action.payload.userId !== id)
-            console.log(newArr)
             return { ...post, likes: newArr }
         }
         default: {

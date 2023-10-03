@@ -14,7 +14,7 @@ const UpdateLike = ({ post, dispatch }) => {
     }, [post])
     //handle delete and update likes
     const handleUpdateLike = async (status) => {
-        const url = `http://localhost:3000/api/v1/posts/like/${post._id}`;
+        const url = `https://my-classroom-server.onrender.com/api/v1/posts/like/${post._id}`;
         const data = {
             userId: user.uid,
             like: status
@@ -22,7 +22,6 @@ const UpdateLike = ({ post, dispatch }) => {
         await handlePutMethod(url, data)
 
         if (status=='true') {
-            console.log({status})
             dispatch({
                 type: 'like',
                 payload: {
@@ -31,7 +30,6 @@ const UpdateLike = ({ post, dispatch }) => {
             })
         }
         else {
-        console.log({status})
             dispatch({
                 type: 'dislike',
                 payload: {
