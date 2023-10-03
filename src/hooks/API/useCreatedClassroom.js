@@ -5,24 +5,24 @@ import useAuth from "../Auth/useAuth";
 const useCreatedClassroom=()=>{
     const { user } = useAuth();
     const [createdClassrooms, setCreatedClassrooms] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loadingCreatedClassrooms, setLoadingCreatedClassrooms] = useState(false);
   
     //get classroom
     useEffect(() => {
       const getClassrooms = async (url) => {
         try {
-          setLoading(true);
+          setLoadingCreatedClassrooms(true);
           const result = await handleGetMethod(url);
           setCreatedClassrooms(result?.filter(classroom => !(classroom?.archived?.find(id => id == user.uid))))
         } catch (error) {
           console.log(error);
         } finally {
-          setLoading(false);
+          setLoadingCreatedClassrooms(false);
         }
       };
       const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/find/${user.uid}`;
       getClassrooms(url);
     }, []);
-    return {loading,createdClassrooms}
+    return {loadingCreatedClassrooms,createdClassrooms}
 }
 export default useCreatedClassroom;

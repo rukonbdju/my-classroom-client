@@ -1,11 +1,9 @@
 
 import { Link, Outlet } from "react-router-dom";
 import ClassroomProvider from "../../context_api/ClassroomProvider/ClassroomProvider";
-import useAuth from "../../hooks/Auth/useAuth";
-import { useContext, useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import { handleGetMethod } from "../../utilities/handleGetMethod";
 import Sidebar from "../../components/ClassroomComponent/Sidebar";
+import RightSidebar from "../../components/ClassroomComponent/RightSidebar/RightSidebar";
 
 
 const MainLayout = () => {
@@ -13,9 +11,10 @@ const MainLayout = () => {
     <ClassroomProvider>
       <div>
         <Navbar></Navbar>
-        <div className='flex flex-row gap-2'>
+        <div className='flex flex-row gap-4 '>
           <Sidebar></Sidebar>
           <Outlet></Outlet>
+          <RightSidebar></RightSidebar>
         </div>
       </div>
     </ClassroomProvider>

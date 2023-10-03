@@ -21,18 +21,19 @@ const CreateClassroom = () => {
       // class creation data from user
       const data = {
         name: e.target.name.value,
-        description: e.target.description.value,
         author: {
           id: user.uid,
           name: user.displayName,
           photoURL: user.photoURL
         },
+        description: e.target.description.value,
         members: [{
           userId: user.uid,
           role: 'teacher'
         }],
         cover_photo: '',
-        created_at: new Date().toString()
+        created_at: new Date().toString(),
+        posts:[]
       }
 
       //create new classroom

@@ -5,11 +5,11 @@ import useAuth from "../Auth/useAuth";
 const useEnrolledClassroom = () => {
     const { user } = useAuth()
     const [enrolledClassroom, setEnrolledClassroom] = useState([])
-    const [loading,setLoading]=useState(false)
+    const [loadingEnrolledClassroom,setLoadingEnrolledClassroom]=useState(false)
     useEffect(() => {
         const getEnrolledClassrooms = async (url) => {
             try {
-                setLoading(true);
+                setLoadingEnrolledClassroom(true);
                 const result = await handleGetMethod(url);
                 const data={ids:result?.joined}
                 if (result?.joined) {
@@ -20,12 +20,12 @@ const useEnrolledClassroom = () => {
             } catch (error) {
                 console.log(error);
             } finally {
-                setLoading(false);
+                setLoadingEnrolledClassroom(false);
             }
         };
         const enrollUrl = `https://my-classroom-server.onrender.com/api/v1/users/${user.uid}`;
         getEnrolledClassrooms(enrollUrl);
     }, []);
-    return {loading,enrolledClassroom}
+    return {loadingEnrolledClassroom,enrolledClassroom}
 }
 export default useEnrolledClassroom
