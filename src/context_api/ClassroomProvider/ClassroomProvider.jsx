@@ -6,7 +6,7 @@ import { handleGetMethod } from "../../utilities/handleGetMethod";
 export const ClassroomContext = createContext()
 
 const ClassroomProvider = ({ children }) => {
-    const params = useParams()
+    const params=useParams()
     const [isLoading,setIsLoading]=useState(false)
     const [classroom, dispatch] = useReducer(ClassroomReducer, null)
     useEffect(() => {
@@ -25,7 +25,7 @@ const ClassroomProvider = ({ children }) => {
         }
         const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
         getData()
-    }, [])
+    }, [params])
 
     return (
         <ClassroomContext.Provider value={{isLoading, classroom, dispatch }}>

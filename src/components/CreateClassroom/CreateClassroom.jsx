@@ -5,6 +5,7 @@ import { handlePostMethod } from "../../utilities/handlePostMethod";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
 import Loader from "../Loader/Loader";
 import Modal from "./Modal";
+import Navbar from "../Navbar/Navbar";
 
 const CreateClassroom = () => {
   const [loading, setLoading] = useState(false);
@@ -52,7 +53,9 @@ const CreateClassroom = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div>
+      <Navbar></Navbar>
+      <div className="w-screen h-screen flex items-center justify-center">
       <div className="w-5/6 mx-auto">
         <form
           onSubmit={handleCreateClassroom}
@@ -98,6 +101,7 @@ const CreateClassroom = () => {
         </form>
       </div>
       {classCreationResult?.classCode && <Modal classCode={classCreationResult?.classCode}></Modal>}
+    </div>
     </div>
   );
 };

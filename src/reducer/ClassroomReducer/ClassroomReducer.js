@@ -3,6 +3,9 @@ const ClassroomReducer = (classroom, action) => {
         case 'initialState': {
             return action.payload;
         }
+        case 'newState': {
+            return action.payload;
+        }
         case 'add': {
             if (classroom.posts.find(id => id === action.payload.id)) {
                 return classroom

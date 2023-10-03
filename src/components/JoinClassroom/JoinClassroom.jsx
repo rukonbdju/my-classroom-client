@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import { handlePutMethod } from "../../utilities/handlePutMethod";
 import Loader from "../Loader/Loader"
+import Navbar from "../Navbar/Navbar";
 
 const JoinClassroom = () => {
   const navigate = useNavigate()
@@ -56,7 +57,9 @@ const JoinClassroom = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div>
+      <Navbar></Navbar>
+      <div className="w-screen h-screen flex items-center justify-center">
       <div className="w-5/6 mx-auto">
         <form
           onSubmit={handleJoinClassroom}
@@ -113,6 +116,7 @@ const JoinClassroom = () => {
           </span>
         </form>
       </div>
+    </div>
     </div>
   );
 };

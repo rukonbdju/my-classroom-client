@@ -17,43 +17,17 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LandingPage></LandingPage>} />
-        <Route
-          path="/classroom"
-          element={<AuthRoute><ClassroomLayout></ClassroomLayout></AuthRoute>}>
-          <Route
-            index
-            element={<Classrooms></Classrooms>}></Route>
-          <Route
-            path="create"
-            element={<CreateClassroom></CreateClassroom>}>
-          </Route>
-          <Route
-            path="join"
-            element={<JoinClassroom></JoinClassroom>}>
-          </Route>
+        <Route path="/classrooms" element={<AuthRoute><Classrooms></Classrooms></AuthRoute>} />
+        <Route path="/classroom/create" element={<AuthRoute><CreateClassroom></CreateClassroom></AuthRoute>} />
+        <Route path="/classroom/join" element={<AuthRoute><JoinClassroom></JoinClassroom></AuthRoute>} />
+        <Route path="/login" element={<Login></Login>} />
+        <Route path="/register" element={<Register></Register>} />
+        <Route path="/reset_password" element={<ResetPassword></ResetPassword>} />
+        <Route path='/classroom' element={<AuthRoute><MainLayout></MainLayout></AuthRoute>}>
+          <Route path=":id"  element={<ClassroomLayout></ClassroomLayout>}></Route>
         </Route>
-        <Route
-          path="/login"
-          element={<Login></Login>}>
-        </Route>
-        <Route
-          path="/register"
-          element={<Register></Register>}>
-        </Route>
-        <Route
-          path="/reset_password"
-          element={<ResetPassword></ResetPassword>}>
-        </Route>
-        <Route
-          path='/classroom/:id'
-          element={<AuthRoute><MainLayout></MainLayout></AuthRoute>}>
-        </Route>
-        <Route
-          path='/classroom/:id/students'
-          element={<AuthRoute><Students></Students></AuthRoute>}>
-        </Route>
-        <Route path="*" element={<NotFound></NotFound>}>
-        </Route>
+        <Route path='/classroom/:id/students' element={<AuthRoute><Students></Students></AuthRoute>} />
+        <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
     </>
   );

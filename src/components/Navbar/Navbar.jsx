@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="flex flex-row items-center justify-center gap-2">
           <div className=" hidden md:hidden lg:flex flex-row items-center gap-6">
             <Link
-              to={"/classroom"}
+              to={"/classrooms"}
               className="font-bold hover:underline text-indigo-500"
             >
               Classroom

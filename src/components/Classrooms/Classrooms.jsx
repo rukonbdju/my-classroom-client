@@ -2,11 +2,13 @@ import useAuth from "../../hooks/Auth/useAuth";
 import ArchivedClassroom from "../ArchivedClassroom/ArchivedClassroom";
 import CreatedClassrooms from "../CreatedClassrooms/CreatedClassrooms";
 import JoinedClassrooms from "../JoinedClassrooms/JoinedClassrooms";
+import Navbar from "../Navbar/Navbar";
 
 const Classrooms = () => {
     const { user } = useAuth()
     return (
         <div className="">
+            <Navbar></Navbar>
             <div className="w-5/6 mx-auto mt-24">
                 <div className="">
                     <h1 className="text-2xl md:text-4xl lg:text-5xl capitalize font-bold ">
