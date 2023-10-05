@@ -5,8 +5,8 @@ const PostInfo = ({ post }) => {
         <>
             <div className='flex flex-row gap-2'>
                 <div>
-                    <h3 className="text xl font-bold">{post?.author?.name}</h3>
-                    <span className='text-xs'>{post?.timestamps}</span>
+                    <h3 className="leading-none font-bold">{post?.author?.name}</h3>
+                    <span className='text-xs leading-none'>{post?.timestamps}</span>
                 </div>
             </div>
             <div className='my-2'>
