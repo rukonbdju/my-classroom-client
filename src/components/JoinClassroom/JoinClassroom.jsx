@@ -49,8 +49,7 @@ const JoinClassroom = () => {
       }
     } catch (error) {
       console.log(error)
-    }
-    finally {
+    }finally {
       setLoading(false)
 
     }

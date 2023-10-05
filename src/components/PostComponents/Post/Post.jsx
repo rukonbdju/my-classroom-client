@@ -5,27 +5,12 @@ import UpdateLike from '../../Updatelike/UpdateLike';
 import PostInfo from '../../PostInfo/PostInfo';
 import { handleGetMethod } from '../../../utilities/handleGetMethod';
 import Placeholder from '../Posts/Placeholder';
-import PostReducer from '../../../reducer/PostReducer/PostReducer';
+import { PostContext } from '../../../context_api/PostProvider/PostProvider';
+import CommentLayout from '../../../layouts/CommentLayout/CommentLayout';
 
-const Post = ({ id}) => {
-    const [post, dispatch] = useReducer(PostReducer, {})
+const Post = () => {
+    const { loading, post } = useContext(PostContext)
     const [openComment, setOpenComment] = useState(false)
-    const [loading, setLaoding] = useState(false)
-    useEffect(() => {
-        
-        setLaoding(true)
-        const getPostById = async () => {
-            const url = `https://my-classroom-server.onrender.com/api/v1/posts/${id}`;
-            const result = await handleGetMethod(url)
-            dispatch({
-                type:'initialState',
-                payload:result
-            })
-            setLaoding(false)
-        }
-        getPostById()
-
-    }, [id])
     if (loading) {
         return <Placeholder></Placeholder>
     }
@@ -34,7 +19,7 @@ const Post = ({ id}) => {
         <div className='border border-indigo-500 relative p-2 rounded-md my-8'>
             <DeletePost post={post} ></DeletePost>
             <div className='flex flex-row gap-4 '>
-                <div className=''>
+                <div>
                     <button
                         className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
                     >
@@ -55,9 +40,7 @@ const Post = ({ id}) => {
                                 className='text-xs cursor-pointer hover:underline'>{post?.comments?.length} Comments</span>
                         </div>
                         <div className='flex flex-row justify-end gap-2 items-center'>
-                            <UpdateLike
-                                post={post} dispatch={dispatch}>
-                            </UpdateLike>
+                            <UpdateLike></UpdateLike>
                             <button
                                 onClick={() => setOpenComment(!openComment)}
                                 className='p-2 rounded-lg bg-indigo-300'>
@@ -74,16 +57,11 @@ const Post = ({ id}) => {
                             </button>
                         </div>
                     </div>
-
-                    <div className=''>
-                        {openComment && <CommentBox
-                            post={post} dispatch={dispatch}
-                            setOpenComment={setOpenComment}>
-                        </CommentBox>}
-                    </div>
+                    {
+                        openComment && <CommentLayout></CommentLayout>
+                    }
                 </div>
             </div>
-
         </div>
     );
 };

@@ -3,7 +3,6 @@ import useAuth from "../../hooks/Auth/useAuth";
 import { handlePostMethod } from "../../utilities/handlePostMethod";
 import Loader from "../Loader/Loader";
 import useFirebaseStorage from "../../hooks/Firebase/useFirebaseStorage";
-import { PostContext } from "../../context_api/PostProvider/PostProvider";
 import { ClassroomContext } from "../../context_api/ClassroomProvider/ClassroomProvider";
 
 const CreatePost = ({ id, setOpenModal }) => {
@@ -94,10 +93,8 @@ const CreatePost = ({ id, setOpenModal }) => {
         className=" bg-slate-200 w-11/12 md:w-2/3 lg:w-1/3 h-max  p-2 rounded-lg mt-24" >
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-xl md:text-2xl lg:text-3xl mb-2">Create Post</h1>
-          <button
-            onClick={() => setOpenModal(false)}
-            className="px-2 py-1  rounded-md shadow-lg bg-indigo-500 hover:bg-indigo-800 text-slate-50 uppercase"
-          >
+          <button onClick={() => setOpenModal(false)}
+            className="px-2 py-1  rounded-md shadow-lg bg-indigo-500 hover:bg-indigo-800 text-slate-50 uppercase" >
             Cancel
           </button>
         </div>
@@ -111,7 +108,7 @@ const CreatePost = ({ id, setOpenModal }) => {
             name="post"
             rows={8}
             placeholder="Start class discussion"
-          ></textarea>
+          />
           {selectedFile && <div className="w-full h-48 overflow-auto mx-auto">
             <img className="mx-auto" src={selectedFile} />
           </div>}
@@ -127,11 +124,8 @@ const CreatePost = ({ id, setOpenModal }) => {
           </div>
           {fileSizeError && <span className="text-red-700 text-sm block">File size can not exceed 2 MB</span>}
         </div>
-        <button
-          type="submit"
-          className="w-full px-2 py-1 flex items-center justify-center rounded-md shadow-lg
-          bg-indigo-500 hover:bg-indigo-800 text-slate-50  uppercase"
-        >
+        <button type="submit" className="w-full px-2 py-1 flex items-center justify-center rounded-md shadow-lg
+          bg-indigo-500 hover:bg-indigo-800 text-slate-50  uppercase">
           {loading && <Loader></Loader>}<span>Post</span>
         </button>
       </form>

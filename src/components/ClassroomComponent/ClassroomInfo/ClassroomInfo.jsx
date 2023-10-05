@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Classroom = ({ classroom }) => {
+const ClassroomInfo = ({ classroom }) => {
   return (
     <Link to={`/classroom/${classroom?._id}`}>
       <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md min-h-fit cursor-pointer">
@@ -12,4 +12,4 @@ const Classroom = ({ classroom }) => {
   );
 };
 
-export default Classroom;
+export default ClassroomInfo;

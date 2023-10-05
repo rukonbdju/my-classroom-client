@@ -1,13 +1,11 @@
-import Posts from "../../components/PostComponents/Posts/Posts"
-import CommentProvider from "../../context_api/CommentProvider/CommentProvider"
+import Post from "../../components/PostComponents/Post/Post"
 import PostProvider from "../../context_api/PostProvider/PostProvider"
 
-const PostLayout = () => {
+const PostLayout = ({id}) => {
+    
     return (
-        <PostProvider>
-            <CommentProvider>
-                <Posts></Posts>
-            </CommentProvider>
+        <PostProvider id={id}>
+            <Post></Post>
         </PostProvider>
     )
 }

@@ -7,12 +7,7 @@ const NotFound = () => {
       <div className="border rounded-md p-5 shadow-lg">
         <h1 className="text-2xl">This Page is not found.</h1>
         <Link to={"/classrooms"}>
-          <button
-            className="block mt-4 w-full rounded-md shadow-xl bg-gradient-to-r from-sky-500 to-indigo-500
-              text-slate-100 px-4 py-2 uppercase font-bold"
-          >
-            Back to Classroom
-          </button>
+          <button className="block mt-4 w-full rounded-md shadow-xl bg-gradient-to-r from-sky-500 to-indigo-500  text-slate-100 px-4 py-2 uppercase font-bold">Back to Classroom </button>
         </Link>
       </div>
     </div>

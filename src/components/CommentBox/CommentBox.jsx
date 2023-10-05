@@ -1,34 +1,17 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useContext, useState } from 'react';
 import useAuth from '../../hooks/Auth/useAuth';
 import { handlePostMethod } from '../../utilities/handlePostMethod';
 import Loader from '../Loader/Loader';
-import { handleGetMethod } from '../../utilities/handleGetMethod';
 import Comment from '../Comment/Comment';
 import Placeholder from './Placeholder';
-import ReplyBox from '../ReplyBox/ReplyBox';
-import CommentReducer from '../../reducer/CommentReducer/CommentReducer';
+import { PostContext } from '../../context_api/PostProvider/PostProvider';
+import { CommentContext } from '../../context_api/CommentProvider/CommentProvider';
 
-const CommentBox = ({ post,dispatch}) => {
+const CommentBox = () => {
+    const { post, dispatch } = useContext(PostContext)
+    const { loading, comments, commentDispatch } = useContext(CommentContext)
     const { user } = useAuth()
     const [comment, setComment] = useState('')
-    const [loading, setLoading] = useState(false)
-    //const [comments, setComments] = useState([])
-    const [comments,commentDispatch]=useReducer(CommentReducer,[])
-    //get all comments of a post
-    useEffect(() => {
-        setLoading(true)
-        const getComments = async (url) => {
-            const result = await handleGetMethod(url)
-            commentDispatch({
-                type:"initialValue",
-                payload:result
-            })
-            setLoading(false)
-        }
-        const url = `https://my-classroom-server.onrender.com/api/v1/comments?postId=${post._id}`
-         getComments(url)
-         
-    }, [])
 
     //get user comment form input
     const getUserComment = (event) => {
@@ -55,16 +38,15 @@ const CommentBox = ({ post,dispatch}) => {
             const saveCommentResult = await handlePostMethod(commentUrl, data)
             data._id = saveCommentResult.commentId;
             dispatch({
-                type:'updateComments',
-                payload:{
-                    commentId:saveCommentResult.commentId
+                type: 'updateComments',
+                payload: {
+                    commentId: saveCommentResult.commentId
                 }
             })
             commentDispatch({
-                type:'add',
-                payload:data
+                type: 'add',
+                payload: data
             })
-            //setComments((prevComments)=>[data,...prevComments])
         } catch (error) {
             console.log(error)
         }
@@ -78,7 +60,7 @@ const CommentBox = ({ post,dispatch}) => {
     }
 
     return (
-        <div className='my-4 border rounded-lg p-2'>
+        <div className='my-4 rounded-lg p-2'>
             <div className='flex flex-row items-center gap-2 w-full'>
                 <div>
                     <button
@@ -115,12 +97,12 @@ const CommentBox = ({ post,dispatch}) => {
                     </button>
                 </div>
             </div>
-            {comments?.length ? comments?.map((comment) => <Comment
-                key={comment._id}
-                commentDispatch={commentDispatch}
-                dispatch={dispatch}
-                comment={comment}
-            ></Comment>) : <></>}
+            <div>
+                {
+                    comments?.length ? comments?.map((comment) => <Comment key={comment._id} comment={comment}></Comment>)
+                        : <p className='p-2 my-4 border rounded'>No comment found.</p>
+                }
+            </div>
         </div>
     );
 };

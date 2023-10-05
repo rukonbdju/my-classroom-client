@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Auth/useAuth";
 import Loader from "../Loader/Loader";
 import { handlePostMethod } from "../../utilities/handlePostMethod";

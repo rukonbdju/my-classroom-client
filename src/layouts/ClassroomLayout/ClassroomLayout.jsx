@@ -2,8 +2,8 @@ import useAuth from '../../hooks/Auth/useAuth';
 import { useContext } from 'react';
 import { ClassroomContext } from '../../context_api/ClassroomProvider/ClassroomProvider';
 import { Link } from 'react-router-dom';
-import PostLayout from '../PostLayout/PostLayout';
 import Placeholder from '../../layouts/MainLayout/Placeholder';
+import Posts from '../../components/PostComponents/Posts/Posts';
 
 const ClassroomLayout = () => {
     const { user } = useAuth()
@@ -56,7 +56,7 @@ const ClassroomLayout = () => {
                         </Link>
                     </div>
                 </div>
-                {classroom?.name && <PostLayout></PostLayout>}
+                {classroom?.name && <Posts></Posts>}
             </div>
         </main>
     );

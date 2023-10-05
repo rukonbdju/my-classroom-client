@@ -8,7 +8,7 @@ const ArchiveClassroom = ({ setClassroomDeleteModal, classroomId }) => {
     const navigate = useNavigate()
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
-
+    // this function request to server to save the information that this user wants to archive the classroom
     const handleArchiveClassroom = async () => {
         try {
             setLoading(true)
@@ -17,7 +17,7 @@ const ArchiveClassroom = ({ setClassroomDeleteModal, classroomId }) => {
             const result = await handlePutMethod(url, data)
             if (result.modifiedCount) {
                 setLoading(false)
-                navigate('/classroom')
+                navigate('/classrooms')
                 setClassroomDeleteModal(false)
             }
         } catch (error) {

@@ -5,6 +5,7 @@ import { ClassroomContext } from "../../../context_api/ClassroomProvider/Classro
 import Placeholder from "./Placeholder";
 import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../Post/Post";
+import PostLayout from "../../../layouts/PostLayout/PostLayout";
 
 const Posts=()=>{
     const {classroom,dispatch}=useContext(ClassroomContext)
@@ -67,7 +68,7 @@ const Posts=()=>{
                     />
                 </div>
             </div>
-            {classroom?.posts?.map((id) => <Post key={id} id={id} classroomDispatch={dispatch}></Post>)}
+            {classroom?.posts?.map((id) => <PostLayout key={id} id={id}></PostLayout>)}
         </div>
     );
 }

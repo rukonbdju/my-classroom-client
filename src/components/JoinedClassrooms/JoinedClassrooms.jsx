@@ -1,6 +1,5 @@
-import Classroom from '../Classroom/Classroom';
+import ClassroomInfo from '../ClassroomComponent/ClassroomInfo/ClassroomInfo';
 import Placeholder from '../Shared/Placeholder';
-import useAuth from '../../hooks/Auth/useAuth';
 import { Link } from 'react-router-dom';
 import useEnrolledClassroom from '../../hooks/API/useEnrolledClassroom';
 
@@ -16,7 +15,7 @@ const JoinedClassrooms = () => {
                 <Placeholder></Placeholder>
                 <Placeholder></Placeholder>
             </div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-6">
-                {enrolledClassroom?.map((classroom) => <Classroom key={classroom._id} classroom={classroom}></Classroom>)}
+                {enrolledClassroom?.map((classroom) => <ClassroomInfo key={Info._id} classroom={classroom}></ClassroomInfo>)}
                 <Link to={"/classroom/join"}>
                     <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md cursor-pointer text-center">
                         <span className="text-5xl font-bold">+</span>

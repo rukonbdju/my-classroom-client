@@ -5,13 +5,13 @@ const RightSidebar = () => {
                 <div>
                     <h2 className='text-xl font-bold'>Class Metarials</h2>
                     <div className='flex flex-col gap-2'>
-                        <h1 className='text-xl'>Class metarials will aprear here</h1>
+                        <h1 className=''>Class metarials will aprear here</h1>
                     </div>
                 </div>
                 <div>
                     <h2 className='text-xl font-bold'>Students</h2>
                     <div className='flex flex-col gap-2'>
-                        <h1 className='text-xl'>Students list will apear here</h1>
+                        <h1 className=''>Students list will apear here</h1>
                     </div>
                 </div>
 

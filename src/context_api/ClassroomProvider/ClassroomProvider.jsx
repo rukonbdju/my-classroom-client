@@ -21,11 +21,11 @@ const ClassroomProvider = ({ children }) => {
             finally{
                 setIsLoading(false)
             }
-
         }
         const url = `https://my-classroom-server.onrender.com/api/v1/classrooms/${params.id}`;
         getData()
     }, [params])
+
     return (
         <ClassroomContext.Provider value={{isLoading, classroom, dispatch }}>
             {children}

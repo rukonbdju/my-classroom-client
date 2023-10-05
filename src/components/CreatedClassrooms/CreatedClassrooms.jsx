@@ -1,5 +1,5 @@
 
-import Classroom from "../Classroom/Classroom";
+import ClassroomInfo from "../ClassroomComponent/ClassroomInfo/ClassroomInfo";
 import { Link } from "react-router-dom";
 import Placeholder from "../Shared/Placeholder";
 import useCreatedClassroom from "../../hooks/API/useCreatedClassroom";
@@ -17,7 +17,7 @@ const {loading,createdClassrooms}=useCreatedClassroom()
         <Placeholder></Placeholder>
       </div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-6 my-6">
         {createdClassrooms?.map((classroom) => (
-          <Classroom key={classroom._id} classroom={classroom}></Classroom>
+          <ClassroomInfo key={classroom._id} classroom={classroom}></ClassroomInfo>
         ))}
         <Link to={"/classroom/create"}>
           <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-6 rounded-lg shadow-md cursor-pointer text-center">

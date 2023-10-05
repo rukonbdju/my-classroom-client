@@ -2,7 +2,7 @@
 import { Link, Outlet } from "react-router-dom";
 import ClassroomProvider from "../../context_api/ClassroomProvider/ClassroomProvider";
 import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/ClassroomComponent/Sidebar";
+import Sidebar from "../../components/ClassroomComponent/Sidebar/Sidebar";
 import RightSidebar from "../../components/ClassroomComponent/RightSidebar/RightSidebar";
 
 
@@ -19,7 +19,6 @@ const MainLayout = () => {
       </div>
     </ClassroomProvider>
   )
-
 };
 
 export default MainLayout;

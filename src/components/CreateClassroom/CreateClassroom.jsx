@@ -33,7 +33,7 @@ const CreateClassroom = () => {
         }],
         cover_photo: '',
         created_at: new Date().toString(),
-        posts:[]
+        posts: []
       }
 
       //create new classroom
@@ -57,52 +57,47 @@ const CreateClassroom = () => {
     <div>
       <Navbar></Navbar>
       <div className="w-screen h-screen flex items-center justify-center">
-      <div className="w-5/6 mx-auto">
-        <form
-          onSubmit={handleCreateClassroom}
-          className="flex flex-col gap-6 items-center justify-center max-w-xl mx-auto"
-        >
-          <h1 className="text-5xl mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">Create new Classroom!</h1>
-          <input
-            required
-            className="p-2 border-2 rounded-lg w-full outline-indigo-700"
-            placeholder="Enter classroom name"
-            type="text"
-            name="name"
-            id="name"
-          />
-          <input
-            className="p-2 border-2 rounded-lg w-full outline-indigo-700"
-            placeholder="Enter description (Optional)"
-            type="text"
-            name="description"
-            id="description"
-          />
-
-          <button
-            className="w-full font-bold rounded-lg shadow-xl mb-4
-             bg-gradient-to-r from-sky-500 to-indigo-500 text-slate-100 px-4 uppercase py-2"
-            type="submit"
+        <div className="w-5/6 mx-auto">
+          <form
+            onSubmit={handleCreateClassroom}
+            className="flex flex-col gap-6 items-center justify-center max-w-xl mx-auto"
           >
-            <div className="flex flex-row items-center justify-center">
-              {loading && <Loader></Loader>}
-              <span>Create Classroom</span>
-            </div>
-          </button>
-          {error&&<span className="text-red-700">An error occur. Please try again.</span>}
-          <span>
-            If you are a student join classroom{" "}
-            <Link
-              className="text-blue-700 hover:underline"
-              to={"/classroom/join"}
+            <h1 className="text-5xl mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-indigo-500">Create new Classroom!</h1>
+            <input
+              required
+              className="p-2 border-2 rounded-lg w-full outline-indigo-700"
+              placeholder="Enter classroom name"
+              type="text"
+              name="name"
+              id="name"
+            />
+            <input
+              className="p-2 border-2 rounded-lg w-full outline-indigo-700"
+              placeholder="Enter description (Optional)"
+              type="text"
+              name="description"
+              id="description"
+            />
+
+            <button
+              className="w-full font-bold rounded-lg shadow-xl mb-4
+             bg-gradient-to-r from-sky-500 to-indigo-500 text-slate-100 px-4 uppercase py-2"
+              type="submit"
             >
-              here
-            </Link>
-          </span>
-        </form>
+              <div className="flex flex-row items-center justify-center">
+                {loading && <Loader></Loader>}
+                <span>Create Classroom</span>
+              </div>
+            </button>
+            {error && <span className="text-red-700">An error occur. Please try again.</span>}
+            <span>
+              If you are a student join classroom{" "}
+              <Link className="text-blue-700 hover:underline" to={"/classroom/join"}>here</Link>
+            </span>
+          </form>
+        </div>
+        {classCreationResult?.classCode && <Modal classCode={classCreationResult?.classCode}></Modal>}
       </div>
-      {classCreationResult?.classCode && <Modal classCode={classCreationResult?.classCode}></Modal>}
-    </div>
     </div>
   );
 };

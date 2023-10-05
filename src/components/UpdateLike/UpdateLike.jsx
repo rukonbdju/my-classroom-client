@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import useAuth from "../../hooks/Auth/useAuth"
 import { handlePutMethod } from "../../utilities/handlePutMethod"
+import { PostContext } from "../../context_api/PostProvider/PostProvider"
 
-const UpdateLike = ({ post, dispatch }) => {
+const UpdateLike = () => {
+    const {post,dispatch}=useContext(PostContext)
     const { user } = useAuth()
     const [isLiked, setIsLiked] = useState(false)
     useEffect(() => {

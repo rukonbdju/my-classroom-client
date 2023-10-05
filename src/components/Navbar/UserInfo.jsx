@@ -8,15 +8,10 @@ const UserInfo = () => {
     <div>
       {user ? (
         <div className="relative group">
-          <button
-
-            className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12"
-          >
-            {user.photoURL ? (
-              <img className='rounded-full' src={user.photoURL} />
-            ) : (
-              user.displayName?.slice(0, 1)
-            )}
+          <button className="flex  flex-row items-center font-bold justify-center bg-blue-700 text-white rounded-full border-2 w-12 h-12">
+            {
+              user.photoURL ? <img className='rounded-full' src={user.photoURL} /> : user.displayName?.slice(0, 1)
+            }
           </button>
           <div className="absolute hidden  group-focus-within:block right-0 bg-indigo-600">
             <div className="p-2 flex flex-col items-center justify-center">

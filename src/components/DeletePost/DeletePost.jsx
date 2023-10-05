@@ -11,7 +11,7 @@ const DeletePost = ({post}) => {
     const handleDeletePost = async () => {
         setLoading(true)
         const url = `https://my-classroom-server.onrender.com/api/v1/posts?id=${post._id}&classId=${post.classId}`
-        const result=await handleDeleteMethod(url)
+        await handleDeleteMethod(url)
         dispatch({
             type:'delete',
             payload:{

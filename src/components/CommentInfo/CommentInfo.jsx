@@ -15,7 +15,6 @@ const CommentInfo = ({ comment }) => {
                     <span className='inline-block'>{comment?.content}</span>
                 </p>
             </div>
-
         </div>
     )
 }

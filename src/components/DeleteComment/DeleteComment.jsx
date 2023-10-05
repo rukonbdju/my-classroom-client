@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import useAuth from "../../hooks/Auth/useAuth"
 import handleDeleteMethod from "../../utilities/handleDeleteMethod"
 import Loader from "../Loader/Loader"
+import { PostContext } from "../../context_api/PostProvider/PostProvider"
+import { CommentContext } from "../../context_api/CommentProvider/CommentProvider"
 
-const DeleteComment = ({ commentDispatch,dispatch, comment }) => {
+const DeleteComment = ({ comment }) => {
+    const {dispatch}=useContext(PostContext)
+    const {commentDispatch}=useContext(CommentContext)
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
 
