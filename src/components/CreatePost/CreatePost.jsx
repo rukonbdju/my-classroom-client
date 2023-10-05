@@ -48,7 +48,11 @@ const CreatePost = ({ id, setOpenModal }) => {
       if (fileSizeError) {
         return
       }
-      const media = await handleUpload(file)
+      let media='';
+      if(file.name){
+        media = await handleUpload(file)
+      }
+
       if (postContent.length < 1 && !(media.url)) {
         return
       }

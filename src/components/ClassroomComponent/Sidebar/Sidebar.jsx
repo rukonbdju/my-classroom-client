@@ -39,7 +39,7 @@ const CreatedClassrooms = () => {
         return <p className='p-2 bg-indigo-200 rounded'>No classroom found</p>
     }
     return (
-        <div>
+        <div className='flex flex-col gap-1'>
 
             {
                 createdClassrooms?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
@@ -58,11 +58,11 @@ const ArchivedClassrooms = () => {
         return <p className='p-2 bg-indigo-200 rounded'>No classroom found</p>
     }
     return (
-        <div>
+        <div className='flex flex-col gap-1'>
 
             {
                 archivedClassroom?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
-                    <li className='bg-indigo-200 hover:bg-indigo-30 p-2 rounded list-none cursor-pointer active:scale-90 active:bg-indigo-500 transition-all' >{classroom?.name}</li>
+                    <li className='bg-indigo-200 hover:bg-indigo-300 p-2 rounded list-none cursor-pointer active:scale-90 active:bg-indigo-500 transition-all' >{classroom?.name}</li>
                 </Link>)
             }
         </div>
@@ -77,10 +77,10 @@ const EnrolledClassrooms = () => {
         return <p className='p-2 bg-indigo-200 rounded'>No classroom found</p>
     }
     return (
-        <div>
+        <div className='flex flex-col gap-1'>
             {
                 enrolledClassroom?.map((classroom) => <Link key={classroom?._id} to={`/classroom/${classroom?._id}`}>
-                    <li className='bg-indigo-200 hover:bg-indigo-30 p-2 rounded list-none cursor-pointer active:scale-90 active:bg-indigo-500 transition-all' >{classroom?.name}</li>
+                    <li className='bg-indigo-200 hover:bg-indigo-300 p-2 rounded list-none cursor-pointer active:scale-90 active:bg-indigo-500 transition-all' >{classroom?.name}</li>
                 </Link>)
             }
         </div>

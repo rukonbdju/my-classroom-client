@@ -11,7 +11,7 @@ const useFirebaseStorage = () => {
             const media={bucket,name,type,contentType,size,fullPath,timeCreated,updated,url}
             return media;
         } catch (error) {
-            console.log(error)
+            console.dir(error)
         }
 
     };
