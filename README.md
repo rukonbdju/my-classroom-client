@@ -1,6 +1,6 @@
 # 🎓 My Classroom Client
 
-**My Classroom Client** is the frontend application for a comprehensive classroom management system. It enables seamless interactions between students and instructors, facilitating functionalities such as course management, assignments, and real-time communication.
+**My Classroom Client** is the frontend application for a comprehensive classroom management system. It enables seamless interactions between students and instructors, such as course management, post in the classroom, likes comments etc.
 
 ## 🌐 Live Application
 
@@ -9,12 +9,8 @@
 
 ## 🚀 Features
 
-- 👥 Role-based system for Students and Instructors
 - 📚 Course listing, creation, and enrollment
-- 📝 Assignment submission and evaluation
-- 🔔 Real-time notifications and announcements
 - 🔐 Firebase Authentication with protected routes
-- 💬 Simple real-time chat between users
 - 📱 Responsive design for all screen sizes
 
 ## 🛠️ Technologies Used
