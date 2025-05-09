@@ -5,6 +5,8 @@
 ## 🌐 Live Application
 
 - **Frontend**: [my-classroom-bd.web.app](https://my-classroom-bd.web.app)
+- 📧 Email:    admin@admin.com
+- 🔐 Password: 123456
 - **Backend Repository**: [rukonbdju/my-classroom-server](https://github.com/rukonbdju/my-classroom-server)
 
 ## 🚀 Features
